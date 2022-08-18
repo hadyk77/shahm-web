@@ -319,17 +319,17 @@
             <div class="menu-item px-3">
                 <div class="menu-content d-flex align-items-center px-3">
                     <div class="symbol symbol-50px me-5">
-                        <img alt="Logo" src="{{Auth::guard(\App\Enums\GuardEnum::ADMIN)->user()->user()->profile_image}}"/>
+                        <img alt="Logo" src="{{Auth::guard(\App\Enums\GuardEnum::ADMIN)->user()->profile_image}}"/>
                     </div>
                     <div class="d-flex flex-column">
                         <div class="fw-bold d-flex align-items-center fs-5">
-                            {{Auth::guard(\App\Enums\GuardEnum::ADMIN)->user()->user()->name}}
+                            {{Auth::guard(\App\Enums\GuardEnum::ADMIN)->user()->name}}
                             <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">
-                                {{Auth::guard(\App\Enums\GuardEnum::ADMIN)->user()->user()->roles()->first()->title}}
+                                {{Auth::guard(\App\Enums\GuardEnum::ADMIN)->user()->roles()->first()->title}}
                             </span>
                         </div>
                         <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
-                            {{Auth::guard(\App\Enums\GuardEnum::ADMIN)->user()->user()->email}}
+                            {{Auth::guard(\App\Enums\GuardEnum::ADMIN)->user()->email}}
                         </a>
                     </div>
                 </div>

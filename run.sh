@@ -26,4 +26,8 @@ else
         docker-compose run --rm artisan_sham db:wipe && docker-compose run --rm artisan_sham migrate --seed
     fi
 
+    if [ $1 == "s" ]; then
+        docker-compose run --rm artisan_sham make:seed $2
+    fi
+
 fi

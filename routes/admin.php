@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\GuardEnum;
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
 use App\Http\Controllers\Admin\Settings\BasicInformationController;
@@ -14,7 +15,7 @@ Route::namespace("\App\Http\Controllers\Admin")->group(function () {
 
 });
 
-Route::middleware("auth")->group(function () {
+Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
     Route::get("/", [DashboardController::class, "index"]);
 

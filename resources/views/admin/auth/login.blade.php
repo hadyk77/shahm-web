@@ -1,16 +1,15 @@
 @extends('admin.layouts.auth')
 
 @section('content')
-    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="#">
+    <form class="form w-100" novalidate="novalidate" id="login_form" action="#">
         <div class="text-center mb-15">
             <h1 class="text-dark fw-bolder mb-3">{{__("Login to your account")}}</h1>
         </div>
         <x-input-field
-            name="email"
-            type="email"
+            name="username"
             col="12"
             required
-            :title="__('Email')"
+            :title="__('Username')"
         />
         <x-input-field
             name="password"
@@ -28,7 +27,7 @@
             <a href="{{route('admin.password.request')}}" class="link-primary">{{__("Forgot Password ?")}}</a>
         </div>
         <div class="d-grid mb-10">
-            <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+            <button type="submit" id="login_btn" class="btn btn-primary">
                 <span class="indicator-label">{{__("Sign In")}}</span>
                 <span class="indicator-progress">
                     {{__("Please wait")}}...
@@ -48,14 +47,10 @@
             let handleForm = function (e) {
                 validator = FormValidation.formValidation(form, {
                     fields: {
-                        'email': {
+                        'username': {
                             validators: {
-                                regexp: {
-                                    regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                    message: '{{__("The value is not a valid email address")}}',
-                                },
                                 notEmpty: {
-                                    message: '{{__("Email address is required")}}'
+                                    message: '{{__("Username is required")}}'
                                 }
                             }
                         },
@@ -81,11 +76,11 @@
                             submitButton.setAttribute('data-kt-indicator', 'on');
                             submitButton.disabled = true;
                             axios.post("{{route("admin.login")}}", {
-                                email: form.querySelector('[name="email"]').value,
+                                username: form.querySelector('[name="username"]').value,
                                 password: form.querySelector('[name="password"]').value,
                                 remember: form.querySelector('[name="remember"]:checked')?.value === "1",
                             }).then((response) => {
-                                if (response.status === 201) {
+                                if (response.status === 204) {
                                     Swal.fire({
                                         text: "{{__("You have successfully logged in!")}}",
                                         icon: "success",
@@ -96,12 +91,9 @@
                                         }
                                     }).then(function (result) {
                                         if (result.isConfirmed) {
-                                            form.querySelector('[name="email"]').value = "";
+                                            form.querySelector('[name="username"]').value = "";
                                             form.querySelector('[name="password"]').value = "";
-                                            var redirectUrl = response.data.data.redirect_url;
-                                            if (redirectUrl) {
-                                                location.href = redirectUrl;
-                                            }
+                                            location.href = "{{route("admin.dashboard.index")}}";
                                         }
                                     });
                                     submitButton.removeAttribute('data-kt-indicator');
@@ -137,8 +129,8 @@
             }
             return {
                 init: function () {
-                    form = document.querySelector('#kt_sign_in_form');
-                    submitButton = document.querySelector('#kt_sign_in_submit');
+                    form = document.querySelector('#login_form');
+                    submitButton = document.querySelector('#login_btn');
 
                     handleForm();
                 }

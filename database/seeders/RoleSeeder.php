@@ -25,6 +25,5 @@ class RoleSeeder extends Seeder
 
         $role->syncPermissions($permissions);
 
-
     }
 }
