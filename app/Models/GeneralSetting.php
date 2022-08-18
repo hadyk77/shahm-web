@@ -16,10 +16,7 @@ class GeneralSetting extends Model implements HasMedia
 
     public array $translatable = [
         "title",
-        "description",
-        "meta_tag_title",
-        "meta_tag_description",
-        "meta_tag_keywords",
+        "description"
     ];
 
     public function logo(): Attribute

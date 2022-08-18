@@ -12,28 +12,16 @@ class GeneralSettingSeeder extends Seeder
     {
         $setting = GeneralSetting::query()->create([
             "title" => [
-                "ar" => "قائمة الطعام",
-                "en" => "MenuPages",
+                "ar" => "شهم",
+                "en" => "Sham",
             ],
             "description" => [
-                "ar" => "قائمة الطعام",
-                "en" => "MenuPages",
-            ],
-            "meta_tag_title" => [
-                "ar" => "قائمة الطعام",
-                "en" => "MenuPages",
-            ],
-            "meta_tag_description" => [
-                "ar" => "قائمة الطعام",
-                "en" => "MenuPages",
-            ],
-            "meta_tag_keywords" => [
-                "ar" => "قائمة الطعام",
-                "en" => "MenuPages",
+                "ar" => "شهم",
+                "en" => "Sham",
             ],
         ]);
 
-        $logo = public_path("web/images/logo.jpg");
+        $logo = public_path("test_images/SEMICOLON-TECH.png");
 
         $setting->addMedia($logo)->preservingOriginal()->toMediaCollection(GeneralSettingEnum::LOGO_IMAGE);
         $setting->addMedia($logo)->preservingOriginal()->toMediaCollection(GeneralSettingEnum::DEFAULT_PROFILE_IMAGE);

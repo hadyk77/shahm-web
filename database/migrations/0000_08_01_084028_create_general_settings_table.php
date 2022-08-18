@@ -16,12 +16,6 @@ return new class extends Migration {
             $table->id();
             $table->json("title");
             $table->json("description");
-            $table->json("meta_tag_title");
-            $table->json("meta_tag_description");
-            $table->json("meta_tag_keywords");
-
-            $table->boolean("enable_maintenance_mode")->default(0);
-            $table->longText("maintenance_text")->nullable();
 
             $table->string("first_email")->nullable();
             $table->string("second_email")->nullable();

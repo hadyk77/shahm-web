@@ -57,13 +57,13 @@ return [
     /*
      * The class that contains the strategy for determining a media file's path.
      */
-    'path_generator' => \App\MediaPaths\CustomPathGenerator::class,
+    'path_generator' => \App\Support\CustomPathGenerator::class,
 
     /*
      * Here you can specify which path generator should be used for the given class.
      */
     'custom_path_generators' => [
-         \App\Models\Table::class => \App\MediaPaths\QrCodePathGenerator::class
+
     ],
 
     /*

@@ -57,8 +57,6 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
-    'host' => env('APP_MAIN_HOST', 'http://localhost'),
-
     'asset_url' => env('ASSET_URL'),
 
     /*
@@ -85,7 +83,7 @@ return [
     |
     */
 
-    'locale' => 'ar',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -98,7 +96,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'ar',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
