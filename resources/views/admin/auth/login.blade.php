@@ -1,18 +1,30 @@
 @extends('admin.layouts.auth')
 
 @section('content')
-    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="{{route('admin.dashboard.index')}}" action="#">
+    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="#">
         <div class="text-center mb-15">
-            <h1 class="text-dark fw-bolder mb-3">{{__("Access to admin panel")}}</h1>
+            <h1 class="text-dark fw-bolder mb-3">{{__("Login to your account")}}</h1>
         </div>
-        <div class="fv-row mb-8">
-            <input type="text" placeholder="{{__("Email")}}" name="email" autocomplete="off" class="form-control"/>
-        </div>
-        <div class="fv-row mb-3">
-            <input type="password" placeholder="{{__("Password")}}" name="password" autocomplete="off" class="form-control bg-transparent"/>
-        </div>
-        <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-            <div></div>
+        <x-input-field
+            name="email"
+            type="email"
+            col="12"
+            required
+            :title="__('Email')"
+        />
+        <x-input-field
+            name="password"
+            type="password"
+            col="12"
+            required
+            class="mt-4"
+            :title="__('Password')"
+        />
+        <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mt-3 mb-3">
+            <label class="form-check form-check-custom form-check-solid my-4">
+                <input class="form-check-input h-20px w-20px cursor-pointer" type="checkbox" name="remember" value="1">
+                <span class="form-check-label fw-semibold cursor-pointer">{{__("Remember Me")}}</span>
+            </label>
             <a href="{{route('admin.password.request')}}" class="link-primary">{{__("Forgot Password ?")}}</a>
         </div>
         <div class="d-grid mb-10">
@@ -58,7 +70,7 @@
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap: new FormValidation.plugins.Bootstrap5({
-                            rowSelector: '.fv-row',
+                            rowSelector: '.form-group',
                         })
                     }
                 });
@@ -70,9 +82,10 @@
                             submitButton.disabled = true;
                             axios.post("{{route("admin.login")}}", {
                                 email: form.querySelector('[name="email"]').value,
-                                password: form.querySelector('[name="password"]').value
+                                password: form.querySelector('[name="password"]').value,
+                                remember: form.querySelector('[name="remember"]:checked')?.value === "1",
                             }).then((response) => {
-                                if (response.status === 204) {
+                                if (response.status === 201) {
                                     Swal.fire({
                                         text: "{{__("You have successfully logged in!")}}",
                                         icon: "success",
@@ -85,7 +98,7 @@
                                         if (result.isConfirmed) {
                                             form.querySelector('[name="email"]').value = "";
                                             form.querySelector('[name="password"]').value = "";
-                                            var redirectUrl = form.getAttribute('data-kt-redirect-url');
+                                            var redirectUrl = response.data.data.redirect_url;
                                             if (redirectUrl) {
                                                 location.href = redirectUrl;
                                             }
