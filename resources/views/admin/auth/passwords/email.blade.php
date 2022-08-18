@@ -5,9 +5,13 @@
         <div class="text-center mb-11">
             <h1 class="text-dark fw-bolder mb-3">{{__("Reset Password")}}</h1>
         </div>
-        <div class="fv-row mb-5">
-            <input type="text" placeholder="{{__("Email")}}" name="email" autocomplete="off" class="form-control"/>
-        </div>
+        <x-input-field
+            name="email"
+            type="email"
+            col="12"
+            required
+            :title="__('Email')"
+        />
         <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-3">
             <div></div>
             <a href="{{route('admin.login')}}" class="link-primary">{{__("Return Login")}}</a>
@@ -48,7 +52,7 @@
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap: new FormValidation.plugins.Bootstrap5({
-                            rowSelector: '.fv-row',
+                            rowSelector: '.form-group',
                         })
                     }
                 });

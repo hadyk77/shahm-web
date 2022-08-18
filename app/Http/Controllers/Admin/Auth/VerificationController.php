@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
+use App\Enums\GuardEnum;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\Guard;
 
 class VerificationController extends Controller
 {
@@ -16,7 +18,7 @@ class VerificationController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:' . GuardEnum::ADMIN);
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }

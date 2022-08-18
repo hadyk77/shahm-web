@@ -6,19 +6,31 @@
         <div class="text-center mb-11">
             <h1 class="text-dark fw-bolder mb-3">{{__("Reset Password")}}</h1>
         </div>
-        <div class="fv-row mb-5">
-            <input type="text" placeholder="{{__("Email")}}" name="email" autocomplete="off"
-                   value="{{old("email", $email)}}" class="form-control"/>
-        </div>
-        <div class="fv-row mb-5">
-            <input type="password" placeholder="{{__("Password")}}" name="password" autocomplete="off"
-                   class="form-control"/>
-        </div>
-        <div class="fv-row mb-5">
-            <input type="password" placeholder="{{__("Password Confirmation")}}" name="password_confirmation"
-                   autocomplete="off" class="form-control"/>
-        </div>
-        <div class="d-grid mb-10">
+        <x-input-field
+            name="email"
+            type="email"
+            col="12"
+            required
+            :value="$email"
+            :title="__('Email')"
+        />
+        <x-input-field
+            name="password"
+            type="password"
+            col="12"
+            required
+            class="mt-4"
+            :title="__('Password')"
+        />
+        <x-input-field
+            name="password_confirmation"
+            type="password"
+            col="12"
+            required
+            class="mt-4"
+            :title="__('Password Confirmation')"
+        />
+        <div class="d-grid mb-10 mt-5">
             <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
                 <span class="indicator-label">{{__("Reset Password")}}</span>
                 <span class="indicator-progress">
@@ -74,7 +86,7 @@
                     plugins: {
                         trigger: new FormValidation.plugins.Trigger(),
                         bootstrap: new FormValidation.plugins.Bootstrap5({
-                            rowSelector: '.fv-row'
+                            rowSelector: '.form-group'
                         })
                     }
                 });
@@ -106,10 +118,7 @@
                                             form.querySelector('[name="email"]').value = "";
                                             form.querySelector('[name="password"]').value = "";
                                             form.querySelector('[name="password_confirmation"]').value = "";
-                                            var redirectUrl = form.getAttribute('data-kt-redirect-url');
-                                            if (redirectUrl) {
-                                                location.href = redirectUrl;
-                                            }
+                                            location.href = "{{route("admin.dashboard.index")}}"
                                         }
                                     });
                                 }
