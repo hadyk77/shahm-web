@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    {!! \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocaleDirection() == "rtl" ? "style='direction:rtl;' dir='rtl'" : ""!!}
+>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta name="description" content="{{ $setting->description }}" />
+    <meta name="keywords" content="{{ $setting->description }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="{{ $setting->title }}" />
+    @include("global-partials.styles")
+    @yield("styles")
+</head>
+<body  id="kt_body" class="app-blank app-blank">
+<div class="d-flex flex-column flex-root" id="kt_app_root">
+    <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+        <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
+            <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+                <div class="w-lg-500px p-10">
+
+                    @yield("content")
+
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2" style="background-image: url('{{asset("admin/media/auth/bg3.jpg")}}')">
+            <div class="d-flex flex-column flex-center py-15 px-5 px-md-15 w-100">
+                <a href="{{route("admin.login")}}" class="mb-12">
+                    <img alt="Logo" src="{{$setting->logo}}" class="h-250px" />
+                </a>
+                <img class="mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{asset("admin/media/misc/auth-screens.png")}}" alt="" />
+                <h1 class="text-white fs-2qx fw-bolder text-center mb-7">{{__("Fast, Efficient and Productive")}}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+@include("global-partials.scripts")
+@yield("scripts")
+</body>
+</html>
