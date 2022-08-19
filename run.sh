@@ -10,6 +10,10 @@ else
         docker-compose run --rm artisan_sham remove log session
     fi
 
+    if [ $1 == "a" ]; then
+        docker-compose run --rm artisan_sham $2
+    fi
+
     if [ $1 == "m" ]; then
         docker-compose run --rm artisan_sham make:model $2 $3
     fi
@@ -28,6 +32,10 @@ else
 
     if [ $1 == "s" ]; then
         docker-compose run --rm artisan_sham make:seed $2
+    fi
+
+    if [ $1 == "composer" ]; then
+        docker-compose run --rm composer_sham $2 $3
     fi
 
 fi

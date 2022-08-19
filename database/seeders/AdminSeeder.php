@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admin;
 use App\Models\Role;
 use Carbon\Carbon;
+use Hash;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
@@ -15,7 +16,7 @@ class AdminSeeder extends Seeder
         $admin  = Admin::query()->create([
             "name" => "Super Admin",
             "username" => "admin",
-            "password" => \Hash::make("admin"),
+            "password" => Hash::make("admin"),
             "email" => "admin@admin.com",
             "email_verified_at" => Carbon::now(),
         ]);
