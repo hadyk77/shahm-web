@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Settings\DefaultImagesController;
 use App\Http\Controllers\Admin\Settings\FirebaseController;
 use App\Http\Controllers\Admin\Settings\SeoController;
 use App\Http\Controllers\Admin\Settings\SocialMediaController;
+use App\Http\Controllers\Admin\Status\StatusController;
 
 Route::namespace("\App\Http\Controllers\Admin")->group(function () {
 
@@ -26,6 +27,8 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
     Route::resource("banner", BannerController::class)->except("show");
 
+
+    Route::post("update-status", StatusController::class)->name("status.update");
 
     Route::prefix("settings")->name("settings.")->group(function () {
 

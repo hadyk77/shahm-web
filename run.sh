@@ -22,6 +22,10 @@ else
         docker-compose run --rm artisan_sham make:controller $2 $3
     fi
 
+    if [ $1 == "r" ]; then
+        docker-compose run --rm artisan_sham make:request $2
+    fi
+
     if [ $1 == "storage:link" ]; then
         docker-compose run --rm artisan_sham storage:link
     fi

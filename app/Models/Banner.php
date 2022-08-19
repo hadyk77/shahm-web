@@ -39,7 +39,13 @@ use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 class Banner extends BaseModel implements HasMedia
 {
     use HasFactory, HasTranslationTrait, InteractsWithMedia;
-    
+
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(BannerEnum::BannerImage)->singleFile();
+    }
+
     public function image(): Attribute
     {
         return Attribute::make(get: function () {

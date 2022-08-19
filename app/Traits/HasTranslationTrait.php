@@ -16,7 +16,11 @@ trait HasTranslationTrait
         "name",
     ];
 
-    
+    public function title(): Attribute
+    {
+        return Attribute::get(fn() => $this->translate("title", "ar"));
+    }
+
     public function name(): Attribute
     {
         return Attribute::get(fn() => $this->translate("name", "ar"));

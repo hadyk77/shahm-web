@@ -121,41 +121,41 @@
                 $(this).parent().find('.menu-sub-accordion').addClass("show");
             });
 
-            {{--$(document).on("change", '.switcher', function (e) {--}}
-            {{--    e.preventDefault();--}}
-            {{--    let element = $('#kt_content_container .card');--}}
-            {{--    let that = $(this);--}}
-            {{--    let action = "{{route("admin.update-status")}}";--}}
-            {{--    $.ajax({--}}
-            {{--        url: action,--}}
-            {{--        type: 'POST',--}}
-            {{--        data: {--}}
-            {{--            model: that.data('model'),--}}
-            {{--            model_id: parseInt(that.data('modelid')),--}}
-            {{--            column_name: that.data('columnname'),--}}
-            {{--            _token: "{{csrf_token()}}"--}}
-            {{--        },--}}
-            {{--        beforeSend: function () {--}}
-            {{--            showSpinner(element);--}}
-            {{--        },--}}
-            {{--        success: function success(result) {--}}
-            {{--            hideSpinner(element);--}}
-            {{--            if (result.success) {--}}
-            {{--                toastr.success(result.message);--}}
-            {{--                return;--}}
-            {{--            }--}}
-            {{--            toastr.error(result.message);--}}
-            {{--            that.prop("checked", true);--}}
-            {{--        },--}}
-            {{--        error: function error(response) {--}}
-            {{--            let errors = response.responseJSON.errors;--}}
-            {{--            $.each(errors, function (key, value) {--}}
-            {{--                toastr.error(value);--}}
-            {{--            });--}}
-            {{--            hideSpinner(element);--}}
-            {{--        }--}}
-            {{--    });--}}
-            {{--});--}}
+            $(document).on("change", '.switcher', function (e) {
+                e.preventDefault();
+                let element = $('#kt_content_container .card');
+                let that = $(this);
+                let action = "{{route("admin.status.update")}}";
+                $.ajax({
+                    url: action,
+                    type: 'POST',
+                    data: {
+                        model: that.data('model'),
+                        model_id: parseInt(that.data('modelid')),
+                        column_name: that.data('columnname'),
+                        _token: "{{csrf_token()}}"
+                    },
+                    beforeSend: function () {
+                        showSpinner(element);
+                    },
+                    success: function success(result) {
+                        hideSpinner(element);
+                        if (result.success) {
+                            toastr.success(result.message);
+                            return;
+                        }
+                        toastr.error(result.message);
+                        that.prop("checked", true);
+                    },
+                    error: function error(response) {
+                        let errors = response.responseJSON.errors;
+                        $.each(errors, function (key, value) {
+                            toastr.error(value);
+                        });
+                        hideSpinner(element);
+                    }
+                });
+            });
 
         });
 
