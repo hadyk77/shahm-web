@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\HasTranslationTrait;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Page
@@ -13,21 +17,21 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $description
  * @property int $status
  * @property int $is_deletable
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|Page newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Page newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Page query()
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereIsDeletable($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Page whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Page newModelQuery()
+ * @method static Builder|Page newQuery()
+ * @method static Builder|Page query()
+ * @method static Builder|Page whereCreatedAt($value)
+ * @method static Builder|Page whereDescription($value)
+ * @method static Builder|Page whereId($value)
+ * @method static Builder|Page whereIsDeletable($value)
+ * @method static Builder|Page whereStatus($value)
+ * @method static Builder|Page whereTitle($value)
+ * @method static Builder|Page whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Page extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslationTrait;
 }

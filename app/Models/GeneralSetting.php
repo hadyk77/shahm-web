@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use App\Enums\GeneralSettingEnum;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -34,37 +38,37 @@ use Spatie\Translatable\HasTranslations;
  * @property string|null $firebase_storage_bucket
  * @property string|null $firebase_messaging_sender_id
  * @property string|null $firebase_app_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
  * @property-read int|null $media_count
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting query()
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFacebookLink($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFcmKey($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFirebaseApiKey($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFirebaseAppId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFirebaseAuthDomain($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFirebaseDatabaseUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFirebaseMessagingSenderId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFirebaseProjectId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFirebaseStorageBucket($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFirstEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereFirstPhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereInstagramLink($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereLinkedinLink($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereSecondEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereSecondPhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereSnapchatLink($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereTiktokLink($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereTwitterLink($value)
- * @method static \Illuminate\Database\Eloquent\Builder|GeneralSetting whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|GeneralSetting newModelQuery()
+ * @method static Builder|GeneralSetting newQuery()
+ * @method static Builder|GeneralSetting query()
+ * @method static Builder|GeneralSetting whereCreatedAt($value)
+ * @method static Builder|GeneralSetting whereDescription($value)
+ * @method static Builder|GeneralSetting whereFacebookLink($value)
+ * @method static Builder|GeneralSetting whereFcmKey($value)
+ * @method static Builder|GeneralSetting whereFirebaseApiKey($value)
+ * @method static Builder|GeneralSetting whereFirebaseAppId($value)
+ * @method static Builder|GeneralSetting whereFirebaseAuthDomain($value)
+ * @method static Builder|GeneralSetting whereFirebaseDatabaseUrl($value)
+ * @method static Builder|GeneralSetting whereFirebaseMessagingSenderId($value)
+ * @method static Builder|GeneralSetting whereFirebaseProjectId($value)
+ * @method static Builder|GeneralSetting whereFirebaseStorageBucket($value)
+ * @method static Builder|GeneralSetting whereFirstEmail($value)
+ * @method static Builder|GeneralSetting whereFirstPhone($value)
+ * @method static Builder|GeneralSetting whereId($value)
+ * @method static Builder|GeneralSetting whereInstagramLink($value)
+ * @method static Builder|GeneralSetting whereLinkedinLink($value)
+ * @method static Builder|GeneralSetting whereSecondEmail($value)
+ * @method static Builder|GeneralSetting whereSecondPhone($value)
+ * @method static Builder|GeneralSetting whereSnapchatLink($value)
+ * @method static Builder|GeneralSetting whereTiktokLink($value)
+ * @method static Builder|GeneralSetting whereTitle($value)
+ * @method static Builder|GeneralSetting whereTwitterLink($value)
+ * @method static Builder|GeneralSetting whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class GeneralSetting extends Model implements HasMedia
 {
