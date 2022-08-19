@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\BannerEnum;
 use App\Traits\HasTranslationTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -34,7 +36,14 @@ use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
  * @method static Builder|Banner whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class Banner extends Model implements HasMedia
+class Banner extends BaseModel implements HasMedia
 {
     use HasFactory, HasTranslationTrait, InteractsWithMedia;
+    
+    public function image(): Attribute
+    {
+        return Attribute::make(get: function () {
+            return $this->getFirstMediaUrl(BannerEnum::BannerImage);
+        });
+    }
 }

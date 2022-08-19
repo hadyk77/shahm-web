@@ -2,7 +2,7 @@
 
 @section('content')
     <form class="form w-100" novalidate="novalidate" id="login_form" action="#">
-        <div class="text-center mb-15">
+        <div class="text-center mb-5">
             <h1 class="text-dark fw-bolder mb-3">{{__("Login to your account")}}</h1>
         </div>
         <x-input-field

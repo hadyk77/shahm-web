@@ -38,4 +38,8 @@ else
         docker-compose run --rm composer_sham $2 $3
     fi
 
+    if [ $1 == "api:resource" ]; then
+        docker-compose run --rm artisan_sham make:resource $2
+    fi
+
 fi

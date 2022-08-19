@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\GuardEnum;
+use App\Http\Controllers\Admin\Banner\BannerController;
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
 use App\Http\Controllers\Admin\Settings\BasicInformationController;
@@ -20,6 +21,11 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::get("/", [DashboardController::class, "index"]);
 
     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard.index");
+
+
+
+    Route::resource("banner", BannerController::class)->except("show");
+
 
     Route::prefix("settings")->name("settings.")->group(function () {
 

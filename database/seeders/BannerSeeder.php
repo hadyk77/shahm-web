@@ -14,34 +14,38 @@ class BannerSeeder extends Seeder
         $banners = [
             [
                 "title" => [
-                    "ar" => "",
-                    "en"
+                    "ar" => "العرض  الاول",
+                    "en" => "First Offer"
                 ],
-                "image" => public_path("test_images/banners/01.png"),
+                "order" => 1,
+                "image" => public_path("test_images/banners/01.jpg"),
             ],
             [
                 "title" => [
-                    "ar" => "",
-                    "en"
+                    "ar" => "العرض  الثانى",
+                    "en" => "Second Offer"
                 ],
-                "image" => public_path("test_images/banners/02.png"),
+                "order" => 2,
+                "image" => public_path("test_images/banners/02.jpg"),
             ],
             [
                 "title" => [
-                    "ar" => "",
-                    "en"
+                    "ar" => "العرض  الثالث",
+                    "en" => "Third Offer"
                 ],
-                "image" => public_path("test_images/banners/03.png"),
+                "order" => 3,
+                "image" => public_path("test_images/banners/03.jpg"),
             ],
         ];
 
         foreach ($banners as $banner) {
 
-            $banner = Banner::query()->create([
-                "title" => $banner['title']
+            $createdBanner = Banner::query()->create([
+                "title" => $banner['title'],
+                'order' => $banner["order"],
             ]);
 
-            $banner->addMedia($banner["image"])->preservingOriginal(BannerEnum::BannerImage)->toMediaCollection();
+            $createdBanner->addMedia($banner["image"])->preservingOriginal()->toMediaCollection(BannerEnum::BannerImage);
         }
 
     }

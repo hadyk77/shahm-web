@@ -2,7 +2,7 @@
 
 @section('content')
     <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="#" action="#">
-        <div class="text-center mb-11">
+        <div class="text-center mb-5">
             <h1 class="text-dark fw-bolder mb-3">{{__("Reset Password")}}</h1>
         </div>
         <x-input-field
