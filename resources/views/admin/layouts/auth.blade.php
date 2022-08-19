@@ -21,7 +21,7 @@
         <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-5 order-2 order-lg-1">
             <div class="d-flex flex-center flex-column flex-lg-row-fluid">
                 <a href="{{route("admin.login")}}" class="mb-5">
-                    <img alt="Logo" src="{{$setting->logo}}" class="h-250px" />
+                    <img alt="Logo" src="{{$setting->logo}}" class="h-200px" />
                 </a>
                 <div class="w-lg-700px p-5">
                     @yield("content")

@@ -1,7 +1,11 @@
 <?php
 
-Route::namespace("\App\Http\Controllers\User")->group(function () {
+use App\Http\Controllers\API\V1\Auth\LoginController;
 
-    Auth::routes(["verify" => false, "register" => true]);
+Route::namespace("\App\Http\Controllers\API\V1")->group(function () {
+
+    Route::post("login", [LoginController::class, "login"]);
+
+    Route::post("register", [LoginController::class, "register"]);
 
 });

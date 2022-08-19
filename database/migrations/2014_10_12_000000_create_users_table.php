@@ -15,12 +15,19 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('phone');
+            $table->string('name');
+            $table->string('phone')->unique();
             $table->string('email')->unique();
+            $table->date('date_of_birth')->nullable();
+            $table->string("gender");
             $table->boolean('status')->default(StatusEnum::ENABLED);
-            $table->boolean('is_branch_owner');
+            $table->point("location")->nullable();
+            $table->string("address")->nullable();
+            $table->string("user_type");
+            $table->string("app_version")->default("1.0.0");
+            $table->string("default_lang")->default("ar");
+            $table->boolean("enable_notification")->default(StatusEnum::ENABLED);
+            $table->timestamp("phone_verified_at")->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->string('password');
