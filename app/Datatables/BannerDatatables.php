@@ -9,7 +9,6 @@ use App\Support\DataTableActions;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Yajra\DataTables\Facades\DataTables;
 
 class BannerDatatables implements DatatableInterface
@@ -19,7 +18,8 @@ class BannerDatatables implements DatatableInterface
     {
         return [
             "image",
-            "title" => ['title->' . LaravelLocalization::getCurrentLocale()],
+            "title" => ['title->ar'],
+            "order",
             "status",
             "created_at",
             "updated_at",
@@ -38,10 +38,7 @@ class BannerDatatables implements DatatableInterface
                         ->switcher();
                 })
                 ->addColumn("image", function (Banner $banner) {
-                    return DataTableActions::image($banner->image);
-                })
-                ->addColumn("title", function (Banner $banner) {
-                    return $banner->title;
+                    return DataTableActions::image($banner->image, 100);
                 })
                 ->addColumn("created_at", function (Banner $banner) {
                     return Helper::formatDate($banner->created_at);

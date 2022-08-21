@@ -14,6 +14,7 @@
             <x-datatable-html>
                 <td>{{__("Image")}}</td>
                 <td>{{__("Title")}}</td>
+                <td>{{__("Order")}}</td>
                 <td>{{__("Status")}}</td>
                 <td>{{__("Created At")}}</td>
                 <td>{{__("Updated At")}}</td>

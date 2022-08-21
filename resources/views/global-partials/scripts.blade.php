@@ -123,7 +123,7 @@
 
             $(document).on("change", '.switcher', function (e) {
                 e.preventDefault();
-                let element = $('#kt_content_container .card');
+                let element = $('#kt_app_content_container .card');
                 let that = $(this);
                 let action = "{{route("admin.status.update")}}";
                 $.ajax({
@@ -136,10 +136,13 @@
                         _token: "{{csrf_token()}}"
                     },
                     beforeSend: function () {
-                        showSpinner(element);
+                        element.find('#overlay').addClass("overlay overlay-block");
+                        element.find('#data').html('<div class="overlay-layer bg-dark-o-10"><div class="spinner-border"></div></div>');
                     },
                     success: function success(result) {
-                        hideSpinner(element);
+                       setTimeout(()=>{
+                           hideSpinner(element);
+                       }, 200)
                         if (result.success) {
                             toastr.success(result.message);
                             return;
@@ -152,7 +155,9 @@
                         $.each(errors, function (key, value) {
                             toastr.error(value);
                         });
-                        hideSpinner(element);
+                        setTimeout(()=>{
+                            hideSpinner(element);
+                        }, 200)
                     }
                 });
             });

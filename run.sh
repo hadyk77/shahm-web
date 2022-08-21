@@ -26,6 +26,10 @@ else
         docker-compose run --rm artisan_sham make:request $2
     fi
 
+    if [ $1 == "middleware" ]; then
+        docker-compose run --rm artisan_sham make:middleware $2
+    fi
+
     if [ $1 == "storage:link" ]; then
         docker-compose run --rm artisan_sham storage:link
     fi
