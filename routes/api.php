@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\Auth\CheckPhoneController;
+use App\Http\Controllers\API\V1\Auth\GetUserByTokenController;
 use App\Http\Controllers\API\V1\Auth\LoginController;
 use App\Http\Controllers\API\V1\Auth\OtpController;
 use App\Http\Controllers\API\V1\Auth\RegisterController;
@@ -45,6 +46,8 @@ Route::prefix("api/v1")->group(function () {
         Route::post("instantiate-otp", [OtpController::class, "instantiateOtp"]);
 
         Route::post("verify-otp", [OtpController::class, "verifyOtp"]);
+
+        Route::post("get-user", GetUserByTokenController::class);
 
     });
 

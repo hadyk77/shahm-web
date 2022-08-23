@@ -27,6 +27,8 @@ return new class extends Migration {
             $table->string("app_version")->default("1.0.0");
             $table->string("default_lang")->default("ar");
             $table->boolean("enable_notification")->default(StatusEnum::ENABLED);
+            $table->string("social_login_type")->nullable();
+            $table->unsignedBigInteger("social_login_id")->nullable();
             $table->timestamp("phone_verified_at")->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_login_at')->nullable();
