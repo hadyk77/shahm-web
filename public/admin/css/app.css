@@ -69,3 +69,9 @@ html[lang='ar'] .select2-container--bootstrap5 .select2-selection--multiple .sel
     right: auto;
     left: 4px;
 }
+
+.app-sidebar-menu .menu .menu-item .menu-link.active {
+    transition: color 0.2s ease, background-color 0.2s ease;
+    background-color: #1b1b28 !important;
+    color: #ffffff;
+}

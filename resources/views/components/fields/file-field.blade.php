@@ -1,5 +1,5 @@
 <div {{$attributes->merge(['class' => 'col-md-' . ($col ?? '6') . ' form-group ', 'style' => ''])}}>
-    <label class="d-flex align-items-center fs-5 fw-bold mb-2" for="image">
+    <label class="d-flex align-items-center fs-5 mb-2" for="image">
         <span>{{$title ?? __('Upload New Image')}} @if($required == true) <sup>*</sup> @endif</span>
         @if(isset($model) && $model->hasMedia($collection))
             <sup>

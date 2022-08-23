@@ -15,12 +15,12 @@
     </div>
     <div class="app-sidebar-menu overflow-hidden flex-column-fluid">
         <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
-            <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+            <div class="menu menu-column" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                 @foreach($links as $link)
                     @if($link['canShow'])
                         @if(isset($link["title"]))
                             <div class="menu-item">
-                                <div class="menu-content pt-8 pb-2">
+                                <div class="menu-content pt-3 pb-2">
                                     <span class="menu-section text-muted text-uppercase fs-8 ls-1">{{$link['title']}}</span>
                                 </div>
                             </div>
@@ -39,7 +39,6 @@
                                             @endif
                                             <span class="menu-title">{{$menu['name']}}</span>
                                             <span class="menu-arrow"></span>
-
                                         </span>
                                         <div class="menu-sub menu-sub-accordion">
                                             @foreach($menu['sub_menu'] as $single_sub_menu)
@@ -66,6 +65,7 @@
                                                     <i class="bi bi-archive fs-3"></i>
                                                 </span>
                                             @endif
+                                            <span class="menu-title">{{$menu['name']}}</span>
                                         </a>
                                     </div>
                                 @endif

@@ -117,6 +117,7 @@
             $('.show_upper_accordion').each(function () {
                 $(this).parent().parent().parent().addClass("show");
             });
+
             $('.show_down_accordion').each(function () {
                 $(this).parent().find('.menu-sub-accordion').addClass("show");
             });
@@ -166,6 +167,8 @@
 
 
         @endauth
+
+
 
     })
 </script>

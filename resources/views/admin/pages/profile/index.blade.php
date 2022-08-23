@@ -1,13 +1,5 @@
 @extends("admin.layouts.app")
 
-@section("breadcrumb")
-    <x-bread-crumb
-        :routes="[
-            route('admin.profile.index')  => __('Profile')
-        ]"
-    />
-@endsection
-
 @section("content")
     <form action="{{route("admin.profile.update")}}" method="post" enctype="multipart/form-data">
         @csrf
