@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API\V1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class GetUserByTokenController extends Controller
@@ -24,8 +26,8 @@ class GetUserByTokenController extends Controller
         }
 
         $data = [
-            "access_token" => $request->access_token,
-            "user" => UserResource::make($user)
+            "access_token" => $user->tokenable->createToken("user_login_token_" . Str::random(5))->plainTextToken,
+            "user" => UserResource::make($user),
         ];
 
         return $this::sendSuccessResponse($data);

@@ -39,7 +39,10 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('api-auth', function (Request $request) {
-            return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip());
+
+            $maxAttempts = config("app.locale") == "local" ? 60 : 10;
+
+            return Limit::perMinute($maxAttempts)->by($request->user()?->id ?: $request->ip());
         });
     }
 }
