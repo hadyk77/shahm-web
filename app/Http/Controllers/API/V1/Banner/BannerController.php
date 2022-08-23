@@ -12,7 +12,6 @@ class BannerController extends Controller
 
     public function __construct(private readonly BannerServices $bannerServices)
     {
-
     }
 
     public function index()

@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\Domain\CheckSubDomainForUserMiddleware;
 use App\Http\Middleware\Domain\EnsureNotHaveDomainMiddleware;
 use App\Http\Middleware\Domain\SubDomainMiddleware;
+use App\Http\Middleware\LanguageApiMiddleware;
 use App\Http\Middleware\StatisticsMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -69,6 +70,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
 
+        'api.lang' => LanguageApiMiddleware::class,
         'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
         'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,

@@ -15,7 +15,7 @@ use Throwable;
 class BannerServices implements ServiceInterface
 {
 
-    public function get()
+    public function get(): array|Collection
     {
         return Banner::query()->orderBy("order", "desc")->enabled()->get();
     }

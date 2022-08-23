@@ -27,7 +27,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|VehicleType whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class VehicleType extends Model
+class VehicleType extends BaseModel
 {
     use HasFactory, HasTranslationTrait;
 }

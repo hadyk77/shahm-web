@@ -31,7 +31,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Page whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class Page extends Model
+class Page extends BaseModel
 {
     use HasFactory, HasTranslationTrait;
 }

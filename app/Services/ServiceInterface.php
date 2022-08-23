@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface ServiceInterface
 {
-    public function get();
+    public function get(): array|Collection;
 
     public function findById($id): Model|Collection|Builder|array|null;
 

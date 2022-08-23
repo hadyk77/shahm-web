@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
 
-            Route::middleware('api')
+            Route::middleware(['api', "api.lang"])
                 ->group(base_path('routes/api.php'));
 
             Route::middleware(["web", 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath'])
