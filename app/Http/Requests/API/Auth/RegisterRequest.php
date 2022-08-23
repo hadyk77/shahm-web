@@ -28,7 +28,6 @@ class RegisterRequest extends FormRequest
             "phone" => "required|numeric|unique:users,phone",
             "date_of_birth" => "required|date",
             "email" => "required|email:dns,rfc|unique:users,email",
-            "password" => "required|string|min:6",
             "app_version" => "required|string",
             "device_token" => "required|string",
             "profile_image" => "nullable|mimetypes:" . implode(",", Media::$IMAGES_MIMES_TYPES),
@@ -47,7 +46,6 @@ class RegisterRequest extends FormRequest
                 "phone" => $this->input("phone"),
                 "date_of_birth" => $this->input("date_of_birth"),
                 "email" => $this->input("email"),
-                "password" => $this->input("password"),
                 "device_token" => $this->input("device_token"),
                 "app_version" => $this->input("app_version"),
             ]);

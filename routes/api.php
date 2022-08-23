@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\V1\Auth\CheckPhoneController;
 use App\Http\Controllers\API\V1\Auth\LoginController;
+use App\Http\Controllers\API\V1\Auth\OtpController;
 use App\Http\Controllers\API\V1\Auth\RegisterController;
 use App\Http\Controllers\API\V1\Auth\SocialLoginController;
 use App\Http\Controllers\API\V1\Banner\BannerController;
@@ -31,16 +32,23 @@ Route::prefix("api/v1")->group(function () {
 
     Route::get('intro-images', IntroImagesController::class);
 
-    Route::post("check-phone", CheckPhoneController::class);
+    Route::prefix("auth")->group(function () {
 
-    Route::post("register", RegisterController::class);
+        Route::post("check-phone", CheckPhoneController::class);
 
-    Route::post("login", LoginController::class);
+        Route::post("register", RegisterController::class);
 
-    Route::post("social-login", SocialLoginController::class);
+        Route::post("login", LoginController::class);
 
-    Route::middleware('auth:sanctum')->group(function () {
+        Route::post("social-login", SocialLoginController::class);
 
+        Route::post("instantiate-otp", [OtpController::class, "instantiateOtp"]);
+
+        Route::post("verify-otp", [OtpController::class, "verifyOtp"]);
+
+    });
+
+    Route::middleware(['auth:sanctum', "api.check.phone", "api.check.status"])->group(function () {
 
 
     });

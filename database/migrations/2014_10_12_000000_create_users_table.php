@@ -30,7 +30,6 @@ return new class extends Migration {
             $table->timestamp("phone_verified_at")->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_login_at')->nullable();
-            $table->string('password');
             $table->string('device_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
