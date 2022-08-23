@@ -4,6 +4,7 @@ namespace App\Services\Otp;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\UserResource;
+use App\Models\User;
 use App\Models\UserVerificationOtp;
 use App\Traits\HandleApiResponseTrait;
 use Carbon\Carbon;
@@ -28,7 +29,7 @@ class OtpServices
 
         $verification = UserVerificationOtp::query()->create([
             "phone" => $user->phone,
-            "user_id" => $user->phone,
+            "user_id" => $user->id,
             "uuid" => Str::uuid()->toString(),
         ]);
 
@@ -78,9 +79,9 @@ class OtpServices
         return DB::table("users")->where("phone", $request->phone)->exists();
     }
 
-    private function getUser(Request $request)
+    private function getUser(Request $request): User
     {
-        return DB::table("users")->where("phone", $request->phone)->first();
+        return User::query()->where("phone", $request->phone)->first();
     }
 
     private function isOtpExists(Request $request): bool
