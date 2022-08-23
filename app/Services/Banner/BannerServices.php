@@ -3,7 +3,7 @@
 namespace App\Services\Banner;
 
 use App\Enums\BannerEnum;
-use App\Http\Requests\Banner\BannerRequest;
+use App\Http\Requests\Admin\Banner\BannerRequest;
 use App\Models\Banner;
 use App\Services\ServiceInterface;
 use DB;

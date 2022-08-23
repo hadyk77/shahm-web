@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Banner;
 
 use App\Datatables\BannerDatatables;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Banner\BannerRequest;
+use App\Http\Requests\Admin\Banner\BannerRequest;
 use App\Services\Banner\BannerServices;
 use Exception;
 use Illuminate\Http\Request;

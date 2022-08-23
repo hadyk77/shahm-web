@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\V1\Auth\CheckPhoneController;
 use App\Http\Controllers\API\V1\Banner\BannerController;
 use App\Http\Controllers\API\V1\Country\CountryController;
 use App\Http\Controllers\API\V1\GeneralSetting\GeneralSettingController;
@@ -27,8 +28,12 @@ Route::prefix("api/v1")->group(function () {
 
     Route::get('intro-images', IntroImagesController::class);
 
-    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-        return $request->user();
+    Route::post("check-phone", CheckPhoneController::class);
+
+    Route::middleware('auth:sanctum')->group(function () {
+
+
+
     });
 
 });
