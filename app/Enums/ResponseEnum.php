@@ -12,4 +12,6 @@ enum ResponseEnum
 
     const MODEL_DATA_NOT_FOUND = "MODEL_DATA_NOT_FOUND";
 
+    const TOO_MANY_ATTEMPTS = "TOO_MANY_ATTEMPTS";
+
 }

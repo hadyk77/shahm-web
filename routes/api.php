@@ -32,7 +32,7 @@ Route::prefix("api/v1")->group(function () {
 
     Route::get('intro-images', IntroImagesController::class);
 
-    Route::prefix("auth")->group(function () {
+    Route::prefix("auth")->middleware("throttle:api-auth")->group(function () {
 
         Route::post("check-phone", CheckPhoneController::class);
 
