@@ -37,6 +37,8 @@ return new class extends Migration {
             $table->string("firebase_storage_bucket")->nullable();
             $table->string("firebase_messaging_sender_id")->nullable();
             $table->string("firebase_app_id")->nullable();
+
+            $table->string("app_version")->default('1.0.0');
             $table->timestamps();
         });
     }

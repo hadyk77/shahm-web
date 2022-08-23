@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\API\V1\Auth\CheckPhoneController;
+use App\Http\Controllers\API\V1\Auth\LoginController;
+use App\Http\Controllers\API\V1\Auth\RegisterController;
+use App\Http\Controllers\API\V1\Auth\SocialLoginController;
 use App\Http\Controllers\API\V1\Banner\BannerController;
 use App\Http\Controllers\API\V1\Country\CountryController;
 use App\Http\Controllers\API\V1\GeneralSetting\GeneralSettingController;
@@ -29,6 +32,12 @@ Route::prefix("api/v1")->group(function () {
     Route::get('intro-images', IntroImagesController::class);
 
     Route::post("check-phone", CheckPhoneController::class);
+
+    Route::post("register", RegisterController::class);
+
+    Route::post("login", LoginController::class);
+
+    Route::post("social-login", SocialLoginController::class);
 
     Route::middleware('auth:sanctum')->group(function () {
 

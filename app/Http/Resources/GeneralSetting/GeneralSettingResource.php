@@ -24,6 +24,7 @@ class GeneralSettingResource extends JsonResource
             "linkedin_link" => $this->linkedin_link,
             "tiktok_link" => $this->tiktok_link,
             "snapchat_link" => $this->snapchat_link,
+            "app_version"  => $this->app_version,
         ];
     }
 

@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->boolean('status')->default(StatusEnum::ENABLED);
             $table->point("location")->nullable();
             $table->string("address")->nullable();
-            $table->string("user_type");
+            $table->boolean("is_captain")->default(StatusEnum::DISABLED);
             $table->string("app_version")->default("1.0.0");
             $table->string("default_lang")->default("ar");
             $table->boolean("enable_notification")->default(StatusEnum::ENABLED);
@@ -31,6 +31,7 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->string('password');
+            $table->string('device_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
