@@ -40,7 +40,6 @@ class Banner extends BaseModel implements HasMedia
 {
     use HasFactory, HasTranslationTrait, InteractsWithMedia;
 
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(BannerEnum::BannerImage)->singleFile();

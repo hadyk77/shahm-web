@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CountryEnum;
 use App\Traits\HasTranslationTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -34,4 +35,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Country extends BaseModel implements HasMedia
 {
     use HasFactory, InteractsWithMedia, HasTranslationTrait;
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(CountryEnum::FLAG)->singleFile();
+    }
 }

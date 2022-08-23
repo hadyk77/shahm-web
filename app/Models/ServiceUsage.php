@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ServiceEnum;
 use App\Traits\HasTranslationTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,4 +36,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class ServiceUsage extends BaseModel implements HasMedia
 {
     use HasFactory, InteractsWithMedia, HasTranslationTrait;
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(ServiceEnum::USAGE_ICON)->singleFile();
+    }
 }

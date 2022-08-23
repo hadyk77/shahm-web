@@ -79,6 +79,12 @@ class GeneralSetting extends Model implements HasMedia
         "description"
     ];
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(GeneralSettingEnum::LOGO_IMAGE)->singleFile();
+        $this->addMediaCollection(GeneralSettingEnum::DEFAULT_PROFILE_IMAGE)->singleFile();
+    }
+
     public function logo(): Attribute
     {
         return Attribute::make(get: function () {

@@ -21,7 +21,7 @@ class GeneralSettingSeeder extends Seeder
             ],
         ]);
 
-        $logo = public_path("test_images/semicolon-tech.png");
+        $logo = public_path("test_images/logo.png");
 
         $setting->addMedia($logo)->preservingOriginal()->toMediaCollection(GeneralSettingEnum::LOGO_IMAGE);
         $setting->addMedia($logo)->preservingOriginal()->toMediaCollection(GeneralSettingEnum::DEFAULT_PROFILE_IMAGE);

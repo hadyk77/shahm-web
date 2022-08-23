@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BannerSeeder::class);
         $this->call(ServiceSeeder::class);
         $this->call(PageSeeder::class);
+        $this->call(IntroImagesSeeder::class);
         $this->call(VehicleTypeSeeder::class);
     }
 }
