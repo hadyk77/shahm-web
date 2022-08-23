@@ -18,7 +18,6 @@
     <meta property="og:image:type" content="image/jpeg"/>
     <meta property="og:image:width" content="400"/>
     <meta property="og:image:height" content="300"/>
-    <meta property="og:image:alt" content="A shiny red apple with a bite taken out"/>
     @include("global-partials.styles")
     @yield("styles")
 </head>

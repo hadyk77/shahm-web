@@ -11,7 +11,13 @@
     <meta name="keywords" content="{{ config('app.name', 'Laravel') }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta property="og:locale" content="en_US"/>
-    <meta property="og:title" content="{{ config('app.name', 'Laravel') }}"/>
+    <meta property="og:title" content="{{ $setting->title }}"/>
+    <link rel="icon" href="{{ $setting->logo }}" sizes="16x16 32x32 48x48 64x64"/>
+    <meta property="og:image" content="{{ $setting->logo }}"/>
+    <meta property="og:image:secure_url" content="{{ $setting->logo }}"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+    <meta property="og:image:width" content="400"/>
+    <meta property="og:image:height" content="300"/>
     @include("global-partials.styles")
     @yield("styles")
 </head>
