@@ -12,20 +12,23 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class OtpServices
 {
     use HandleApiResponseTrait;
 
-    public function instantiateOtp(Request $request)
+    public function instantiateOtp(Request $request): JsonResponse
     {
         $this->validatePhone($request);
 
         if (!$this->isPhoneExists($request)) {
-            return $this::sendFailedResponse(__("User not found"));
+            return $this::sendFailedResponse(__("Invalid Phone Credentials"));
         }
 
         $user = $this->getUser($request);
+
+        $this->deleteVerificationOtpBeforeSend($request);
 
         $verification = UserVerificationOtp::query()->create([
             "phone" => $user->phone,
@@ -98,5 +101,10 @@ class OtpServices
             ->where("uuid", $request->otp_key)
             ->where("phone", $request->phone)
             ->delete();
+    }
+
+    private function deleteVerificationOtpBeforeSend(Request $request): void
+    {
+        UserVerificationOtp::query()->where("phone", $request->phone)->delete();
     }
 }
