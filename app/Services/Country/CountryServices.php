@@ -2,6 +2,7 @@
 
 namespace App\Services\Country;
 
+use App\Models\Country;
 use App\Models\Page;
 use App\Services\ServiceInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,12 +14,12 @@ class CountryServices implements ServiceInterface
 
     public function get(): array|Collection
     {
-        return Page::query()->get();
+        return Country::query()->get();
     }
 
     public function findById($id): Model|Collection|Builder|array|null
     {
-        return Page::query()->enabled()->findOrFail($id);
+        return Country::query()->enabled()->findOrFail($id);
     }
 
     public function store($request)

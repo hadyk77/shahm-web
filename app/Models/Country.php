@@ -31,7 +31,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Country whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class Country extends Model implements HasMedia
+class Country extends BaseModel implements HasMedia
 {
     use HasFactory, InteractsWithMedia, HasTranslationTrait;
 }
