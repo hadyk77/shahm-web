@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Enums;
+
+enum ResponseEnum
+{
+    const SUCCESS_RESPONSE = "SUCCESS_RESPONSE";
+
+    const FAILED_RESPONSE = "FAILED_RESPONSE";
+
+    const VALIDATION_ERROR_RESPONSE = "VALIDATION_ERROR_RESPONSE";
+
+    const MODEL_DATA_NOT_FOUND = "MODEL_DATA_NOT_FOUND";
+
+}

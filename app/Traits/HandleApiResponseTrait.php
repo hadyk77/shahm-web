@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Enums\ResponseEnum;
 use Illuminate\Http\JsonResponse;
 use \Symfony\Component\HttpFoundation\Response;
 
@@ -12,7 +13,7 @@ trait HandleApiResponseTrait
         return response()->json([
             "success" => true,
             "code" => $code,
-            "message" => $message ?? __("Success Response"),
+            "message" => $message ?? ResponseEnum::SUCCESS_RESPONSE,
             "data" => $data,
         ], $code);
     }
@@ -22,8 +23,8 @@ trait HandleApiResponseTrait
         return response()->json([
             "success" => false,
             "code" => $code,
-            "message" => $message ?? __("Failed Response"),
-            "direct" => $code == Response::HTTP_UNAUTHORIZED ? "login" : null
+            "message" => $message ?? ResponseEnum::FAILED_RESPONSE,
+            "data" => [],
         ], $code);
     }
 

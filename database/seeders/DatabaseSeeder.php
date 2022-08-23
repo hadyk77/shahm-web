@@ -14,8 +14,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(PermissionSeeder::class);
         $this->call(RoleSeeder::class);
+        $this->call(CountrySeeder::class);
         $this->call(GeneralSettingSeeder::class);
         $this->call(AdminSeeder::class);
         $this->call(BannerSeeder::class);
+        $this->call(ServiceSeeder::class);
+        $this->call(PageSeeder::class);
+        $this->call(VehicleTypeSeeder::class);
     }
 }

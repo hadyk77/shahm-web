@@ -6,6 +6,7 @@ use App\Traits\HasTranslationTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -31,4 +32,10 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Service extends BaseModel implements HasMedia
 {
     use HasFactory, InteractsWithMedia, HasTranslationTrait;
+
+    public function serviceUsages(): HasMany
+    {
+        return $this->hasMany(ServiceUsage::class);
+    }
+
 }
