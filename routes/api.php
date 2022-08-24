@@ -12,9 +12,9 @@ use App\Http\Controllers\API\V1\GeneralSetting\GeneralSettingController;
 use App\Http\Controllers\API\V1\IntroImages\IntroImagesController;
 use App\Http\Controllers\API\V1\Page\PageController;
 use App\Http\Controllers\API\V1\Nationality\NationalityController;
+use App\Http\Controllers\API\V1\Profile\MeController;
 use App\Http\Controllers\API\V1\Service\ServiceController;
 use App\Http\Controllers\API\V1\VehicleType\VehicleTypeController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("api/v1")->group(function () {
@@ -55,6 +55,7 @@ Route::prefix("api/v1")->group(function () {
 
     Route::middleware(['auth:sanctum', "api.check.phone", "api.check.status"])->group(function () {
 
+        Route::get("me", MeController::class);
 
     });
 
