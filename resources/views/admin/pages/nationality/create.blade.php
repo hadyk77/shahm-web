@@ -1,15 +1,15 @@
 @extends("admin.layouts.app")
 
 @section("content")
-    <form action="{{route("admin.page.store")}}" method="post" enctype="multipart/form-data">
+    <form action="{{route("admin.nationality.store")}}" method="post" enctype="multipart/form-data">
         @csrf
         <x-card-content>
             <x-card-header>
                 <x-card-title>
-                    {{__("Add New Page")}}
+                    {{__("Add New Nationality")}}
                 </x-card-title>
                 <x-card-toolbar>
-                    <x-back-btn :route="route('admin.page.index')" />
+                    <x-back-btn :route="route('admin.nationality.index')" />
                 </x-card-toolbar>
             </x-card-header>
             <x-card-body>
@@ -19,13 +19,6 @@
                     col="12"
                     translated-input
                     :title="__('Title')"
-                />
-                <x-summernote-field
-                    name="description"
-                    required
-                    col="12"
-                    translated-input
-                    :title="__('Description')"
                 />
             </x-card-body>
             <x-card-footer>

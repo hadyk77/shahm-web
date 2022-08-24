@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\IntroImage;
 use App\Datatables\BannerDatatables;
 use App\Datatables\IntroImagesDatatables;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Banner\BannerRequest;
 use App\Http\Requests\Admin\IntroImage\IntroImageRequest;
 use App\Services\IntroImages\IntroImagesServices;
 use Exception;

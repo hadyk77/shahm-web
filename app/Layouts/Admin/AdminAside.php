@@ -112,6 +112,25 @@ class AdminAside
                                 "route" => route("admin.intro-image.create"),
                             ],
                         ]
+                    ],
+                    [
+                        "name" => __("Nationalities"),
+                        "route" => route("admin.nationality.index"),
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Nationalities"),
+                                "route" => route("admin.nationality.index"),
+                            ],
+                            [
+                                "name" => __("Inactive Nationalities"),
+                                "route" => route("admin.nationality.index", ["status" => StatusEnum::DEACTIVATED]),
+                            ],
+                            [
+                                "name" => __("Add New Nationality"),
+                                "route" => route("admin.nationality.create"),
+                            ],
+                        ]
                     ]
                 ]
             ]

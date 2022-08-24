@@ -27,7 +27,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Nationality whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class Nationality extends Model
+class Nationality extends BaseModel
 {
     use HasFactory, HasTranslationTrait;
 }

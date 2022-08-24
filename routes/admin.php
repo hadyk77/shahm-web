@@ -36,9 +36,9 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
     Route::resource("vehicle-type", VehicleTypeController::class)->except('show');
 
-    Route::resource("nationality", NationalityController::class)->except('show');
-
     Route::resource("intro-image", IntroImageController::class)->except('show');
+
+    Route::resource("nationality", NationalityController::class)->except('show');
 
     Route::post("update-status", StatusController::class)->name("status.update");
 
