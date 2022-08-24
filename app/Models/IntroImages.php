@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\IntroImagesEnum;
 use App\Traits\HasTranslationTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -16,5 +17,12 @@ class IntroImages extends BaseModel implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(IntroImagesEnum::IMAGE)->singleFile();
+    }
+
+    public function image(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->getFirstMediaUrl(IntroImagesEnum::IMAGE);
+        });
     }
 }

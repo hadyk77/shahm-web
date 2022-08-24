@@ -8,6 +8,7 @@ use App\Services\ServiceInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class VehicleTypeServices implements ServiceInterface
 {
@@ -19,21 +20,44 @@ class VehicleTypeServices implements ServiceInterface
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
     {
-        return VehicleType::query()->enabled()->findOrFail($id);
+        if ($checkStatus) {
+            return VehicleType::query()->enabled()->findOrFail($id);
+        }
+        return VehicleType::query()->findOrFail($id);
     }
 
     public function store($request)
     {
-        // TODO: Implement store() method.
+        return DB::transaction(function () use ($request) {
+
+            return VehicleType::query()->create([
+                "title" => $request->title,
+            ]);
+
+        });
     }
 
     public function update($request, $id)
     {
-        // TODO: Implement update() method.
+        return DB::transaction(function () use ($request, $id) {
+
+            $vehicleType = $this->findById($id);
+
+            $vehicleType->update([
+                "title" => $request->title
+            ]);
+
+        });
     }
 
     public function destroy($id)
     {
-        // TODO: Implement destroy() method.
+        return DB::transaction(function () use ($id) {
+
+            $vehicleType = $this->findById($id);
+
+            $vehicleType->delete();
+
+        });
     }
 }

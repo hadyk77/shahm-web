@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Banner\BannerController;
 use App\Http\Controllers\Admin\Country\CountryController;
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\IntroImage\IntroImageController;
+use App\Http\Controllers\Admin\Nationality\NationalityController;
 use App\Http\Controllers\Admin\Page\PageController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
 use App\Http\Controllers\Admin\Settings\BasicInformationController;
@@ -34,6 +35,8 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::resource("page", PageController::class)->except('show');
 
     Route::resource("vehicle-type", VehicleTypeController::class)->except('show');
+
+    Route::resource("nationality", NationalityController::class)->except('show');
 
     Route::resource("intro-image", IntroImageController::class)->except('show');
 
