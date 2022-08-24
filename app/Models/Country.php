@@ -6,6 +6,7 @@ use App\Enums\CountryEnum;
 use App\Traits\HasTranslationTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -35,6 +36,13 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Country extends BaseModel implements HasMedia
 {
     use HasFactory, InteractsWithMedia, HasTranslationTrait;
+
+    public function flag(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->getFirstMediaUrl(CountryEnum::FLAG);
+        });
+    }
 
     public function registerMediaCollections(): void
     {

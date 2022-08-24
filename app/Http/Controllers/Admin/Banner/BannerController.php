@@ -47,7 +47,7 @@ class BannerController extends Controller
     public function edit($id)
     {
         return view("admin.pages.banner.edit")->with([
-            "banner" => $this->bannerServices->findWithoutStatus($id)
+            "banner" => $this->bannerServices->findById($id, false)
         ]);
     }
 

@@ -2,7 +2,10 @@
 
 use App\Enums\GuardEnum;
 use App\Http\Controllers\Admin\Banner\BannerController;
+use App\Http\Controllers\Admin\Country\CountryController;
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
+use App\Http\Controllers\Admin\IntroImage\IntroImageController;
+use App\Http\Controllers\Admin\Page\PageController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
 use App\Http\Controllers\Admin\Settings\BasicInformationController;
 use App\Http\Controllers\Admin\Settings\DefaultImagesController;
@@ -10,6 +13,7 @@ use App\Http\Controllers\Admin\Settings\FirebaseController;
 use App\Http\Controllers\Admin\Settings\SeoController;
 use App\Http\Controllers\Admin\Settings\SocialMediaController;
 use App\Http\Controllers\Admin\Status\StatusController;
+use App\Http\Controllers\Admin\VehicleType\VehicleTypeController;
 
 Route::namespace("\App\Http\Controllers\Admin")->group(function () {
 
@@ -23,10 +27,15 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard.index");
 
-
-
     Route::resource("banner", BannerController::class)->except("show");
 
+    Route::resource("country", CountryController::class)->except('show');
+
+    Route::resource("page", PageController::class)->except('show');
+
+    Route::resource("vehicle-type", VehicleTypeController::class)->except('show');
+
+    Route::resource("intro-image", IntroImageController::class)->except('show');
 
     Route::post("update-status", StatusController::class)->name("status.update");
 

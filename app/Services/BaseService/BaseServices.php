@@ -15,7 +15,7 @@ class BaseServices implements ServiceInterface
         return Service::query()->get();
     }
 
-    public function findById($id): Model|Collection|Builder|array|null
+    public function findById($id, $status = true): Model|Collection|Builder|array|null
     {
         return Service::query()->enabled()->findOrFail($id);
     }
