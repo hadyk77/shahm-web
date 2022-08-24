@@ -13,6 +13,7 @@ use App\Http\Controllers\API\V1\IntroImages\IntroImagesController;
 use App\Http\Controllers\API\V1\Page\PageController;
 use App\Http\Controllers\API\V1\Nationality\NationalityController;
 use App\Http\Controllers\API\V1\Profile\MeController;
+use App\Http\Controllers\API\V1\Profile\VerifyPhoneController;
 use App\Http\Controllers\API\V1\Service\ServiceController;
 use App\Http\Controllers\API\V1\VehicleType\VehicleTypeController;
 use Illuminate\Support\Facades\Route;
@@ -53,9 +54,24 @@ Route::prefix("api/v1")->group(function () {
 
     });
 
-    Route::middleware(['auth:sanctum', "api.check.phone", "api.check.status"])->group(function () {
+    Route::middleware(['auth:sanctum', "api.check.status"])->group(function () {
 
-        Route::get("me", MeController::class);
+        Route::prefix("verify")->middleware(["throttle:api-auth"])->group(function () {
+
+            Route::post("sending-otp", [VerifyPhoneController::class, "startSendingOtp"]);
+
+            Route::post("otp", [VerifyPhoneController::class, "verifyOtp"]);
+
+            Route::post('update-phone', [VerifyPhoneController::class, "updatePhone"]);
+
+        });
+
+        Route::middleware("api.check.phone")->group(function () {
+
+            Route::get("me", MeController::class);
+
+        });
+
 
     });
 
