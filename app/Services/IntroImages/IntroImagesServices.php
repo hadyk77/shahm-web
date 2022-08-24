@@ -2,11 +2,13 @@
 
 namespace App\Services\IntroImages;
 
+use App\Enums\IntroImagesEnum;
 use App\Models\IntroImages;
 use App\Services\ServiceInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class IntroImagesServices implements ServiceInterface
 {
@@ -18,21 +20,61 @@ class IntroImagesServices implements ServiceInterface
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
     {
-        return IntroImages::query()->enabled()->findOrFail($id);
+        if ($checkStatus) {
+            return IntroImages::query()->enabled()->findOrFail($id);
+        }
+        return IntroImages::query()->findOrFail($id);
     }
 
     public function store($request)
     {
-        // TODO: Implement store() method.
+        return DB::transaction(function () use ($request) {
+
+            $introImage = IntroImages::query()->create([
+                "title" => $request->title,
+                "description" => $request->description,
+            ]);
+
+            $this->handleImageUpload($request, $introImage);
+
+            return $introImage;
+
+        });
     }
 
     public function update($request, $id)
     {
-        // TODO: Implement update() method.
+        return DB::transaction(function () use ($request, $id) {
+
+            $introImage = $this->findById($id);
+
+            $introImage->update([
+                "title" => $request->title,
+                "description" => $request->description,
+            ]);
+
+            $this->handleImageUpload($request, $introImage);
+
+            return $introImage;
+
+        });
     }
 
     public function destroy($id)
     {
-        // TODO: Implement destroy() method.
+        return DB::transaction(function () use ($id) {
+
+            $introImage = $this->findById($id);
+
+            $introImage->delete();
+
+        });
+    }
+
+    private function handleImageUpload($request, Model|Builder|\App\Models\BaseModel $introImage)
+    {
+        if ($request->hasFile('image')) {
+            $introImage->addMedia($request->image)->toMediaCollection(IntroImagesEnum::IMAGE);
+        }
     }
 }
