@@ -64,6 +64,10 @@ class PageController extends Controller
 
     public function destroy($id)
     {
+        $page = $this->pageServices->findById($id);
+        if ($page->is_deletable == 0) {
+            return $this::sendFailedResponse(__("This Page Cannot be deleted"));
+        }
         try {
             $this->pageServices->destroy($id);
         } catch (Exception|Throwable $exception) {
