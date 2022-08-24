@@ -22,5 +22,4 @@ class RegisterController extends Controller
         return $this->otpServices->instantiateOtp($request);
     }
 
-
 }

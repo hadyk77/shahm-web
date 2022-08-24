@@ -40,7 +40,7 @@ class RouteServiceProvider extends ServiceProvider
 
         RateLimiter::for('api-auth', function (Request $request) {
 
-            $maxAttempts = config("app.locale") == "local" ? 60 : 10;
+            $maxAttempts = config("app.env") == "local" ? 60 : 10;
 
             return Limit::perMinute($maxAttempts)->by($request->user()?->id ?: $request->ip());
         });
