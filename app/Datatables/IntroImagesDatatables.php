@@ -33,7 +33,7 @@ class IntroImagesDatatables implements DatatableInterface
                     ->switcher();
             })
             ->addColumn("image", function (IntroImages $introImages) {
-                return DataTableActions::image($introImages->image);
+                return DataTableActions::image($introImages->image, 250);
             })
             ->addColumn("created_at", function (IntroImages $introImages) {
                 return Helper::formatDate($introImages->created_at);
