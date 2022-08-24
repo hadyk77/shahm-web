@@ -4,6 +4,7 @@ namespace App\Services\Page;
 
 use App\Models\Page;
 use App\Services\ServiceInterface;
+use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -18,21 +19,46 @@ class PageServices implements ServiceInterface
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
     {
-        return Page::query()->enabled()->findOrFail($id);
+        if ($checkStatus) {
+            return Page::query()->enabled()->findOrFail($id);
+        }
+        return Page::query()->findOrFail($id);
     }
 
-    public function store($request)
+    public function store($request): Page
     {
-        // TODO: Implement store() method.
+        return DB::transaction(function () use ($request) {
+
+            return Page::query()->create([
+                "title" => $request->title,
+                "description" => $request->description,
+            ]);
+
+        });
     }
 
-    public function update($request, $id)
+    public function update($request, $id): Page
     {
-        // TODO: Implement update() method.
+        return DB::transaction(function () use ($request, $id) {
+
+            $page = $this->findById($id);
+
+            $page->update([
+                "title" => $request->title,
+                "description" => $request->description,
+            ]);
+
+            return $page;
+        });
     }
 
     public function destroy($id)
     {
-        // TODO: Implement destroy() method.
+        return DB::transaction(function () use ($id) {
+
+            $page = $this->findById($id);
+            $page->delete();
+
+        });
     }
 }

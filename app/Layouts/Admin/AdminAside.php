@@ -67,7 +67,7 @@ class AdminAside
                             ],
                             [
                                 "name" => __("Inactive Pages"),
-                                "route" => route("admin.country.index", ["status" => StatusEnum::DEACTIVATED]),
+                                "route" => route("admin.page.index", ["status" => StatusEnum::DEACTIVATED]),
                             ],
                             [
                                 "name" => __("Add New Page"),

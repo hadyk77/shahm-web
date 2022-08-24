@@ -7,6 +7,7 @@
             }
         },
         columns: [
+            {data: 'id', name: "id"},
     @foreach($columns as $key => $column)
     @if(is_array($column))
         {data: '{{$key}}', name: '{!! $column[0] !!}', @if(in_array($key, ['image', 'icon', 'qr_code', 'created_at', "updated_at", "status", "best_selling", "is_available"])) searchable: false, orderable: false, @endif },
