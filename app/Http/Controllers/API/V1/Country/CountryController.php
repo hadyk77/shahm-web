@@ -20,6 +20,6 @@ class CountryController extends Controller
 
     public function show($id)
     {
-        return $this::sendSuccessResponse(CountryResource::make($this->countryServices->findById($id)));
+        return $this::sendSuccessResponse(CountryResource::make($this->countryServices->findById($id, true)));
     }
 }

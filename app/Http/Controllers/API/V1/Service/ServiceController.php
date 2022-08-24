@@ -20,6 +20,6 @@ class ServiceController extends Controller
 
     public function show($id)
     {
-        return $this::sendSuccessResponse(ServiceResource::make($this->services->findById($id)));
+        return $this::sendSuccessResponse(ServiceResource::make($this->services->findById($id, true)));
     }
 }

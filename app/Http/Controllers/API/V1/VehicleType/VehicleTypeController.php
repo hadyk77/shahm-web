@@ -20,6 +20,6 @@ class VehicleTypeController extends Controller
 
     public function show($id)
     {
-        return $this::sendSuccessResponse(VehicleTypeResource::make($this->vehicleTypeServices->findById($id)));
+        return $this::sendSuccessResponse(VehicleTypeResource::make($this->vehicleTypeServices->findById($id, true)));
     }
 }

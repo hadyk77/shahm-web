@@ -15,7 +15,7 @@ class VehicleTypeServices implements ServiceInterface
 
     public function get(): array|Collection
     {
-        return VehicleType::query()->get();
+        return VehicleType::query()->enabled()->get();
     }
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null

@@ -20,6 +20,6 @@ class PageController extends Controller
 
     public function show($id)
     {
-        return $this::sendSuccessResponse(PageResource::make($this->pageServices->findById($id)));
+        return $this::sendSuccessResponse(PageResource::make($this->pageServices->findById($id, true)));
     }
 }

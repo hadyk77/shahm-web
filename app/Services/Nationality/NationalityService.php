@@ -14,7 +14,7 @@ class NationalityService implements ServiceInterface
 
     public function get(): array|Collection
     {
-        return Nationality::query()->get();
+        return Nationality::query()->enabled()->get();
     }
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null

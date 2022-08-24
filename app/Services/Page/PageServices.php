@@ -14,7 +14,7 @@ class PageServices implements ServiceInterface
 
     public function get(): array|Collection
     {
-        return Page::query()->get();
+        return Page::query()->enabled()->get();
     }
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null

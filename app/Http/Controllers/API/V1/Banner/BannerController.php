@@ -21,7 +21,7 @@ class BannerController extends Controller
 
     public function show($id)
     {
-        return $this::sendSuccessResponse(BannerResource::make($this->bannerServices->findById($id)));
+        return $this::sendSuccessResponse(BannerResource::make($this->bannerServices->findById($id, true)));
     }
 
 }
