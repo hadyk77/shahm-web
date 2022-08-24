@@ -16,7 +16,7 @@ class IntroImagesServices implements ServiceInterface
         return IntroImages::query()->get();
     }
 
-    public function findById($id, $status = true): Model|Collection|Builder|array|null
+    public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
     {
         return IntroImages::query()->enabled()->findOrFail($id);
     }

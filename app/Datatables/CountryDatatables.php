@@ -15,7 +15,7 @@ class CountryDatatables implements DatatableInterface
     {
         return [
             "flag",
-            "title",
+            "title" => ['title->ar'],
             "status",
             "created_at",
         ];
@@ -51,7 +51,7 @@ class CountryDatatables implements DatatableInterface
     {
         return Country::query()
             ->when($request->filled("status") && $request->status === StatusEnum::DEACTIVATED, function ($query) {
-                $query->enabled();
+                $query->deactivated();
             })
             ->select("*");
     }

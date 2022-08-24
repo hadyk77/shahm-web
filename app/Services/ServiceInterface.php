@@ -10,7 +10,7 @@ interface ServiceInterface
 {
     public function get(): array|Collection;
 
-    public function findById($id, $status = true): Model|Collection|Builder|array|null;
+    public function findById($id, $checkStatus = true): Model|Collection|Builder|array|null;
 
     public function store($request);
 

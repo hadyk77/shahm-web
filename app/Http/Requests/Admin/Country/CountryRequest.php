@@ -17,7 +17,7 @@ class CountryRequest extends FormRequest
         return [
             "title" => "required|array|min:1",
             "title.ar" => "required|string",
-            "country_code" => "required|string|unique:countries,country_code" . ($this->isMethod("PUT") ? "," . $this->route("country") : ""),
+            "country_code" => "required|numeric|starts_with:+|unique:countries,country_code" . ($this->isMethod("PUT") ? "," . $this->route("country") : ""),
             "flag" => Helper::imageRules($this->isMethod("PUT"))
         ];
     }

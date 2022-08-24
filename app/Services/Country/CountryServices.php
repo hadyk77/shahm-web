@@ -19,9 +19,9 @@ class CountryServices implements ServiceInterface
         return Country::query()->get();
     }
 
-    public function findById($id, $status = true): Model|Collection|Builder|array|null
+    public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
     {
-        if ($status) {
+        if ($checkStatus) {
             return Country::query()->enabled()->findOrFail($id);
         }
         return Country::query()->findOrFail($id);
@@ -44,7 +44,7 @@ class CountryServices implements ServiceInterface
     public function update($request, $id)
     {
         return DB::transaction(function () use ($request, $id) {
-            $country = $this->findById($id, false);
+            $country = $this->findById($id);
 
             $country->update([
                 "title" => $request->title,

@@ -45,10 +45,13 @@ class CountryController extends Controller
 
     public function edit($id)
     {
-
+        $country = $this->countryServices->findById($id);
+        return view("admin.pages.country.edit")->with([
+            "country" => $country
+        ]);
     }
 
-    public function update(CountryRequest $request)
+    public function update(CountryRequest $request, $id)
     {
         try {
             $this->countryServices->update($request, $id);
@@ -65,9 +68,9 @@ class CountryController extends Controller
             $this->countryServices->destroy($id);
         } catch (Exception|Throwable $exception) {
             Log::error($exception->getMessage());
-            return back()->withInput()->with("error", $exception->getMessage());
+            return $this::sendFailedResponse($exception->getMessage());
         }
-        return back()->with("success", __("Country Deleted Successfully"));
+        return $this::sendSuccessResponse(__("Country Deleted Successfully"));
     }
 
 }

@@ -20,19 +20,14 @@ class BannerServices implements ServiceInterface
         return Banner::query()->orderBy("order", "desc")->enabled()->get();
     }
 
-    public function findById($id, $status = true): Model|Collection|Builder|array|null
+    public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
     {
-        if ($status) {
+        if ($checkStatus) {
             return Banner::query()->orderBy("order", "desc")->enabled()->findOrFail($id);
         }
         return Banner::query()->orderBy("order", "desc")->findOrFail($id);
     }
 
-    /**
-     * @param BannerRequest $request
-     * @return mixed
-     * @throws Throwable
-     */
     public function store($request): Banner
     {
         return DB::transaction(function () use ($request) {
@@ -56,7 +51,7 @@ class BannerServices implements ServiceInterface
     {
         return DB::transaction(function () use ($request, $id) {
 
-            $banner = $this->findById($id, false);
+            $banner = $this->findById($id);
 
             $banner->update([
                 "title" => $request->title,
@@ -77,7 +72,7 @@ class BannerServices implements ServiceInterface
     {
         return DB::transaction(function () use ($id) {
 
-            $banner = $this->findById($id, false);
+            $banner = $this->findById($id);
 
             $banner->delete();
 

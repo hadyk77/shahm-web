@@ -21,7 +21,7 @@
                 />
                 <x-input-field
                     name="country_code"
-                    type="number"
+                    type="string"
                     required
                     :title="__('Country Phone Code')"
                 />
