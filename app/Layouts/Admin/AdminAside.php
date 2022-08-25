@@ -17,6 +17,44 @@ class AdminAside
                 "canShow" => true,
             ],
             [
+                "title" => __("Orders"),
+                "canShow" => true,
+                "menu" => [
+                    [
+                        "name" => __("Orders"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Orders"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("Waiting Offers"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("In Way Orders"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("Completed Orders"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("Canceled Orders"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                        ]
+                    ]
+                ]
+            ],
+            [
                 "title" => __("Services"),
                 "canShow" => true,
                 "menu" => [
