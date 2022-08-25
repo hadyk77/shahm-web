@@ -66,6 +66,11 @@
                                                 </span>
                                             @endif
                                             <span class="menu-title">{{$menu['name']}}</span>
+                                            @if(isset($menu['badge']) && $menu['badge']['show'])
+                                                <span class="menu-badge">
+                                                    <span id="{{$menu['badge']['id']}}" class="badge badge-{{$menu['badge']['color']}}">{{$menu['badge']['count']}}</span>
+                                                </span>
+                                            @endif
                                         </a>
                                     </div>
                                 @endif

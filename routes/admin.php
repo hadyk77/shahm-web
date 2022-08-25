@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\IntroImage\IntroImageController;
 use App\Http\Controllers\Admin\Nationality\NationalityController;
 use App\Http\Controllers\Admin\Page\PageController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
+use App\Http\Controllers\Admin\Service\ServiceController;
+use App\Http\Controllers\Admin\Service\ServiceRateController;
 use App\Http\Controllers\Admin\Settings\BasicInformationController;
 use App\Http\Controllers\Admin\Settings\DefaultImagesController;
 use App\Http\Controllers\Admin\Settings\FirebaseController;
@@ -27,6 +29,10 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::get("/", [DashboardController::class, "index"]);
 
     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard.index");
+
+    Route::resource('service', ServiceController::class)->except("destroy", "create", "store");
+
+    Route::resource("service.rate", ServiceRateController::class);
 
     Route::resource("banner", BannerController::class)->except("show");
 

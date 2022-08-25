@@ -3,6 +3,8 @@
 namespace App\Layouts\Admin;
 
 use App\Enums\StatusEnum;
+use App\Models\Service;
+use Cache;
 
 class AdminAside
 {
@@ -15,9 +17,157 @@ class AdminAside
                 "canShow" => true,
             ],
             [
+                "title" => __("Services"),
+                "canShow" => true,
+                "menu" => [
+                    [
+                        "name" => __("Services"),
+                        "route" => route("admin.service.index"),
+                        "canShow" => true,
+                    ],
+                    [
+                        "name" => __("Services Rates"),
+                        "route" => route("admin.service.index"),
+                        "canShow" => true,
+                        "sub_menu" => self::services(),
+                    ],
+                ]
+            ],
+            [
+                "title" => __("Users"),
+                "canShow" => true,
+                "menu" => [
+                    [
+                        "name" => __("Clients"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All clients"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("Inactive clients"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("Add new client"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("Client Rates"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ]
+                        ]
+                    ],
+                    [
+                        "name" => __("Captains"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All captain"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("Inactive captain"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("Add new captain"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ],
+                            [
+                                "name" => __("Captain Rates"),
+                                "route" => "#",
+                                "canShow" => true,
+                            ]
+                        ],
+                    ],
+                    [
+                        "name" => __("Captain Verifications"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "badge" => [
+                            "id" => "captain_verifications",
+                            "count" => 15,
+                            "color" => "danger",
+                            "show" => true,
+                        ],
+                    ]
+                ]
+            ],
+            [
+                "title" => __("Coupons"),
+                "canShow" => true,
+                "menu" => [
+                    [
+                        "name" => __("Coupons"),
+                        "route" => route("admin.service.index"),
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Coupons"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Inactive Coupons"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Add New Coupon"),
+                                "route" => "#",
+                            ],
+                        ]
+                    ],
+                    [
+                        "name" => __("Coupons Usages"),
+                        "route" => "#",
+                        "canShow" => true,
+                    ],
+                ]
+            ],
+            [
                 "title" => __("General Settings"),
                 "canShow" => true,
                 "menu" => [
+                    [
+                        "name" => __("Upgrade options"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Options"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Add new option"),
+                                "route" => "#",
+                            ],
+                        ]
+                    ],
+                    [
+                        "name" => __("Verification files"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All files"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Add new file"),
+                                "route" => "#",
+                            ],
+                        ]
+                    ],
                     [
                         "name" => __("Banners"),
                         "route" => route("admin.banner.index"),
@@ -131,9 +281,52 @@ class AdminAside
                                 "route" => route("admin.nationality.create"),
                             ],
                         ]
+                    ],
+                    [
+                        "name" => __("Settings"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("Basic Information"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Services Commissions"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Social Media Links"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Firebase Setting"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Default Images"),
+                                "route" => "#",
+                            ],
+                        ]
                     ]
                 ]
             ]
         ];
     }
+
+    public static function services(): array
+    {
+        return Cache::rememberForever("services", function () {
+            $services = [];
+            foreach (Service::query()->get() as $service) {
+                $services[] = [
+                    "name" => $service->title,
+                    "route" => route("admin.service.rate.index", $service->id),
+                    "canShow" => true,
+                ];
+            }
+            return $services;
+        });
+    }
+
 }
