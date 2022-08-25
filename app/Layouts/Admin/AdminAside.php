@@ -334,6 +334,10 @@ class AdminAside
                                 "route" => "#",
                             ],
                             [
+                                "name" => __("Payment Settings"),
+                                "route" => "#",
+                            ],
+                            [
                                 "name" => __("Social Media Links"),
                                 "route" => "#",
                             ],
