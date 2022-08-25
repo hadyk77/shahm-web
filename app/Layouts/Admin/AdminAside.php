@@ -65,7 +65,7 @@ class AdminAside
                     ],
                     [
                         "name" => __("Services Rates"),
-                        "route" => route("admin.service.index"),
+                        "route" => '#',
                         "canShow" => true,
                         "sub_menu" => self::services(),
                     ],

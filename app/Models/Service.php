@@ -6,6 +6,7 @@ use App\Enums\ServiceEnum;
 use App\Traits\HasTranslationTrait;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
@@ -44,4 +45,10 @@ class Service extends BaseModel implements HasMedia
         return $this->hasMany(ServiceUsage::class);
     }
 
+    public function icon(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->getFirstMediaUrl(ServiceEnum::ICON);
+        });
+    }
 }

@@ -6,15 +6,12 @@
             <x-card-title>
                 <x-datatable-search-input />
             </x-card-title>
-            <x-card-toolbar>
-                <x-add-btn :route="route('admin.page.create')"  :title="__('Add New Service')"/>
-            </x-card-toolbar>
         </x-card-header>
         <x-card-body>
             <x-datatable-html>
+                <td>{{__("Icon")}}</td>
                 <td>{{__("Title")}}</td>
                 <td>{{__("Status")}}</td>
-                <td>{{__("Created At")}}</td>
                 <td>{{__("Updated At")}}</td>
             </x-datatable-html>
         </x-card-body>
@@ -23,7 +20,7 @@
 
 @section("scripts")
     <x-datatable-script
-        :route="route('admin.page.index', ['status' => request()->status])"
+        :route="route('admin.service.index')"
         :columns="$columns"
     />
 @endsection
