@@ -49,8 +49,8 @@
                                 <x-input-field
                                     col="12"
                                     type="text"
-                                    :value="$usage->title"
-                                    name="service_usage[{{$loop->index}}][title]"
+                                    :value="$usage->getTranslation('title', 'ar')"
+                                    name="service_usage[{{$loop->index}}][title][ar]"
                                     required
                                     :title="__('Title')"
                                 />
@@ -59,9 +59,9 @@
                                 <x-input-field
                                     col="12"
                                     type="text"
-                                    name="service_usage[{{$loop->index}}][description]"
+                                    name="service_usage[{{$loop->index}}][description][ar]"
                                     required
-                                    :value="$usage->description"
+                                    :value="$usage->getTranslation('description', 'ar')"
                                     :title="__('Description')"
                                 />
                             </div>
@@ -114,13 +114,13 @@
                         <div class="col-md-6">
                             <div style="" class="col-md-12 form-group" id="service_usage[title][]_parent">
                                 <label class="d-flex align-items-center fs-6  mb-2" for="service_usage_title_${i}">Title <sup>*</sup></label>
-                                <input type="text" name="service_usage[${i}][title]" id="service_usage_title_${i}" value="" class="form-control  form-control-lg form-control-solid " placeholder="{{__("Title")}}" required="">
+                                <input type="text" name="service_usage[${i}][title][ar]" id="service_usage_title_${i}" value="" class="form-control  form-control-lg form-control-solid " placeholder="{{__("Title")}}" required="">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div style="" class="col-md-12 form-group">
                                 <label class="d-flex align-items-center fs-6  mb-2" for="service_usage_description_${i}">Description <sup>*</sup></label>
-                                <input type="text" name="service_usage[${i}][description]" id="service_usage_description_${i}" class="form-control  form-control-lg form-control-solid " placeholder="{{__("Description")}}" required="">
+                                <input type="text" name="service_usage[${i}][description][ar]" id="service_usage_description_${i}" class="form-control  form-control-lg form-control-solid " placeholder="{{__("Description")}}" required="">
                             </div>
                         </div>
                         <div class="col-md-6">

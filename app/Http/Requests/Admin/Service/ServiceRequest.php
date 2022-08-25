@@ -20,8 +20,8 @@ class ServiceRequest extends FormRequest
             "description" => "required|array|min:1",
             "description.ar" => "required|string",
             "service_usage" => "required|array|min:1",
-            "service_usage.*.title" => "required|string",
-            "service_usage.*.description" => "required|string",
+            "service_usage.*.title.ar" => "required|string",
+            "service_usage.*.description.ar" => "required|string",
             "service_usage.*.icon" => Helper::imageRules(true),
         ];
     }
