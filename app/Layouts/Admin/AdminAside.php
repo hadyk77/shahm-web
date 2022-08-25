@@ -321,6 +321,25 @@ class AdminAside
                         ]
                     ],
                     [
+                        "name" => __("Governorates"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Governorates"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Inactive Governorates"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Add New Governorate"),
+                                "route" => "#",
+                            ],
+                        ]
+                    ],
+                    [
                         "name" => __("Settings"),
                         "route" => "#",
                         "canShow" => true,

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -28,7 +29,6 @@ return new class extends Migration {
             $table->string("snapchat_link")->nullable();
             $table->string("tiktok_link")->nullable();
 
-
             $table->string("fcm_key")->nullable();
             $table->string("firebase_api_key")->nullable();
             $table->string("firebase_auth_domain")->nullable();
@@ -37,6 +37,13 @@ return new class extends Migration {
             $table->string("firebase_storage_bucket")->nullable();
             $table->string("firebase_messaging_sender_id")->nullable();
             $table->string("firebase_app_id")->nullable();
+
+            $table->boolean("is_credit_card_enabled")->default(StatusEnum::ENABLED);
+            $table->boolean("is_wallet_enabled")->default(StatusEnum::ENABLED);
+            $table->boolean("is_cash_enabled")->default(StatusEnum::ENABLED);
+
+            $table->double("service_commission")->default(0);
+            $table->double("tax")->default(15);
 
             $table->string("app_version")->default('1.0.0');
             $table->timestamps();
