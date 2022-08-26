@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(NationalitySeeder::class);
         $this->call(CountrySeeder::class);
+        $this->call(GovernorateSeeder::class);
         $this->call(UpgradeAccountOptionsSeeder::class);
         $this->call(VerificationFilesSeeder::class);
         $this->call(GeneralSettingSeeder::class);

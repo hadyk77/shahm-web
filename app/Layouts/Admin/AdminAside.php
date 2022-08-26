@@ -245,6 +245,25 @@ class AdminAside
                         ]
                     ],
                     [
+                        "name" => __("Governorates"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Governorates"),
+                                "route" => route('admin.governorate.index'),
+                            ],
+                            [
+                                "name" => __("Inactive Governorates"),
+                                "route" => route('admin.governorate.index', ["status" => StatusEnum::DEACTIVATED]),
+                            ],
+                            [
+                                "name" => __("Add New Governorate"),
+                                "route" => route('admin.governorate.create'),
+                            ],
+                        ]
+                    ],
+                    [
                         "name" => __("Pages"),
                         "route" => route("admin.page.index"),
                         "canShow" => true,
@@ -317,25 +336,6 @@ class AdminAside
                             [
                                 "name" => __("Add New Nationality"),
                                 "route" => route("admin.nationality.create"),
-                            ],
-                        ]
-                    ],
-                    [
-                        "name" => __("Governorates"),
-                        "route" => "#",
-                        "canShow" => true,
-                        "sub_menu" => [
-                            [
-                                "name" => __("All Governorates"),
-                                "route" => "#",
-                            ],
-                            [
-                                "name" => __("Inactive Governorates"),
-                                "route" => "#",
-                            ],
-                            [
-                                "name" => __("Add New Governorate"),
-                                "route" => "#",
                             ],
                         ]
                     ],

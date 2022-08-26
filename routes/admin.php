@@ -4,6 +4,7 @@ use App\Enums\GuardEnum;
 use App\Http\Controllers\Admin\Banner\BannerController;
 use App\Http\Controllers\Admin\Country\CountryController;
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
+use App\Http\Controllers\Admin\Governorate\GovernorateController;
 use App\Http\Controllers\Admin\IntroImage\IntroImageController;
 use App\Http\Controllers\Admin\Nationality\NationalityController;
 use App\Http\Controllers\Admin\Page\PageController;
@@ -43,6 +44,8 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::resource("banner", BannerController::class)->except("show");
 
     Route::resource("country", CountryController::class)->except('show');
+
+    Route::resource("governorate", GovernorateController::class);
 
     Route::resource("page", PageController::class)->except('show');
 
