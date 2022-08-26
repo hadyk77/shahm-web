@@ -2,6 +2,7 @@
 
 namespace App\Services\VerificationOptions;
 
+use App\Enums\VerificationOptionEnum;
 use App\Models\VerificationOption;
 use App\Services\ServiceInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,20 +29,49 @@ class VerificationOptionsServices implements ServiceInterface
     {
         return DB::transaction(function () use ($request) {
 
+            $option = VerificationOption::query()->create([
+                "title" => $request->title,
+                "description" => $request->description,
+            ]);
+
+            $this->handleIconUpload($request, $option);
+
         });
     }
 
     public function update($request, $id)
     {
-        return DB::transaction(function () use ($request) {
+        return DB::transaction(function () use ($request, $id) {
+
+            $option = $this->findById($id);
+
+            $option->update([
+                "title" => $request->title,
+                "description" => $request->description,
+            ]);
+
+            $this->handleIconUpload($request, $option);
 
         });
     }
 
     public function destroy($id)
     {
-        return DB::transaction(function () use ($request) {
+        return DB::transaction(function () use ($id) {
+
+            $option = $this->findById($id);
+
+            $option->delete();
 
         });
+    }
+
+    private function handleIconUpload($request, $option)
+    {
+        if ($request->hasFile('icon')) {
+
+            $option->addMedia($request->icon)->toMediaCollection(VerificationOptionEnum::ICON);
+
+        }
     }
 }

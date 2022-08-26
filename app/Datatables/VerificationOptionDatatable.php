@@ -2,6 +2,7 @@
 
 namespace App\Datatables;
 
+use App\Helper\Helper;
 use App\Models\VerificationOption;
 use App\Support\DataTableActions;
 use Illuminate\Database\Query\Builder;
@@ -15,6 +16,7 @@ class VerificationOptionDatatable implements DatatableInterface
         return [
             "icon",
             "title",
+            "status",
             "created_at",
             "updated_at"
         ];
@@ -23,23 +25,33 @@ class VerificationOptionDatatable implements DatatableInterface
     public function datatables(Request $request)
     {
         return Datatables::of($this->query($request))
+            ->addColumn("icon", function (VerificationOption $verificationOption) {
+                return DataTableActions::image($verificationOption->icon);
+            })
             ->addColumn("created_at", function (VerificationOption $verificationOption) {
                 return Helper::formatDate($verificationOption->created_at);
+            })
+            ->addColumn("status", function (VerificationOption $verificationOption) {
+                return (new DataTableActions())
+                    ->model($verificationOption)
+                    ->modelId($verificationOption->id)
+                    ->checkStatus($verificationOption->status)
+                    ->switcher();
             })
             ->addColumn("updated_at", function (VerificationOption $verificationOption) {
                 return Helper::formatDate($verificationOption->updated_at);
             })
             ->addColumn("action", function (VerificationOption $verificationOption) {
                 return (new DataTableActions())
-                    ->edit(route("admin.banner.edit", $verificationOption->id))
-                    ->delete(route("admin.banner.destroy", $verificationOption->id))
+                    ->edit(route("admin.verification-options.edit", $verificationOption->id))
+                    ->delete(route("admin.verification-options.destroy", $verificationOption->id))
                     ->make();
             })
-            ->rawColumns(["action"])
+            ->rawColumns(["action", "icon", "status"])
             ->make();
     }
 
-    public function query(Request $request): Builder
+    public function query(Request $request)
     {
         return VerificationOption::query()->select("*");
     }

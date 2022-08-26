@@ -50,7 +50,7 @@ class UpgradeOptionsController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpgradeOptionRequest $request, $id)
     {
         try {
             $this->upgradeOptionsServices->update($request, $id);

@@ -7,14 +7,13 @@
                 <x-datatable-search-input />
             </x-card-title>
             <x-card-toolbar>
-                <x-add-btn :route="route('admin.banner.create')"  :title="__('Add New Banner')"/>
+                <x-add-btn :route="route('admin.verification-options.create')"  :title="__('Add New Option')"/>
             </x-card-toolbar>
         </x-card-header>
         <x-card-body>
             <x-datatable-html>
-                <td>{{__("Image")}}</td>
+                <td>{{__("Icon")}}</td>
                 <td>{{__("Title")}}</td>
-                <td>{{__("Order")}}</td>
                 <td>{{__("Status")}}</td>
                 <td>{{__("Created At")}}</td>
                 <td>{{__("Updated At")}}</td>
@@ -25,7 +24,7 @@
 
 @section("scripts")
     <x-datatable-script
-        :route="route('admin.banner.index', ['status' => request()->status])"
+        :route="route('admin.verification-options.index', ['status' => request()->status])"
         :columns="$columns"
     />
 @endsection
