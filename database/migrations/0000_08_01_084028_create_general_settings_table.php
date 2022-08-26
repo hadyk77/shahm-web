@@ -42,7 +42,8 @@ return new class extends Migration {
             $table->boolean("is_wallet_enabled")->default(StatusEnum::ENABLED);
             $table->boolean("is_cash_enabled")->default(StatusEnum::ENABLED);
 
-            $table->double("service_commission")->default(0);
+            $table->double("client_commission")->default(0);
+            $table->double("captain_commission")->default(0);
             $table->double("tax")->default(15);
 
             $table->string("app_version")->default('1.0.0');

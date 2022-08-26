@@ -11,9 +11,11 @@ use App\Http\Controllers\Admin\Page\PageController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
 use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\Service\ServiceRateController;
+use App\Http\Controllers\Admin\Settings\AppCommissionController;
 use App\Http\Controllers\Admin\Settings\BasicInformationController;
 use App\Http\Controllers\Admin\Settings\DefaultImagesController;
 use App\Http\Controllers\Admin\Settings\FirebaseController;
+use App\Http\Controllers\Admin\Settings\PaymentsController;
 use App\Http\Controllers\Admin\Settings\SeoController;
 use App\Http\Controllers\Admin\Settings\SocialMediaController;
 use App\Http\Controllers\Admin\Status\StatusController;
@@ -61,15 +63,15 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
         Route::resource("basic-information", BasicInformationController::class)->only("index", "store");
 
+        Route::resource("app-commission", AppCommissionController::class)->only("index", "store");
+
+        Route::resource("payment-options", PaymentsController::class)->only("index", "store");
+
         Route::resource("social-media", SocialMediaController::class)->only("index", "store");
 
         Route::resource("firebase", FirebaseController::class)->only("index", "store");
 
         Route::resource("default-images", DefaultImagesController::class)->only("index", "store");
-
-        Route::resource("seo", SeoController::class)->only("index", "store");
-
-        Route::resource("seo", SeoController::class)->only("index", "store");
 
     });
 

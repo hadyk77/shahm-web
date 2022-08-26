@@ -346,27 +346,27 @@ class AdminAside
                         "sub_menu" => [
                             [
                                 "name" => __("Basic Information"),
-                                "route" => "#",
+                                "route" => route('admin.settings.basic-information.index'),
                             ],
                             [
-                                "name" => __("Services Commissions"),
-                                "route" => "#",
+                                "name" => __("App Commissions"),
+                                "route" => route('admin.settings.app-commission.index'),
                             ],
                             [
                                 "name" => __("Payment Settings"),
-                                "route" => "#",
+                                "route" => route('admin.settings.payment-options.index'),
                             ],
                             [
                                 "name" => __("Social Media Links"),
-                                "route" => "#",
+                                "route" => route('admin.settings.social-media.index'),
                             ],
                             [
                                 "name" => __("Firebase Setting"),
-                                "route" => "#",
+                                "route" => route('admin.settings.firebase.index'),
                             ],
                             [
                                 "name" => __("Default Images"),
-                                "route" => "#",
+                                "route" => route('admin.settings.default-images.index'),
                             ],
                         ]
                     ]
