@@ -16,7 +16,9 @@ use App\Http\Controllers\Admin\Settings\FirebaseController;
 use App\Http\Controllers\Admin\Settings\SeoController;
 use App\Http\Controllers\Admin\Settings\SocialMediaController;
 use App\Http\Controllers\Admin\Status\StatusController;
+use App\Http\Controllers\Admin\UpgradeOptions\UpgradeOptionsController;
 use App\Http\Controllers\Admin\VehicleType\VehicleTypeController;
+use App\Http\Controllers\Admin\VerificationOptions\VerificationOptionsController;
 
 Route::namespace("\App\Http\Controllers\Admin")->group(function () {
 
@@ -33,6 +35,10 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::resource('service', ServiceController::class)->except("destroy", "create", "store");
 
     Route::resource("service.rate", ServiceRateController::class);
+
+    Route::resource("verification-options", VerificationOptionsController::class)->except("show");
+
+    Route::resource("upgrade-options", UpgradeOptionsController::class)->except("show");
 
     Route::resource("banner", BannerController::class)->except("show");
 

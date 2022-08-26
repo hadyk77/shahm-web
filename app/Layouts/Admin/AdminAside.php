@@ -183,11 +183,11 @@ class AdminAside
                         "sub_menu" => [
                             [
                                 "name" => __("All Options"),
-                                "route" => "#",
+                                "route" => route('admin.upgrade-options.index'),
                             ],
                             [
                                 "name" => __("Add new option"),
-                                "route" => "#",
+                                "route" => route('admin.upgrade-options.create'),
                             ],
                         ]
                     ],
@@ -198,11 +198,11 @@ class AdminAside
                         "sub_menu" => [
                             [
                                 "name" => __("All files"),
-                                "route" => "#",
+                                "route" => route('admin.verification-options.index'),
                             ],
                             [
                                 "name" => __("Add new file"),
-                                "route" => "#",
+                                "route" => route('admin.verification-options.create'),
                             ],
                         ]
                     ],

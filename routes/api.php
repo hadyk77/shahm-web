@@ -15,7 +15,9 @@ use App\Http\Controllers\API\V1\Nationality\NationalityController;
 use App\Http\Controllers\API\V1\Profile\MeController;
 use App\Http\Controllers\API\V1\Profile\VerifyPhoneController;
 use App\Http\Controllers\API\V1\Service\ServiceController;
+use App\Http\Controllers\API\V1\UpgradeOptions\UpgradeOptionsController;
 use App\Http\Controllers\API\V1\VehicleType\VehicleTypeController;
+use App\Http\Controllers\API\V1\VerificationOptions\VerificationOptionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("api/v1")->group(function () {
@@ -35,6 +37,10 @@ Route::prefix("api/v1")->group(function () {
     Route::get('settings', GeneralSettingController::class);
 
     Route::get('intro-images', IntroImagesController::class);
+
+    Route::apiResource("account-upgrade-options", UpgradeOptionsController::class)->only("index", "show");
+
+    Route::apiResource("verification-options", VerificationOptionsController::class)->only("index", "show");
 
     Route::prefix("auth")->middleware("throttle:api-auth")->group(function () {
 
