@@ -12,7 +12,7 @@ class VerificationOptionsResource extends JsonResource
         return [
             "id" => $this->id,
             "title" => $this->title,
-            "description" => $this->title,
+            "description" => $this->description,
             "icon" => $this->icon
         ];
     }
