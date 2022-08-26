@@ -63,6 +63,10 @@ class VerificationOptionsController extends Controller
 
     public function destroy($id)
     {
+        $option = $this->verificationOptionsServices->findById($id);
+        if ($option->is_deletable == 0) {
+            return $this::sendFailedResponse(__('This option can not be deleted'));
+        }
         try {
             $this->verificationOptionsServices->destroy($id);
         } catch (Exception|Throwable $exception) {
