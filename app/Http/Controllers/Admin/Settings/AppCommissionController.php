@@ -19,6 +19,17 @@ class AppCommissionController extends Controller
     public function store(Request $request)
     {
 
+        $this->validate($request, [
+            "client_commission"  => "required|numeric",
+            "captain_commission"  => "required|numeric",
+        ]);
+
+        $gs = GeneralSetting::query()->first();
+
+        $gs->update([
+            "client_commission" => $request->client_commission,
+            "captain_commission" => $request->captain_commission,
+        ]);
 
         return back()->with('success', __('Updated Successfully'));
     }

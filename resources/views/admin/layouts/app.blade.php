@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    <meta name="description" content="{{ config('app.name', 'Laravel') }}"/>
-    <meta name="keywords" content="{{ config('app.name', 'Laravel') }}"/>
+    <title>{{ $setting->title }}</title>
+    <meta name="description" content="{{ $setting->description  }}"/>
+    <meta name="keywords" content="{{ $setting->description  }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta property="og:locale" content="en_US"/>
     <meta property="og:title" content="{{ $setting->title }}"/>

@@ -19,6 +19,8 @@ class GeneralSettingSeeder extends Seeder
                 "ar" => "شهم",
                 "en" => "Sham",
             ],
+            "first_email" => "admin@admin.com",
+            "first_phone" => "0123456789"
         ]);
 
         $logo = public_path("test_images/logo.png");
