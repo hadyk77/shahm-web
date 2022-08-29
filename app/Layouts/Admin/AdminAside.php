@@ -152,16 +152,16 @@ class AdminAside
                         "canShow" => true,
                         "sub_menu" => [
                             [
-                                "name" => __("All Coupons"),
-                                "route" => "#",
+                                "name" => __("All Discounts"),
+                                "route" => route('admin.discount.index'),
                             ],
                             [
-                                "name" => __("Inactive Coupons"),
-                                "route" => "#",
+                                "name" => __("Inactive Discounts"),
+                                "route" => route('admin.discount.index', ['status' => StatusEnum::DEACTIVATED]),
                             ],
                             [
-                                "name" => __("Add New Coupon"),
-                                "route" => "#",
+                                "name" => __("Add New Discount"),
+                                "route" => route('admin.discount.create'),
                             ],
                         ]
                     ],

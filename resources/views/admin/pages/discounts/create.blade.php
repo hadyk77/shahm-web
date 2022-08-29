@@ -1,7 +1,7 @@
 @extends("admin.layouts.app")
 
 @section("content")
-    <form action="{{route('admin.coupons.store')}}" method="post">
+    <form action="{{route('admin.discount.store')}}" method="post">
         @csrf
         <x-card-content>
             <x-card-header>
@@ -9,7 +9,7 @@
                     {{__("Discounts")}}
                 </x-card-title>
                 <x-card-toolbar>
-                    <x-back-btn :route="route('admin.coupons.index')"/>
+                    <x-back-btn :route="route('admin.discount.index')"/>
                 </x-card-toolbar>
             </x-card-header>
             <x-card-body>

@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Shop\Coupon;
+namespace App\Http\Controllers\Admin\Coupon;
 
 use App\Datatables\DiscountDatatables;
 use App\Helper\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Shop\DiscountRequest;
-use App\Models\Shop;
-use App\Models\ShopDiscount;
-use App\Services\Admin\DiscountServices;
+use App\Http\Requests\Admin\Discount\DiscountRequest;
+use App\Services\Discount\DiscountServices;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,28 +14,30 @@ use Throwable;
 
 class DiscountController extends Controller
 {
-    public function index(Request $request, DiscountDatatables $discountDatatables)
+
+    public function __construct(private readonly DiscountDatatables $discountDatatables, protected readonly DiscountServices $discountServices)
     {
-        Helper::abortPermission("marketing");
+    }
+
+    public function index(Request $request)
+    {
         if ($request->expectsJson()) {
-            return $discountDatatables->datatables($request);
+            return $this->discountDatatables->datatables($request);
         }
-        return view("shop.pages.marketing.discounts.index")->with([
-            "columns" => $discountDatatables::columns()
+        return view("admin.pages.discounts.index")->with([
+            "columns" => $this->discountDatatables::columns()
         ]);
     }
 
     public function create()
     {
-        Helper::abortPermission("marketing");
-        return view("shop.pages.marketing.discounts.create");
+        return view("admin.pages.discounts.create");
     }
 
     public function store(DiscountRequest $request)
     {
-        Helper::abortPermission("marketing");
         try {
-            DiscountServices::store($request);
+            $this->discountServices->store($request);
         } catch (Exception|Throwable $exception) {
             Log::error($exception->getMessage());
             return back()->with("error", $exception->getMessage());
@@ -47,21 +47,15 @@ class DiscountController extends Controller
 
     public function edit($id)
     {
-        Helper::abortPermission("marketing");
-        $shop = Shop::query()->findOrFail(Helper::getCurrentShopId());
-        $discount = $shop->discounts()->findOrFail($id);
-        return view("shop.pages.marketing.discounts.edit")->with([
-            "discount" => $discount
+        return view("admin.pages.discounts.edit")->with([
+            "discount" => $this->discountServices->findById($id)
         ]);
     }
 
     public function update(DiscountRequest $request, $id)
     {
-        Helper::abortPermission("marketing");
-        $shop = Shop::query()->findOrFail(Helper::getCurrentShopId());
-        $discount = $shop->discounts()->findOrFail($id);
         try {
-            DiscountServices::update($request, $discount->id);
+            $this->discountServices->update($request, $id);
         } catch (Exception|Throwable $exception) {
             Log::error($exception->getMessage());
             return back()->with("error", $exception->getMessage());
@@ -71,9 +65,8 @@ class DiscountController extends Controller
 
     public function destroy($id)
     {
-        Helper::abortPermission("marketing");
         try {
-            DiscountServices::destroy($id);
+            $this->discountServices->findById($id);
         } catch (Exception|Throwable $exception) {
             Log::error($exception->getMessage());
             return $this::sendFailedResponse($exception->getMessage());

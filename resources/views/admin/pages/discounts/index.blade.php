@@ -1,12 +1,4 @@
-@extends('shop.layouts.app')
-
-@section("breadcrumb")
-    <x-bread-crumb
-        :routes="[
-            route('shop.marketing.discount.index') => __('Shop Discounts')
-        ]"
-    />
-@endsection
+@extends('admin.layouts.app')
 
 @section("content")
     <x-card-content>
@@ -15,7 +7,7 @@
                 <x-datatable-search-input/>
             </x-card-title>
             <x-card-toolbar>
-                <x-add-btn :title="__('Add Discount')" :route="route('shop.marketing.discount.create')"/>
+                <x-add-btn :title="__('Add Discount')" :route="route('admin.discount.create')"/>
             </x-card-toolbar>
         </x-card-header>
         <x-card-body>
@@ -33,6 +25,6 @@
 @section("scripts")
     <x-datatable.script
         :columns="$columns"
-        :route="route('shop.marketing.discount.index')"
+        :route="route('admin.discount.index', ['status' => request()->status])"
     />
 @endsection

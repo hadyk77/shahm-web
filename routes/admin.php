@@ -3,6 +3,7 @@
 use App\Enums\GuardEnum;
 use App\Http\Controllers\Admin\Banner\BannerController;
 use App\Http\Controllers\Admin\Country\CountryController;
+use App\Http\Controllers\Admin\Coupon\DiscountController;
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\Governorate\GovernorateController;
 use App\Http\Controllers\Admin\IntroImage\IntroImageController;
@@ -38,6 +39,8 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::resource('service', ServiceController::class)->except("destroy", "create", "store");
 
     Route::resource("service.rate", ServiceRateController::class);
+
+    Route::resource("discount", DiscountController::class)->except('show');
 
     Route::resource("verification-options", VerificationOptionsController::class)->except("show");
 

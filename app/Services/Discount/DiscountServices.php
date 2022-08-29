@@ -1,36 +1,37 @@
 <?php
 
-namespace App\Services\Services\Discount;
+namespace App\Services\Discount;
 
 use App\Enums\DiscountEnum;
-use App\Helper\Helper;
+use App\Models\Discount;
 use App\Services\ServiceInterface;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Throwable;
 
 class DiscountServices implements ServiceInterface
 {
 
     public function get(): array|Collection
     {
-        // TODO: Implement get() method.
+        return Discount::query()->enabled()->get();
     }
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
     {
-        // TODO: Implement findById() method.
+        if ($checkStatus) {
+            return Discount::query()->enabled()->findOrFail($id);
+        }
+        return Discount::query()->findOrFail($id);
     }
 
     public function store($request)
     {
         return DB::transaction(function () use ($request) {
-            ShopDiscount::query()->create([
+            Discount::query()->create([
                 "code" => strtoupper($request->code),
                 "type" => $request->type,
-                "shop_id" => Helper::getCurrentShopId(),
                 "amount" => $request->amount ?? null,
                 "percentage" => $request->percentage ?? null,
                 "quantity" => $request->quantity,
@@ -45,7 +46,7 @@ class DiscountServices implements ServiceInterface
     public function update($request, $id)
     {
         return DB::transaction(function () use ($request, $id) {
-            $discount = ShopDiscount::query()->where("shop_id", Helper::getCurrentShopId())->findOrFail($id);
+            $discount = $this->findById($id);
             $discount->update([
                 "code" => strtoupper($request->code),
                 "type" => $request->type,
@@ -62,7 +63,8 @@ class DiscountServices implements ServiceInterface
     public function destroy($id)
     {
         DB::transaction(function () use ($id) {
-            $discount = ShopDiscount::query()->where("shop_id", Helper::getCurrentShopId())->findOrFail($id);
+            $discount = $this->findById($id);
+
             $discount->delete();
         });
     }

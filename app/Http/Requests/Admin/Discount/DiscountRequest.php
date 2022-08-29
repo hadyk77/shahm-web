@@ -17,13 +17,7 @@ class DiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "code" => [
-                "required",
-                "string",
-                Rule::unique("shop_discounts", "code")->where(function ($query) {
-                    $query->where('shop_id', Helper::getCurrentShopId());
-                })->ignore($this->route('discount')),
-            ],
+            "code" => "required|string|unique:coupons",
             "start_date" => "required|date",
             "end_date" => "required|date",
             "type" => "required|string|in:amount,percentage",
