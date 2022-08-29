@@ -17,8 +17,11 @@ class UserResource extends JsonResource
             "email" => $this->email,
             "date_of_birth" => $this->date_of_birth,
             "gender" => $this->gender,
-            "location" => $this->location,
-            "address" => $this->address,
+            "address" => [
+                "location" => $this->address,
+                "lat" => $this->address_lat,
+                "long" => $this->address_long,
+            ],
             "is_captain" => $this->is_captain == 1,
             "app_version" => $this->app_version,
             "default_lang" => $this->default_lang,

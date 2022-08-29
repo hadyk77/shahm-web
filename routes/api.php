@@ -15,6 +15,8 @@ use App\Http\Controllers\API\V1\IntroImages\IntroImagesController;
 use App\Http\Controllers\API\V1\Page\PageController;
 use App\Http\Controllers\API\V1\Nationality\NationalityController;
 use App\Http\Controllers\API\V1\Profile\MeController;
+use App\Http\Controllers\API\V1\Profile\UpdateLocationController;
+use App\Http\Controllers\API\V1\Profile\UpdateProfileController;
 use App\Http\Controllers\API\V1\Profile\VerifyPhoneController;
 use App\Http\Controllers\API\V1\Service\ServiceController;
 use App\Http\Controllers\API\V1\UpgradeOptions\UpgradeOptionsController;
@@ -78,7 +80,19 @@ Route::prefix("api/v1")->group(function () {
 
         Route::middleware("api.check.phone")->group(function () {
 
-            Route::get("me", MeController::class);
+            Route::prefix("profile")->group(function () {
+
+                Route::get("me", MeController::class);
+
+                Route::post("update-location", UpdateLocationController::class);
+
+                Route::post('update-profile', [UpdateProfileController::class, "updateBasicInformation"]);
+
+                Route::post("update-lang", [UpdateProfileController::class, "updateLang"]);
+
+                Route::post("update-notification", [UpdateProfileController::class, "updateNotification"]);
+
+            });
 
             Route::get("random-valid-discount", [DiscountController::class, "randomDiscount"]);
 
