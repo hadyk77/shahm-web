@@ -14,6 +14,7 @@ class GeneralSettingResource extends JsonResource
             "title" => $this->title,
             "description" => $this->description,
             "logo" => Helper::getFirstMediaUrl($this, GeneralSettingEnum::LOGO_IMAGE),
+            "default_profile_image" => Helper::getFirstMediaUrl($this, GeneralSettingEnum::DEFAULT_PROFILE_IMAGE),
             "first_email" => $this->first_email,
             "second_email" => $this->second_email,
             "first_phone" => $this->first_phone,
