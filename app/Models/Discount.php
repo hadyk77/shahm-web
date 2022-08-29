@@ -13,7 +13,8 @@ class Discount extends BaseModel
     protected $casts = [
         "start_at" => "datetime:Y-m-d",
         "end_at" => "datetime:Y-m-d",
-        "amount" => "float"
+        "amount" => "float",
+        "percentage" => "float",
     ];
 
     public function discountAmount(float $cartAmount): float

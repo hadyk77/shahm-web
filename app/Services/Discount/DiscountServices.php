@@ -3,8 +3,10 @@
 namespace App\Services\Discount;
 
 use App\Enums\DiscountEnum;
+use App\Models\Coupon;
 use App\Models\Discount;
 use App\Services\ServiceInterface;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -67,5 +69,14 @@ class DiscountServices implements ServiceInterface
 
             $discount->delete();
         });
+    }
+
+    public function randomOne()
+    {
+        return Discount::query()
+            ->whereDate("start_at", "<=", Carbon::now()->format("Y-m-d"))
+            ->whereDate("end_at", ">=", Carbon::now()->format("Y-m-d"))
+            ->where("status", 1)
+            ->first();
     }
 }

@@ -4,11 +4,11 @@ namespace App\Exceptions;
 
 use App\Enums\ResponseEnum;
 use App\Traits\HandleApiResponseTrait;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -47,5 +47,17 @@ class Handler extends ExceptionHandler
                 return $this::sendFailedResponse(ResponseEnum::TOO_MANY_ATTEMPTS);
             }
         });
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return $this->shouldReturnJson($request, $exception)
+            ? response()->json([
+                "success" => false,
+                "code" => Response::HTTP_UNAUTHORIZED,
+                'message' => ResponseEnum::UNAUTHENTICATED,
+                "data" => []
+            ], 401)
+            : redirect()->guest($exception->redirectTo() ?? route('login'));
     }
 }

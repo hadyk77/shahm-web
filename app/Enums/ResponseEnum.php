@@ -14,4 +14,6 @@ enum ResponseEnum
 
     const TOO_MANY_ATTEMPTS = "TOO_MANY_ATTEMPTS";
 
+    const UNAUTHENTICATED = "UNAUTHENTICATED";
+
 }
