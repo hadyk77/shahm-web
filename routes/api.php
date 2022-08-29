@@ -7,6 +7,8 @@ use App\Http\Controllers\API\V1\Auth\OtpController;
 use App\Http\Controllers\API\V1\Auth\RegisterController;
 use App\Http\Controllers\API\V1\Auth\SocialLoginController;
 use App\Http\Controllers\API\V1\Banner\BannerController;
+use App\Http\Controllers\API\V1\Contact\ContactController;
+use App\Http\Controllers\API\V1\ContactType\ContactTypeController;
 use App\Http\Controllers\API\V1\Country\CountryController;
 use App\Http\Controllers\API\V1\Discount\DiscountController;
 use App\Http\Controllers\API\V1\GeneralSetting\GeneralSettingController;
@@ -44,6 +46,8 @@ Route::prefix("api/v1")->group(function () {
     Route::get('settings', GeneralSettingController::class);
 
     Route::get('intro-images', IntroImagesController::class);
+
+    Route::get("contact-types", ContactTypeController::class);
 
     Route::apiResource("account-upgrade-options", UpgradeOptionsController::class)->only("index", "show");
 

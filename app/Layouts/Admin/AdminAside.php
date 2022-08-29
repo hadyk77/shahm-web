@@ -143,12 +143,52 @@ class AdminAside
                 ]
             ],
             [
+                "title" => __("Contacts"),
+                "canShow" => true,
+                "menu" => [
+                    [
+                        "name" => __("Contact Types"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Contact Types"),
+                                "route" => route('admin.contact-type.index'),
+                            ],
+                            [
+                                "name" => __("Add New Contact Type"),
+                                "route" => route('admin.contact-type.create'),
+                            ],
+                        ]
+                    ],
+                    [
+                        "name" => __("Contact Messages"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Messages"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("UnRead Messages"),
+                                "route" => "#",
+                            ],
+                            [
+                                "name" => __("Read Messages"),
+                                "route" => "#",
+                            ],
+                        ]
+                    ]
+                ]
+            ],
+            [
                 "title" => __("Marketing"),
                 "canShow" => true,
                 "menu" => [
                     [
                         "name" => __("Coupons"),
-                        "route" => route("admin.service.index"),
+                        "route" => "#",
                         "canShow" => true,
                         "sub_menu" => [
                             [
