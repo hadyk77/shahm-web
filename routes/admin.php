@@ -16,7 +16,6 @@ use App\Http\Controllers\Admin\Settings\BasicInformationController;
 use App\Http\Controllers\Admin\Settings\DefaultImagesController;
 use App\Http\Controllers\Admin\Settings\FirebaseController;
 use App\Http\Controllers\Admin\Settings\PaymentsController;
-use App\Http\Controllers\Admin\Settings\SeoController;
 use App\Http\Controllers\Admin\Settings\SocialMediaController;
 use App\Http\Controllers\Admin\Status\StatusController;
 use App\Http\Controllers\Admin\Translation\TranslationController;
@@ -70,6 +69,8 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
         Route::resource("social-media", SocialMediaController::class)->only("index", "store");
 
+        Route::get("int-firebase", [FirebaseController::class, "init"])->name("init.firebase");
+
         Route::resource("firebase", FirebaseController::class)->only("index", "store");
 
         Route::resource("default-images", DefaultImagesController::class)->only("index", "store");
@@ -91,4 +92,6 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
         Route::post("update-password", [ProfileController::class, "updatePassword"])->name("update.password");
 
     });
+
+    Route::put("update-device-token", [DashboardController::class, "updateDeviceToken"])->name("update-device-token");
 });

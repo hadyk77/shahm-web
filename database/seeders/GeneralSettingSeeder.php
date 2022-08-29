@@ -27,6 +27,15 @@ class GeneralSettingSeeder extends Seeder
             "linkedin_link" => 'https://linkedin.com',
             "snapchat_link" => 'https://snapchat.com',
             "tiktok_link" => 'https://tiktok.com',
+
+            "fcm_key" => "AAAAAtjXarI:APA91bG9EPze9Yfp4cZYO1nLJ-MIQ6x6wP-grp6s5BhSQMDbXTKgIyBvGIyMeh930WteB6cZcqOsj8Y2mGMzB4-IJcTZAGhtBIHC3kqZcYpBjnp_rma8BLL5yCIId-6Tv-uXQC_A5KLX",
+            "firebase_api_key" => "AIzaSyAh64uLHY0h303UgPiTEvs2j59DraFbIhQ",
+            "firebase_auth_domain" => "shahm-54b6f.firebaseapp.com",
+            "firebase_database_url" => "https://shahm-54b6f-default-rtdb.firebaseio.com/",
+            "firebase_project_id" => "shahm-54b6f",
+            "firebase_storage_bucket" => "shahm-54b6f.appspot.com",
+            "firebase_messaging_sender_id" => "12227930802",
+            "firebase_app_id" => "1:12227930802:web:d54a54be303bc8e96db7ab",
         ]);
 
         $logo = public_path("test_images/logo.png");

@@ -13,6 +13,7 @@ class ViewServiceProvider extends ServiceProvider
         View::composer([
             "admin.layouts.app",
             "admin.layouts.auth",
+            "firebase.init_firebase",
         ], SettingComposer::class);
     }
 }

@@ -59,4 +59,9 @@ class FirebaseController extends Controller
         return back()->with('success', __('Updated Successfully'));
     }
 
+    public function init()
+    {
+        return response()->view("firebase.sw_firebase")->header("Content-Type", "application/javascript");
+    }
+
 }
