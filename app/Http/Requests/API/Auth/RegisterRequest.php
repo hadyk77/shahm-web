@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\API\Auth;
 
+use App\Actions\NotifyAdminsWithNewUserAction;
 use App\Enums\ProfileImageEnum;
 use App\Enums\UserEnum;
+use App\Models\Admin;
 use App\Models\Media;
 use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
@@ -55,6 +57,8 @@ class RegisterRequest extends FormRequest
                     ->addMedia(request()->file("profile_image"))
                     ->toMediaCollection(ProfileImageEnum::PROFILE_IMAGE);
             }
+
+            NotifyAdminsWithNewUserAction::run($user);
 
             return $user;
 

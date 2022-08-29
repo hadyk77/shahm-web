@@ -14,15 +14,25 @@ class PermissionSeeder extends Seeder
     {
         $adminPermissions = [
             [
-                "title" => "Permissions",
+                "title" => [
+                    'ar'  => "الصلاحيات",
+                    "en" => "Permission"
+                ],
                 "name" => "permissions"
+            ],
+            [
+                "title" => [
+                    'ar'  => "المستخدمين",
+                    "en" => "Users"
+                ],
+                "name" => "users"
             ],
         ];
         foreach ($adminPermissions as $permission) {
             $createdPermission = Permission::query()->create([
                 "title" => [
-                    "en" => $permission["title"],
-                    "ar" => Helper::translate("ar", $permission["title"]),
+                    "en" => $permission["title"]['en'],
+                    "ar" => $permission["title"]['ar'],
                 ],
                 "name" => $permission["name"],
                 "guard_name" => GuardEnum::ADMIN

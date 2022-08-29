@@ -14,6 +14,7 @@ use App\Http\Controllers\API\V1\Governorate\GovernorateController;
 use App\Http\Controllers\API\V1\IntroImages\IntroImagesController;
 use App\Http\Controllers\API\V1\Page\PageController;
 use App\Http\Controllers\API\V1\Nationality\NationalityController;
+use App\Http\Controllers\API\V1\Profile\DeleteAccountController;
 use App\Http\Controllers\API\V1\Profile\MeController;
 use App\Http\Controllers\API\V1\Profile\UpdateLocationController;
 use App\Http\Controllers\API\V1\Profile\UpdateProfileController;
@@ -91,6 +92,8 @@ Route::prefix("api/v1")->group(function () {
                 Route::post("update-lang", [UpdateProfileController::class, "updateLang"]);
 
                 Route::post("update-notification", [UpdateProfileController::class, "updateNotification"]);
+
+                Route::delete("delete-account", DeleteAccountController::class);
 
             });
 
