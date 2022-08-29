@@ -7,6 +7,7 @@ use App\Traits\HandleApiResponseTrait;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -59,5 +60,15 @@ class Handler extends ExceptionHandler
                 "data" => []
             ], 401)
             : redirect()->guest($exception->redirectTo() ?? route('login'));
+    }
+
+    protected function invalidJson($request, ValidationException $exception)
+    {
+        return response()->json([
+            "success" => false,
+            "code" => $exception->status,
+            'message' => $exception->getMessage(),
+            'errors' => $exception->errors(),
+        ], $exception->status);
     }
 }

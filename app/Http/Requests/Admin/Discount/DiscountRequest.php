@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Admin\Discount;
 
-use App\Helper\Helper;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -18,8 +17,8 @@ class DiscountRequest extends FormRequest
     {
         return [
             "code" => "required|string|unique:discounts,code" . ($this->isMethod("PUT") ? ("," . $this->route('discount')) : ""),
-            "start_at" => "required|date",
-            "end_at" => "required|date",
+            "start_at" => "required|date|after_or_equal:today",
+            "end_at" => "required|date|after_or_equal:today",
             "type" => "required|string|in:amount,percentage",
             "amount" => Rule::when(request()->type == "amount", "required|numeric"),
             "percentage" => Rule::when(request()->type == "percentage", "required|numeric|max:100"),
