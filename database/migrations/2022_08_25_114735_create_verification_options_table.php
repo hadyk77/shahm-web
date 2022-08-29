@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText("description")->nullable();
             $table->boolean("status")->default(StatusEnum::ENABLED);
             $table->boolean("is_deletable")->default(StatusEnum::ENABLED);
+            $table->string("related_orders");
             $table->string("purchase_link")->nullable();
             $table->timestamps();
         });

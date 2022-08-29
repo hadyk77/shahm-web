@@ -31,6 +31,7 @@ class VerificationOptionsServices implements ServiceInterface
 
             $option = VerificationOption::query()->create([
                 "title" => $request->title,
+                "related_orders" => $request->related_orders,
                 "description" => $request->description,
             ]);
 
@@ -48,6 +49,7 @@ class VerificationOptionsServices implements ServiceInterface
             $option->update([
                 "title" => $request->title,
                 "description" => $request->description,
+                "related_orders" => $request->related_orders,
             ]);
 
             $this->handleIconUpload($request, $option);

@@ -20,7 +20,13 @@ class GeneralSettingSeeder extends Seeder
                 "en" => "Sham",
             ],
             "first_email" => "admin@admin.com",
-            "first_phone" => "0123456789"
+            "first_phone" => "0123456789",
+            "facebook_link" => 'https://facebook.com',
+            "twitter_link" => 'https://twitter.com',
+            "instagram_link" => 'https://instagram.com',
+            "linkedin_link" => 'https://linkedin.com',
+            "snapchat_link" => 'https://snapchat.com',
+            "tiktok_link" => 'https://tiktok.com',
         ]);
 
         $logo = public_path("test_images/logo.png");

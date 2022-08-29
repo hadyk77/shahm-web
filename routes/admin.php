@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\Settings\PaymentsController;
 use App\Http\Controllers\Admin\Settings\SeoController;
 use App\Http\Controllers\Admin\Settings\SocialMediaController;
 use App\Http\Controllers\Admin\Status\StatusController;
+use App\Http\Controllers\Admin\Translation\TranslationController;
 use App\Http\Controllers\Admin\UpgradeOptions\UpgradeOptionsController;
 use App\Http\Controllers\Admin\VehicleType\VehicleTypeController;
 use App\Http\Controllers\Admin\VerificationOptions\VerificationOptionsController;
@@ -74,6 +75,12 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
         Route::resource("default-images", DefaultImagesController::class)->only("index", "store");
 
     });
+
+    Route::get("translation", [TranslationController::class, "index"])->name("translation.index");
+
+    Route::post("get-translations-columns", [TranslationController::class, "show"])->name("translation.show");
+
+    Route::post("translation", [TranslationController::class, "update"])->name("translation.update");
 
     Route::prefix("profile")->name("profile.")->group(function () {
 

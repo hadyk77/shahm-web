@@ -14,14 +14,12 @@
                     name="client_commission"
                     :title="__('Client Commission')"
                     type="number"
-                    class="mt-5"
                     :model="$gs"
                 />
                 <x-input-field
                     name="captain_commission"
                     :title="__('Captain Commission')"
                     type="number"
-                    class="mt-5"
                     :model="$gs"
                 />
             </x-card-body>

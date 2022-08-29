@@ -177,6 +177,11 @@ class AdminAside
                 "canShow" => true,
                 "menu" => [
                     [
+                        "name" => __("Translation Center"),
+                        "route" => route('admin.translation.index'),
+                        "canShow" => true,
+                    ],
+                    [
                         "name" => __("Upgrade options"),
                         "route" => "#",
                         "canShow" => true,
