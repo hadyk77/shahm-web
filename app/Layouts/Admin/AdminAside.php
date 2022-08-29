@@ -143,7 +143,7 @@ class AdminAside
                 ]
             ],
             [
-                "title" => __("Coupons"),
+                "title" => __("Marketing"),
                 "canShow" => true,
                 "menu" => [
                     [
@@ -166,9 +166,42 @@ class AdminAside
                         ]
                     ],
                     [
-                        "name" => __("Coupons Usages"),
-                        "route" => "#",
+                        "name" => __("Banners"),
+                        "route" => route("admin.banner.index"),
                         "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Banners"),
+                                "route" => route("admin.banner.index"),
+                            ],
+                            [
+                                "name" => __("Inactive Banners"),
+                                "route" => route("admin.banner.index", ["status" => StatusEnum::DEACTIVATED]),
+                            ],
+                            [
+                                "name" => __("Add New Banner"),
+                                "route" => route("admin.banner.create"),
+                            ],
+                        ]
+                    ],
+                    [
+                        "name" => __("Intro Images"),
+                        "route" => route("admin.intro-image.index"),
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Intro Images"),
+                                "route" => route("admin.intro-image.index"),
+                            ],
+                            [
+                                "name" => __("Inactive Intro Images"),
+                                "route" => route("admin.intro-image.index", ["status" => StatusEnum::DEACTIVATED]),
+                            ],
+                            [
+                                "name" => __("Add New Intro Image"),
+                                "route" => route("admin.intro-image.create"),
+                            ],
+                        ]
                     ],
                 ]
             ],
@@ -208,25 +241,6 @@ class AdminAside
                             [
                                 "name" => __("Add new file"),
                                 "route" => route('admin.verification-options.create'),
-                            ],
-                        ]
-                    ],
-                    [
-                        "name" => __("Banners"),
-                        "route" => route("admin.banner.index"),
-                        "canShow" => true,
-                        "sub_menu" => [
-                            [
-                                "name" => __("All Banners"),
-                                "route" => route("admin.banner.index"),
-                            ],
-                            [
-                                "name" => __("Inactive Banners"),
-                                "route" => route("admin.banner.index", ["status" => StatusEnum::DEACTIVATED]),
-                            ],
-                            [
-                                "name" => __("Add New Banner"),
-                                "route" => route("admin.banner.create"),
                             ],
                         ]
                     ],
@@ -303,25 +317,6 @@ class AdminAside
                             [
                                 "name" => __("Add New Vehicle Type"),
                                 "route" => route("admin.vehicle-type.create"),
-                            ],
-                        ]
-                    ],
-                    [
-                        "name" => __("Intro Images"),
-                        "route" => route("admin.intro-image.index"),
-                        "canShow" => true,
-                        "sub_menu" => [
-                            [
-                                "name" => __("All Intro Images"),
-                                "route" => route("admin.intro-image.index"),
-                            ],
-                            [
-                                "name" => __("Inactive Intro Images"),
-                                "route" => route("admin.intro-image.index", ["status" => StatusEnum::DEACTIVATED]),
-                            ],
-                            [
-                                "name" => __("Add New Intro Image"),
-                                "route" => route("admin.intro-image.create"),
                             ],
                         ]
                     ],
