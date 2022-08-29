@@ -7,6 +7,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Role as BaseRole;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * App\Models\Role
@@ -35,5 +36,10 @@ use Spatie\Permission\Models\Role as BaseRole;
  */
 class Role extends BaseRole
 {
-    use HasTranslationTrait;
+    use HasTranslations;
+
+    public array $translatable = [
+        "title",
+    ];
+
 }

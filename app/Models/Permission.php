@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 use Spatie\Permission\Models\Permission as BasePermission;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * App\Models\Permission
@@ -39,5 +40,9 @@ use Spatie\Permission\Models\Permission as BasePermission;
  */
 class Permission extends BasePermission
 {
-    use HasTranslationTrait;
+    use HasTranslations;
+
+    public array $translatable = [
+        "title",
+    ];
 }
