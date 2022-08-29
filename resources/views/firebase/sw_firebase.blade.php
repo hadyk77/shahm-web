@@ -6,10 +6,10 @@ importScripts('//www.gstatic.com/firebasejs/8.6.1/firebase-messaging.js');
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function(payload) {
-const notificationTitle = payload.notification.title;
+const notificationTitle = payload.data.title;
 const notificationOptions = {
-body: payload.notification.body,
-icon: payload.notification.icon,
+body: payload.data.body,
+icon: payload.data.icon,
 };
 return self.registration.showNotification(notificationTitle,notificationOptions);
 });

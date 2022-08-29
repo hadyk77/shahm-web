@@ -190,14 +190,15 @@
                         console.log('Unable to get permission to notify.', err);
                     });
                 messaging.onMessage(function (payload) {
-                    toastr.info(payload.notification.title + '<br />' + payload.notification.body);
+                    console.log(payload);
+                    toastr.info(payload.data.title + '<br />' + payload.data.body);
                     let sound = new Audio('{{asset('audio/audio-notification.mpeg')}}')
                     sound.play();
-                    let notificationTitle = payload.notification.title;
+                    let notificationTitle = payload.data.title;
                     let notificationOptions = {
-                        body: payload.notification.body,
-                        icon: payload.notification.icon,
-                        image: payload.notification.image
+                        body: payload.data.body,
+                        icon: payload.data.icon,
+                        image: payload.data.image
                     };
                     new Notification(notificationTitle, notificationOptions);
                 });

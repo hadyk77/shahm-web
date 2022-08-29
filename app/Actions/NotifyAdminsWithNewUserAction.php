@@ -13,12 +13,12 @@ class NotifyAdminsWithNewUserAction
 
     public function handle($user)
     {
-        $admins = Admin::query()->whereHas("roles", function ($query) {
-            $query->where('roles.name', "users");
-        })->get();
+        $admins = Admin::query()->where("status", 1)->get();
 
         $admins->map(function (Admin $admin) use ($user) {
-            $admin->notify(new NewUserRegisteredNotification($user));
+            if ($admin->hasPermissionTo("users")) {
+                $admin->notify(new NewUserRegisteredNotification($user));
+            }
         });
 
     }
