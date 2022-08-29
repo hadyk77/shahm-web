@@ -190,7 +190,6 @@
                         console.log('Unable to get permission to notify.', err);
                     });
                 messaging.onMessage(function (payload) {
-                    console.log(payload);
                     toastr.info(payload.data.title + '<br />' + payload.data.body);
                     let sound = new Audio('{{asset('audio/audio-notification.mpeg')}}')
                     sound.play();
