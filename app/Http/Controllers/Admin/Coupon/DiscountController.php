@@ -66,7 +66,7 @@ class DiscountController extends Controller
     public function destroy($id)
     {
         try {
-            $this->discountServices->findById($id);
+            $this->discountServices->destroy($id);
         } catch (Exception|Throwable $exception) {
             Log::error($exception->getMessage());
             return $this::sendFailedResponse($exception->getMessage());

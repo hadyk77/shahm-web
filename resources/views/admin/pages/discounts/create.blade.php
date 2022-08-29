@@ -21,13 +21,13 @@
                     />
                     <x-input-field
                         required
-                        name="start_date"
+                        name="start_at"
                         :title="__('Start At')"
                     />
                     <x-input-field
                         required
                         class="mt-5"
-                        name="end_date"
+                        name="end_at"
                         :title="__('End At')"
                     />
                     <div class="col-md-6">
@@ -83,6 +83,22 @@
 @endsection
 
 @section("scripts")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    @if(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale() == "ar")
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/ar.min.js"></script>
+    @endif
+    <script>
+        $(function () {
+            $('#start_at, #end_at').flatpickr({
+                enableTime: false,
+                dateFormat: "Y-m-d",
+                minDate: "{{now()->format("Y-m-d")}}",
+                @if(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale() == "ar")
+                locale: "ar"
+                @endif
+            })
+        });
+    </script>
     <script>
         function showAndHideFieldType() {
             if ($(this).val() === "amount") {

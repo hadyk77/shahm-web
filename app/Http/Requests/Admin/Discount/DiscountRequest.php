@@ -17,9 +17,9 @@ class DiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "code" => "required|string|unique:coupons",
-            "start_date" => "required|date",
-            "end_date" => "required|date",
+            "code" => "required|string|unique:discounts,code" . ($this->isMethod("PUT") ? ("," . $this->route('discount')) : ""),
+            "start_at" => "required|date",
+            "end_at" => "required|date",
             "type" => "required|string|in:amount,percentage",
             "amount" => Rule::when(request()->type == "amount", "required|numeric"),
             "percentage" => Rule::when(request()->type == "percentage", "required|numeric|max:100"),

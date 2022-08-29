@@ -22,8 +22,8 @@ class CreateDiscountsTable extends Migration
             $table->string('amount')->nullable();
             $table->string('quantity');
             $table->integer('quantity_number')->nullable();
-            $table->string('start_date');
-            $table->string('end_date');
+            $table->string('start_at');
+            $table->string('end_at');
             $table->boolean("status")->default(StatusEnum::DISABLED);
             $table->timestamps();
         });

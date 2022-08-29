@@ -37,8 +37,8 @@ class DiscountServices implements ServiceInterface
                 "quantity" => $request->quantity,
                 "status" => 1,
                 "quantity_number" => $request->quantity_number ?? null,
-                "start_date" => $request->date("start_date"),
-                "end_date" => $request->date("end_date")
+                "start_at" => $request->date("start_at"),
+                "end_at" => $request->date("end_at")
             ]);
         });
     }
@@ -54,8 +54,8 @@ class DiscountServices implements ServiceInterface
                 "percentage" => $request->type == DiscountEnum::PERCENTAGE ? $request->percentage : null,
                 "quantity" => $request->quantity,
                 "quantity_number" => $request->quantity == DiscountEnum::LIMITED ? $request->quantity_number : null,
-                "start_date" => $request->date("start_date"),
-                "end_date" => $request->date("end_date")
+                "start_at" => $request->date("start_at"),
+                "end_at" => $request->date("end_at")
             ]);
         });
     }

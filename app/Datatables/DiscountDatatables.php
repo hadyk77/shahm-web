@@ -2,6 +2,7 @@
 
 namespace App\Datatables;
 
+use App\Enums\StatusEnum;
 use App\Models\Discount;
 use App\Support\DataTableActions;
 use Exception;
@@ -40,10 +41,10 @@ class DiscountDatatables implements DatatableInterface
                         ->switcher();
                 })
                 ->addColumn("start_at", function (Discount $discount) {
-                    return $discount->start_date->format('Y-m-d');
+                    return $discount->start_at->format('Y-m-d');
                 })
                 ->addColumn("end_at", function (Discount $discount) {
-                    return $discount->end_date->format('Y-m-d');
+                    return $discount->end_at->format('Y-m-d');
                 })
                 ->rawColumns(["action", "status"])
                 ->make(true);
@@ -54,6 +55,10 @@ class DiscountDatatables implements DatatableInterface
 
     public function query(Request $request): Builder
     {
-        return Discount::query()->select("*");
+        return Discount::query()
+            ->when($request->filled("status") && $request->status === StatusEnum::DEACTIVATED, function ($query) {
+                $query->deactivated();
+            })
+            ->select("*");
     }
 }
