@@ -6,6 +6,7 @@ use App\Helper\Helper;
 use App\Models\Service;
 use App\Support\DataTableActions;
 use DataTables;
+use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,7 @@ class ServiceDatatables implements DatatableInterface
         return [
             "icon",
             "title",
+            "rate",
             "status",
             "updated_at"
         ];
@@ -31,6 +33,18 @@ class ServiceDatatables implements DatatableInterface
                     ->checkStatus($service->status)
                     ->switcher();
             })
+            ->addColumn("rate", function (Service $service) {
+                $rate = DB::table("rates")->where("model_type", Service::class)->where("model_id", $service->id)->avg("rate");
+                $html = "";
+                if (!is_null($rate)) {
+                    for ($i = 0; $i < $rate; $i++) {
+                        $html .= "<img style='width: 25px;' class='img-fluid' src='" . asset("admin/media/star-icon.svg") . "'/>";
+                    }
+                } else {
+                    $html = __("No Rate Yet");
+                }
+                return $html;
+            })
             ->addColumn("icon", function (Service $service) {
                 return DataTableActions::image($service->icon);
             })
@@ -42,7 +56,7 @@ class ServiceDatatables implements DatatableInterface
                     ->edit(route("admin.service.edit", $service->id))
                     ->make();
             })
-            ->rawColumns(["action", "icon", "status"])
+            ->rawColumns(["action", "icon", "status", "rate"])
             ->make();
     }
 

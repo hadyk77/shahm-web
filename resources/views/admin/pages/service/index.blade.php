@@ -11,6 +11,7 @@
             <x-datatable-html>
                 <td>{{__("Icon")}}</td>
                 <td>{{__("Title")}}</td>
+                <td>{{__("Rate")}}</td>
                 <td>{{__("Status")}}</td>
                 <td>{{__("Updated At")}}</td>
             </x-datatable-html>
