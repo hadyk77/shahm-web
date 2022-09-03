@@ -26,7 +26,13 @@ class ContactController extends Controller
 
     public function show($id)
     {
-        //
+        $contact = $this->contactService->findById($id);
+        $contact->update([
+            "is_read" => 1
+        ]);
+        return view("admin.pages.contact.show")->with([
+            "contact" => $contact
+        ]);
     }
 
     public function destroy($id)

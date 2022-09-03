@@ -2,6 +2,7 @@
 
 namespace App\Services\Contact;
 
+use App\Models\Contact;
 use App\Services\ServiceInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,7 +18,7 @@ class ContactService implements ServiceInterface
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
     {
-        // TODO: Implement findById() method.
+        return  Contact::query()->findOrFail($id);
     }
 
     public function store($request)

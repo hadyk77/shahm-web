@@ -4,7 +4,6 @@ namespace App\Datatables;
 
 use App\Helper\Helper;
 use App\Models\Contact;
-use App\Models\ContactType;
 use App\Support\DataTableActions;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -58,6 +57,9 @@ class ContactDatatables
     {
         return Contact::query()
             ->with(["user", "contactType"])
+            ->when($request->filled("status") && in_array($request->status, ["read", "unread"]), function ($query) use ($request) {
+                return $query->where("is_read", $request->status == "read");
+            })
             ->select("*");
     }
 }
