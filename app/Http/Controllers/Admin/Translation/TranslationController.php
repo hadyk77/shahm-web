@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Translation;
 use App\Http\Controllers\Controller;
 use App\Models\AccountUpgradeOption;
 use App\Models\Banner;
+use App\Models\ContactType;
 use App\Models\Country;
 use App\Models\GeneralSetting;
 use App\Models\Governorate;
@@ -206,6 +207,16 @@ class TranslationController extends Controller
                         "type" => "textarea",
                         "rules" => "required"
                     ],
+                ]
+            ],
+            __("Contact Type") => [
+                "model" => ContactType::class,
+                "translatableColumn" => "title",
+                "columns" => [
+                    "title" => [
+                        "type" => "text",
+                        "rules" => "required"
+                    ]
                 ]
             ],
         ];

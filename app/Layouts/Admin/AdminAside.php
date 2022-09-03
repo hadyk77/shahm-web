@@ -76,22 +76,17 @@ class AdminAside
                         "sub_menu" => [
                             [
                                 "name" => __("All clients"),
-                                "route" => "#",
+                                "route" => route("admin.user.index"),
                                 "canShow" => true,
                             ],
                             [
                                 "name" => __("Inactive clients"),
-                                "route" => "#",
+                                "route" => route("admin.user.index", ['type' => StatusEnum::DEACTIVATED]),
                                 "canShow" => true,
                             ],
                             [
                                 "name" => __("Add new client"),
-                                "route" => "#",
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("Client Rates"),
-                                "route" => "#",
+                                "route" => route("admin.user.create"),
                                 "canShow" => true,
                             ]
                         ]
@@ -103,33 +98,28 @@ class AdminAside
                         "sub_menu" => [
                             [
                                 "name" => __("All captain"),
-                                "route" => "#",
+                                "route" => route("admin.user.index"),
                                 "canShow" => true,
                             ],
                             [
                                 "name" => __("Inactive captain"),
-                                "route" => "#",
+                                "route" => route("admin.user.index", ['type' => StatusEnum::DEACTIVATED]),
                                 "canShow" => true,
                             ],
                             [
                                 "name" => __("Add new captain"),
-                                "route" => "#",
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("Captain Rates"),
-                                "route" => "#",
+                                "route" => route("admin.captain.create"),
                                 "canShow" => true,
                             ]
                         ],
                     ],
                     [
                         "name" => __("Captain Verifications"),
-                        "route" => "#",
+                        "route" => route('admin.verification-files.index'),
                         "canShow" => true,
                         "badge" => [
                             "id" => "captain_verifications",
-                            "count" => 15,
+                            "count" => 0,
                             "color" => "danger",
                             "show" => true,
                         ],

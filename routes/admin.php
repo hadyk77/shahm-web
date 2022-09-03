@@ -2,6 +2,8 @@
 
 use App\Enums\GuardEnum;
 use App\Http\Controllers\Admin\Banner\BannerController;
+use App\Http\Controllers\Admin\Captain\CaptainController;
+use App\Http\Controllers\Admin\Captain\VerificationFilesController;
 use App\Http\Controllers\Admin\Contact\ContactController;
 use App\Http\Controllers\Admin\Contact\ContactTypeController;
 use App\Http\Controllers\Admin\Country\CountryController;
@@ -23,6 +25,7 @@ use App\Http\Controllers\Admin\Settings\SocialMediaController;
 use App\Http\Controllers\Admin\Status\StatusController;
 use App\Http\Controllers\Admin\Translation\TranslationController;
 use App\Http\Controllers\Admin\UpgradeOptions\UpgradeOptionsController;
+use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\VehicleType\VehicleTypeController;
 use App\Http\Controllers\Admin\VerificationOptions\VerificationOptionsController;
 
@@ -63,6 +66,12 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::resource("intro-image", IntroImageController::class)->except('show');
 
     Route::resource("nationality", NationalityController::class)->except('show');
+
+    Route::resource("user", UserController::class);
+
+    Route::resource("captain", CaptainController::class);
+
+    Route::resource("verification-files", VerificationFilesController::class)->only("index", "show", "store");
 
     Route::post("update-status", StatusController::class)->name("status.update");
 
