@@ -40,11 +40,9 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
     Route::resource('service', ServiceController::class)->except("destroy", "create", "store");
 
-    Route::resource("service.rate", ServiceRateController::class);
-
     Route::resource("contact-type", ContactTypeController::class)->except("show");
 
-    Route::resource("contact", ContactController::class)->except("show");
+    Route::resource("contact", ContactController::class)->only("show", "index", "destroy");
 
     Route::resource("discount", DiscountController::class)->except('show');
 

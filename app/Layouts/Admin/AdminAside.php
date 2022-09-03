@@ -62,13 +62,7 @@ class AdminAside
                         "name" => __("Services"),
                         "route" => route("admin.service.index"),
                         "canShow" => true,
-                    ],
-                    [
-                        "name" => __("Services Rates"),
-                        "route" => '#',
-                        "canShow" => true,
-                        "sub_menu" => self::services(),
-                    ],
+                    ]
                 ]
             ],
             [
@@ -168,15 +162,15 @@ class AdminAside
                         "sub_menu" => [
                             [
                                 "name" => __("All Messages"),
-                                "route" => "#",
+                                "route" => route("admin.contact.index"),
                             ],
                             [
                                 "name" => __("UnRead Messages"),
-                                "route" => "#",
+                                "route" => route("admin.contact.index",["status" => "unread"]),
                             ],
                             [
                                 "name" => __("Read Messages"),
-                                "route" => "#",
+                                "route" => route("admin.contact.index",["status" => "read"]),
                             ],
                         ]
                     ]

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Contact;
 
 use App\Datatables\ContactDatatables;
+use App\Datatables\ContactTypeDatatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Contact\ContactTypeRequest;
 use App\Services\Contact\ContactTypeService;
@@ -14,17 +15,17 @@ use Throwable;
 class ContactTypeController extends Controller
 {
 
-    public function __construct(private readonly ContactDatatables $contactDatatables, private readonly ContactTypeService $contactTypeService)
+    public function __construct(private readonly ContactTypeDatatables $contactTypeDatatables, private readonly ContactTypeService $contactTypeService)
     {
     }
 
     public function index(Request $request)
     {
         if ($request->expectsJson()) {
-            return $this->contactDatatables->datatables($request);
+            return $this->contactTypeDatatables->datatables($request);
         }
         return view("admin.pages.contact-types.index")->with([
-            "columns" => $this->contactDatatables::columns(),
+            "columns" => $this->contactTypeDatatables::columns(),
         ]);
     }
 
