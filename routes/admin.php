@@ -74,7 +74,7 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
     Route::resource("verification-files", VerificationFilesController::class)->only("index", "show", "store");
 
-    Route::get("notifications", [NotificationController::class, "index"])->name("notification.index");
+    Route::resource("notification", NotificationController::class)->only("index", "update");
 
     Route::post("update-status", StatusController::class)->name("status.update");
 

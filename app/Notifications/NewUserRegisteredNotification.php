@@ -19,7 +19,7 @@ class NewUserRegisteredNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['firebase'];
+        return ['firebase', 'database'];
     }
 
     public function toMail($notifiable): MailMessage

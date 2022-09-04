@@ -15,7 +15,7 @@
                 </span>
                 </div>
                 <div class="mb-0 me-2">
-                    <a href="javascript:;" data-action="#" class="fs-6 text-gray-800 text-hover-primary {{$single_notification->unread() ? "notification_record fw-bolder" : ""}}">
+                    <a href="javascript:;" data-action="{{route("admin.notification.update", $single_notification->id)}}" class="fs-6 text-gray-800 text-hover-primary {{$single_notification->unread() ? "notification_record fw-bolder" : ""}}">
                         {{App\Enums\NotificationEnum::notificationTypes()[$single_notification->data['type']]}}
                     </a>
                 </div>

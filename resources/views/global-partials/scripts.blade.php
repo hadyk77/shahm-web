@@ -142,9 +142,9 @@
                         element.find('#data').html('<div class="overlay-layer bg-dark-o-10"><div class="spinner-border"></div></div>');
                     },
                     success: function success(result) {
-                       setTimeout(()=>{
-                           hideSpinner(element);
-                       }, 200)
+                        setTimeout(() => {
+                            hideSpinner(element);
+                        }, 200)
                         if (result.success) {
                             toastr.success(result.message);
                             return;
@@ -157,36 +157,39 @@
                         $.each(errors, function (key, value) {
                             toastr.error(value);
                         });
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             hideSpinner(element);
                         }, 200)
                     }
                 });
             });
 
+
+
             $('#notification').load("{{route("admin.notification.index")}}");
 
-            {{--$(document).on("click", ".notification_record", function () {--}}
-            {{--    let that = $(this);--}}
-            {{--    $.post({--}}
-            {{--        url: that.data("action"),--}}
-            {{--        method: "POST",--}}
-            {{--        data: {--}}
-            {{--            _token: "{{csrf_token()}}"--}}
-            {{--        },--}}
-            {{--        success: function (response) {--}}
-            {{--            that.removeClass("fw-bolder");--}}
-            {{--            that.removeClass("notification_record");--}}
-            {{--            $('#notification_count').html(response.data.remaining_notification);--}}
-            {{--            if (response.data.count == 0) {--}}
-            {{--                $('#notification_dots').remove();--}}
-            {{--            }--}}
-            {{--        },--}}
-            {{--        error: function (error) {--}}
-            {{--            console.log(error);--}}
-            {{--        }--}}
-            {{--    })--}}
-            {{--});--}}
+            $(document).on("click", ".notification_record", function () {
+                let that = $(this);
+                $.post({
+                    url: that.data("action"),
+                    method: "POST",
+                    data: {
+                        _token: "{{csrf_token()}}",
+                        _method: "PUT"
+                    },
+                    success: function (response) {
+                        that.removeClass("fw-bolder");
+                        that.removeClass("notification_record");
+                        $('#notification_count').html(response.data.remaining_notification);
+                        if (response.data.remaining_notification === 0) {
+                            $('#notification_dots').remove();
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            });
 
         });
 
@@ -218,6 +221,7 @@
                     toastr.info(payload.data.title + '<br />' + payload.data.body);
                     let sound = new Audio('{{asset('audio/audio-notification.mpeg')}}')
                     sound.play();
+                    $('#notification').load("{{route("admin.notification.index")}}");
                     let notificationTitle = payload.data.title;
                     let notificationOptions = {
                         body: payload.data.body,
