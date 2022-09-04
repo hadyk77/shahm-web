@@ -16,7 +16,6 @@ use App\Http\Controllers\Admin\Notification\NotificationController;
 use App\Http\Controllers\Admin\Page\PageController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
 use App\Http\Controllers\Admin\Service\ServiceController;
-use App\Http\Controllers\Admin\Service\ServiceRateController;
 use App\Http\Controllers\Admin\Settings\AppCommissionController;
 use App\Http\Controllers\Admin\Settings\BasicInformationController;
 use App\Http\Controllers\Admin\Settings\DefaultImagesController;
@@ -41,6 +40,10 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::get("/", [DashboardController::class, "index"]);
 
     Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard.index");
+
+    Route::get("order-chart", [DashboardController::class, "orderChart"])->name("order.chart");
+
+    Route::get("captain-chart", [DashboardController::class, "captainChart"])->name("captain.chart");
 
     Route::resource('service', ServiceController::class)->except("destroy", "create", "store");
 
