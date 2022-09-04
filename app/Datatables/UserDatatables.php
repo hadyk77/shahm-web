@@ -42,7 +42,7 @@ class UserDatatables implements DatatableInterface
             })
             ->addColumn("action", function (User $user) {
                 return (new DataTableActions())
-                    ->show(route("admin.user.show", $user->id))
+//                    ->show(route("admin.user.show", $user->id))
                     ->edit(route("admin.user.edit", $user->id))
                     ->delete(route("admin.user.destroy", $user->id))
                     ->make();
