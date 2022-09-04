@@ -9,6 +9,8 @@ use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class CaptainServices implements ServiceInterface
 {
@@ -43,13 +45,7 @@ class CaptainServices implements ServiceInterface
                 "is_captain" => true,
             ]);
 
-            if ($request->hasFile('license_from_front')) {
-                $captain->addMedia($request->license_from_front)->toMediaCollection(CaptainEnum::LICENSE_PICTURE_FROM_FRONT);
-            }
-
-            if ($request->hasFile('license_from_back')) {
-                $captain->addMedia($request->license_from_back)->toMediaCollection(CaptainEnum::LICENSE_PICTURE_FROM_FRONT);
-            }
+            $this->handleCaptainImages($request, $captain);
 
         });
     }
@@ -68,13 +64,8 @@ class CaptainServices implements ServiceInterface
                 "vehicle_license_plate_number" => $request->vehicle_license_plate_number,
             ]);
 
-            if ($request->hasFile('license_from_front')) {
-                $captain->addMedia($request->license_from_front)->toMediaCollection(CaptainEnum::LICENSE_PICTURE_FROM_FRONT);
-            }
+            $this->handleCaptainImages($request, $captain);
 
-            if ($request->hasFile('license_from_back')) {
-                $captain->addMedia($request->license_from_back)->toMediaCollection(CaptainEnum::LICENSE_PICTURE_FROM_FRONT);
-            }
         });
     }
 
@@ -91,5 +82,31 @@ class CaptainServices implements ServiceInterface
             $captain->delete();
 
         });
+    }
+
+    /**
+     * @param $request
+     * @param Model|Captain|Builder $captain
+     * @return void
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    function handleCaptainImages($request, Model|Captain|Builder $captain): void
+    {
+        if ($request->hasFile('license_from_front')) {
+            $captain->addMedia($request->license_from_front)->toMediaCollection(CaptainEnum::LICENSE_PICTURE_FROM_FRONT);
+        }
+
+        if ($request->hasFile('license_from_back')) {
+            $captain->addMedia($request->license_from_back)->toMediaCollection(CaptainEnum::LICENSE_PICTURE_FROM_FRONT);
+        }
+
+        if ($request->hasFile('car_picture_from_front')) {
+            $captain->addMedia($request->car_picture_from_front)->toMediaCollection(CaptainEnum::CAR_PICTURE_FROM_FRONT);
+        }
+
+        if ($request->hasFile('car_picture_from_back')) {
+            $captain->addMedia($request->car_picture_from_back)->toMediaCollection(CaptainEnum::CAR_PICTURE_FROM_BACK);
+        }
     }
 }

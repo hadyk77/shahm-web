@@ -22,6 +22,8 @@ class CaptainRequest extends FormRequest
             "vehicle_license_plate_number" => "required",
             "license_from_back" => Helper::imageRules($this->isMethod("PUT")),
             "license_from_front" => Helper::imageRules($this->isMethod("PUT")),
+            "car_picture_from_front" => Helper::imageRules($this->isMethod("PUT")),
+            "car_picture_from_back" => Helper::imageRules($this->isMethod("PUT")),
         ];
     }
 

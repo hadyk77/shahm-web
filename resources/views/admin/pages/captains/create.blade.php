@@ -67,6 +67,18 @@
                     required
                     :title="__('Picture of the license from the back')"
                 />
+                <x-file-field
+                    class="mt-5"
+                    name="car_picture_from_front"
+                    required
+                    :title="__('Picture of the car from the front')"
+                />
+                <x-file-field
+                    class="mt-5"
+                    name="car_picture_from_back"
+                    required
+                    :title="__('Picture of the car from the back')"
+                />
             </x-card-body>
             <x-card-footer>
                 <x-save-btn/>

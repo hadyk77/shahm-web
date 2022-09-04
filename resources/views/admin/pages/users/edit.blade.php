@@ -67,6 +67,20 @@
                     :collection="\App\Enums\CaptainEnum::LICENSE_PICTURE_FROM_BACK"
                     :title="__('Picture of the license from the back')"
                 />
+                <x-file-field
+                    class="mt-5"
+                    name="car_picture_from_front"
+                    :model="$captain"
+                    :collection="\App\Enums\CaptainEnum::CAR_PICTURE_FROM_FRONT"
+                    :title="__('Picture of the car from the front')"
+                />
+                <x-file-field
+                    class="mt-5"
+                    name="car_picture_from_back"
+                    :model="$captain"
+                    :collection="\App\Enums\CaptainEnum::CAR_PICTURE_FROM_BACK"
+                    :title="__('Picture of the car from the back')"
+                />
             </x-card-body>
             <x-card-footer>
                 <x-save-btn/>
