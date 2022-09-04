@@ -5,6 +5,7 @@ namespace App\Layouts\Admin;
 use App\Enums\StatusEnum;
 use App\Models\Service;
 use Cache;
+use DB;
 
 class AdminAside
 {
@@ -119,7 +120,7 @@ class AdminAside
                         "canShow" => true,
                         "badge" => [
                             "id" => "captain_verifications",
-                            "count" => 0,
+                            "count" => DB::table("captain_verification_files")->where("is_read", 1)->count(),
                             "color" => "danger",
                             "show" => true,
                         ],
