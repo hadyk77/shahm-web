@@ -12,6 +12,7 @@
         </x-card-header>
         <x-card-body>
             <x-datatable-html>
+                <td>{{__("Image")}}</td>
                 <td>{{__("Name")}}</td>
                 <td>{{__("Email")}}</td>
                 <td>{{__("Phone")}}</td>

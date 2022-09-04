@@ -15,6 +15,7 @@ class UserDatatables implements DatatableInterface
     public static function columns(): array
     {
         return [
+            "profile_image",
             "name",
             "phone",
             "email",
@@ -27,6 +28,9 @@ class UserDatatables implements DatatableInterface
     public function datatables(Request $request)
     {
         return Datatables::of($this->query($request))
+            ->addColumn("profile_image", function (User $user) {
+                return DataTableActions::image($user->profile_image);
+            })
             ->addColumn("created_at", function (User $user) {
                 return Helper::formatDate($user->created_at);
             })
@@ -47,7 +51,7 @@ class UserDatatables implements DatatableInterface
                     ->delete(route("admin.user.destroy", $user->id))
                     ->make();
             })
-            ->rawColumns(["action", "status"])
+            ->rawColumns(["action", "status", "profile_image"])
             ->make();
     }
 

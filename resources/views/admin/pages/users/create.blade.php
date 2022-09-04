@@ -51,10 +51,33 @@
                         </select>
                     </div>
                 </div>
+                <x-file-field
+                    class="mt-5"
+                    name="profile_image"
+                    :title="__('Profile Image')"
+                />
             </x-card-body>
             <x-card-footer>
                 <x-save-btn />
             </x-card-footer>
         </x-card-content>
     </form>
+@endsection
+
+@section("scripts")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    @if(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale() == "ar")
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/ar.min.js"></script>
+    @endif
+    <script>
+        $(function () {
+            $('#date_of_birth').flatpickr({
+                enableTime: false,
+                dateFormat: "Y-m-d",
+                @if(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale() == "ar")
+                locale: "ar"
+                @endif
+            })
+        });
+    </script>
 @endsection

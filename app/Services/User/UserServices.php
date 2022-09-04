@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Enums\ProfileImageEnum;
 use App\Models\User;
 use App\Services\ServiceInterface;
 use DB;
@@ -29,6 +30,18 @@ class UserServices implements ServiceInterface
     {
         return DB::transaction(function () use ($request) {
 
+            $user = User::query()->create([
+                "name" => $request->name,
+                "phone" => $request->phone,
+                "email" => $request->email,
+                "date_of_birth" => $request->date_of_birth,
+                "gender" => $request->gender,
+            ]);
+
+            if ($request->hasFile("profile_image")) {
+                $user->addMedia($request->profile_image)->toMediaCollection(ProfileImageEnum::PROFILE_IMAGE);
+            }
+
         });
     }
 
@@ -36,6 +49,19 @@ class UserServices implements ServiceInterface
     {
         return DB::transaction(function () use ($request, $id) {
 
+            $user = $this->findById($id);
+
+            $user->update([
+                "name" => $request->name,
+                "phone" => $request->phone,
+                "email" => $request->email,
+                "date_of_birth" => $request->date_of_birth,
+                "gender" => $request->gender,
+            ]);
+
+            if ($request->hasFile("profile_image")) {
+                $user->addMedia($request->profile_image)->toMediaCollection(ProfileImageEnum::PROFILE_IMAGE);
+            }
         });
     }
 
