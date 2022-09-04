@@ -7,12 +7,14 @@
                 <x-datatable-search-input />
             </x-card-title>
             <x-card-toolbar>
-                <x-add-btn :route="route('admin.page.create')"  :title="__('Add New User')"/>
+                <x-add-btn :route="route('admin.user.create')"  :title="__('Add New User')"/>
             </x-card-toolbar>
         </x-card-header>
         <x-card-body>
             <x-datatable-html>
-                <td>{{__("Title")}}</td>
+                <td>{{__("Name")}}</td>
+                <td>{{__("Email")}}</td>
+                <td>{{__("Phone")}}</td>
                 <td>{{__("Status")}}</td>
                 <td>{{__("Created At")}}</td>
                 <td>{{__("Updated At")}}</td>
@@ -23,7 +25,7 @@
 
 @section("scripts")
     <x-datatable-script
-        :route="route('admin.page.index', ['status' => request()->status])"
+        :route="route('admin.user.index', ['status' => request()->status])"
         :columns="$columns"
     />
 @endsection
