@@ -6,6 +6,9 @@ use App\Datatables\CaptainDatatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Captain\CaptainRequest;
 use App\Services\Captain\CaptainServices;
+use App\Services\User\UserServices;
+use App\Services\VehicleType\VehicleTypeServices;
+use App\Services\VerificationOptions\VerificationOptionsServices;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +16,12 @@ use Throwable;
 
 class CaptainController extends Controller
 {
-    public function __construct(private readonly CaptainDatatables $captainDatatables, private readonly CaptainServices $captainService)
+    public function __construct(
+        private readonly CaptainDatatables $captainDatatables,
+        private readonly CaptainServices $captainService,
+        private readonly UserServices $userServices,
+        private readonly VehicleTypeServices $vehicleTypeServices,
+    )
     {
     }
 
@@ -29,7 +37,10 @@ class CaptainController extends Controller
 
     public function create()
     {
-        return view("admin.pages.captains.create");
+        return view("admin.pages.captains.create")->with([
+            "users"  => $this->userServices->getUsersWithoutCaptains(),
+            "vehicleTypeServices" => $this->vehicleTypeServices->get()
+        ]);
     }
 
     public function store(CaptainRequest $request)
@@ -46,7 +57,8 @@ class CaptainController extends Controller
     public function edit($id)
     {
         return view("admin.pages.users.edit")->with([
-            "user" => $this->captainService->findById($id),
+            "vehicleTypeServices" => $this->vehicleTypeServices->get(),
+            "captain" => $this->captainService->findById($id),
         ]);
     }
 

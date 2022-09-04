@@ -15,7 +15,7 @@ class UserServices implements ServiceInterface
 
     public function get(): array|Collection
     {
-        return User::query()->where("status", 1)->get();
+        return User::query()->get();
     }
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
@@ -74,5 +74,10 @@ class UserServices implements ServiceInterface
             $user->delete();
 
         });
+    }
+
+    public function getUsersWithoutCaptains()
+    {
+        return User::query()->where("is_captain", false)->get();
     }
 }

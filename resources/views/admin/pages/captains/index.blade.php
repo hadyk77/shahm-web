@@ -7,7 +7,7 @@
                 <x-datatable-search-input />
             </x-card-title>
             <x-card-toolbar>
-                <x-add-btn :route="route('admin.user.create')"  :title="__('Add New User')"/>
+                <x-add-btn :route="route('admin.captain.create')"  :title="__('Add New Captain')"/>
             </x-card-toolbar>
         </x-card-header>
         <x-card-body>

@@ -43,8 +43,8 @@ class CaptainDatatables implements DatatableInterface
             ->addColumn("action", function (User $user) {
                 return (new DataTableActions())
 //                    ->show(route("admin.captain.show", $user->id))
-                    ->edit(route("admin.captain.edit", $user->id))
-                    ->delete(route("admin.captain.destroy", $user->id))
+                    ->edit(route("admin.captain.edit", $user->captain->id))
+                    ->delete(route("admin.captain.destroy", $user->captain->id))
                     ->make();
             })
             ->rawColumns(["action", "status"])

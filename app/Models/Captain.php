@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CaptainEnum;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,6 +41,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Captain extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(CaptainEnum::LICENSE_PICTURE_FROM_FRONT)->singleFile();
+        $this->addMediaCollection(CaptainEnum::LICENSE_PICTURE_FROM_BACK)->singleFile();
+    }
 
     public function user(): BelongsTo
     {
