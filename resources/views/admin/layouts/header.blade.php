@@ -91,7 +91,7 @@
             </div>
             <div class="row g-0">
                 <div class="col-6">
-                    <a href=".{{route('admin.user.index')}}" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end border-bottom">
+                    <a href="{{route('admin.user.index')}}" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end border-bottom">
                         <span class="svg-icon svg-icon-3x svg-icon-primary mb-2">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path opacity="0.3" d="M15.8 11.4H6C5.4 11.4 5 11 5 10.4C5 9.80002 5.4 9.40002 6 9.40002H15.8C16.4 9.40002 16.8 9.80002 16.8 10.4C16.8 11 16.3 11.4 15.8 11.4ZM15.7 13.7999C15.7 13.1999 15.3 12.7999 14.7 12.7999H6C5.4 12.7999 5 13.1999 5 13.7999C5 14.3999 5.4 14.7999 6 14.7999H14.8C15.3 14.7999 15.7 14.2999 15.7 13.7999Z" fill="currentColor"/>
@@ -113,7 +113,7 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <a href="{{route('admin.captain.index')}}" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end">
+                    <a href="{{route('admin.verification-files.index')}}" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end">
                         <span class="svg-icon svg-icon-3x svg-icon-primary mb-2">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M18 21.6C16.6 20.4 9.1 20.3 6.3 21.2C5.7 21.4 5.1 21.2 4.7 20.8L2 18C4.2 15.8 10.8 15.1 15.8 15.8C16.2 18.3 17 20.5 18 21.6ZM18.8 2.8C18.4 2.4 17.8 2.20001 17.2 2.40001C14.4 3.30001 6.9 3.2 5.5 2C6.8 3.3 7.4 5.5 7.7 7.7C9 7.9 10.3 8 11.7 8C15.8 8 19.8 7.2 21.5 5.5L18.8 2.8Z" fill="currentColor"/>
