@@ -14,7 +14,9 @@ class VerificationOptionsResource extends JsonResource
             "title" => $this->title,
             "related_orders" => $this->related_orders,
             "description" => $this->description,
-            "icon" => $this->icon
+            "icon" => $this->icon,
+            "purchase_link" => $this->purchase_link,
+            "sale_link" => $this->sale_link,
         ];
     }
 }

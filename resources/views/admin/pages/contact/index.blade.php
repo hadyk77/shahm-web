@@ -6,9 +6,6 @@
             <x-card-title>
                 <x-datatable-search-input />
             </x-card-title>
-            <x-card-toolbar>
-                <x-add-btn :route="route('admin.banner.create')"  :title="__('Add New Banner')"/>
-            </x-card-toolbar>
         </x-card-header>
         <x-card-body>
             <x-datatable-html>

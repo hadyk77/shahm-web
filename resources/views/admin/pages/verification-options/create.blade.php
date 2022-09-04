@@ -42,6 +42,20 @@
                     col="6"
                     class="mt-5"
                 />
+                <x-input-field
+                    name="purchase_link"
+                    col="6"
+                    type="url"
+                    class="mt-5"
+                    :title="__('Purchase Link')"
+                />
+                <x-input-field
+                    name="sale_link"
+                    class="mt-5"
+                    type="url"
+                    col="6"
+                    :title="__('Sale Link')"
+                />
             </x-card-body>
             <x-card-footer>
                 <x-save-btn />

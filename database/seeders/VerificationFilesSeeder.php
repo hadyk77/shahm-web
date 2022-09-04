@@ -46,7 +46,9 @@ class VerificationFilesSeeder extends Seeder
 إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع."
             ],
             "is_deletable" => 1,
-            "related_orders" => "food"
+            "related_orders" => "food",
+            'purchase_link' => "https://google.com",
+            'sale_link' => "https://google.com",
         ]);
         $verification3->addMedia(public_path("test_images/verifications/image-03.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON);
 
@@ -59,7 +61,9 @@ class VerificationFilesSeeder extends Seeder
 إذا كنت تحتاج إلى عدد أكبر من الفقرات يتيح لك مولد النص العربى زيادة عدد الفقرات كما تريد، النص لن يبدو مقسما ولا يحوي أخطاء لغوية، مولد النص العربى مفيد لمصممي المواقع على وجه الخصوص، حيث يحتاج العميل فى كثير من الأحيان أن يطلع على صورة حقيقية لتصميم الموقع."
             ],
             "is_deletable" => 1,
-            "related_orders" => "products"
+            "related_orders" => "products",
+            'purchase_link' => "https://google.com",
+            'sale_link' => "https://google.com",
         ]);
         $verification4->addMedia(public_path("test_images/verifications/image-04.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON);
 

@@ -5,8 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -22,6 +21,7 @@ return new class extends Migration
             $table->boolean("is_deletable")->default(StatusEnum::ENABLED);
             $table->string("related_orders");
             $table->string("purchase_link")->nullable();
+            $table->string("sale_link")->nullable();
             $table->timestamps();
         });
     }

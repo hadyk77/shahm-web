@@ -33,6 +33,8 @@ class VerificationOptionsServices implements ServiceInterface
                 "title" => $request->title,
                 "related_orders" => $request->related_orders,
                 "description" => $request->description,
+                "purchase_link" => $request->purchase_link,
+                "sale_link" => $request->sale_link,
             ]);
 
             $this->handleIconUpload($request, $option);
@@ -50,6 +52,8 @@ class VerificationOptionsServices implements ServiceInterface
                 "title" => $request->title,
                 "description" => $request->description,
                 "related_orders" => $request->related_orders,
+                "purchase_link" => $request->purchase_link,
+                "sale_link" => $request->sale_link,
             ]);
 
             $this->handleIconUpload($request, $option);

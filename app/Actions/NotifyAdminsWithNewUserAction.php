@@ -10,7 +10,6 @@ class NotifyAdminsWithNewUserAction
 {
     use AsAction;
 
-
     public function handle($user)
     {
         $admins = Admin::query()->where("status", 1)->get();
