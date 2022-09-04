@@ -33,7 +33,8 @@ class ContactNotification extends Notification
     public function toArray($notifiable): array
     {
         return [
-//            "ty"
+            "type" => NotificationEnum::NEW_CONTACT_MESSAGE,
+            "contact" => $this->contact,
         ];
     }
 

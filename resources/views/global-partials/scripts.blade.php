@@ -27,6 +27,8 @@
         el.find('button[type="submit"]').attr('data-kt-indicator', 'off');
     }
 
+    let table;
+
     $(function () {
 
         @auth()
@@ -49,7 +51,6 @@
             submitButton.disabled = true;
         });
 
-        let table;
 
         $(function () {
 
@@ -162,6 +163,30 @@
                     }
                 });
             });
+
+            $('#notification').load("{{route("admin.notification.index")}}");
+
+            {{--$(document).on("click", ".notification_record", function () {--}}
+            {{--    let that = $(this);--}}
+            {{--    $.post({--}}
+            {{--        url: that.data("action"),--}}
+            {{--        method: "POST",--}}
+            {{--        data: {--}}
+            {{--            _token: "{{csrf_token()}}"--}}
+            {{--        },--}}
+            {{--        success: function (response) {--}}
+            {{--            that.removeClass("fw-bolder");--}}
+            {{--            that.removeClass("notification_record");--}}
+            {{--            $('#notification_count').html(response.data.remaining_notification);--}}
+            {{--            if (response.data.count == 0) {--}}
+            {{--                $('#notification_dots').remove();--}}
+            {{--            }--}}
+            {{--        },--}}
+            {{--        error: function (error) {--}}
+            {{--            console.log(error);--}}
+            {{--        }--}}
+            {{--    })--}}
+            {{--});--}}
 
         });
 

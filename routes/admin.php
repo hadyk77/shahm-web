@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\Governorate\GovernorateController;
 use App\Http\Controllers\Admin\IntroImage\IntroImageController;
 use App\Http\Controllers\Admin\Nationality\NationalityController;
+use App\Http\Controllers\Admin\Notification\NotificationController;
 use App\Http\Controllers\Admin\Page\PageController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
 use App\Http\Controllers\Admin\Service\ServiceController;
@@ -72,6 +73,8 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::resource("captain", CaptainController::class);
 
     Route::resource("verification-files", VerificationFilesController::class)->only("index", "show", "store");
+
+    Route::get("notifications", [NotificationController::class, "index"])->name("notification.index");
 
     Route::post("update-status", StatusController::class)->name("status.update");
 
