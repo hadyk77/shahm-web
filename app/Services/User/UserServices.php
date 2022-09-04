@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\Enums\ProfileImageEnum;
 use App\Models\User;
 use App\Services\ServiceInterface;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -33,6 +34,7 @@ class UserServices implements ServiceInterface
             $user = User::query()->create([
                 "name" => $request->name,
                 "phone" => $request->phone,
+                "phone_verified_at" => Carbon::now(),
                 "email" => $request->email,
                 "date_of_birth" => $request->date_of_birth,
                 "gender" => $request->gender,

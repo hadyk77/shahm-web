@@ -11,6 +11,36 @@
                 <span class="menu-title">{{__("Dashboard")}}</span>
             </a>
         </div>
+        <div class="menu-item me-0 me-lg-2">
+            <a href="{{route('admin.user.index')}}"
+               class="menu-link {{request()->routeIs("admin.user.index") ? "active" : ""}}">
+                <span class="menu-title">{{__("Clients")}}</span>
+            </a>
+        </div>
+        <div class="menu-item me-0 me-lg-2">
+            <a href="{{route('admin.captain.index')}}"
+               class="menu-link {{request()->routeIs("admin.captain.index") ? "active" : ""}}">
+                <span class="menu-title">{{__("Captains")}}</span>
+            </a>
+        </div>
+        <div class="menu-item me-0 me-lg-2">
+            <a href="{{route('admin.service.index')}}"
+               class="menu-link {{request()->routeIs("admin.service.index") ? "active" : ""}}">
+                <span class="menu-title">{{__("Services")}}</span>
+            </a>
+        </div>
+        <div class="menu-item me-0 me-lg-2">
+            <a href="{{route('admin.discount.index')}}"
+               class="menu-link {{request()->routeIs("admin.discount.index") ? "active" : ""}}">
+                <span class="menu-title">{{__("Coupons")}}</span>
+            </a>
+        </div>
+        <div class="menu-item me-0 me-lg-2">
+            <a href="{{route('admin.settings.basic-information.index')}}"
+               class="menu-link {{request()->routeIs("admin.settings.basic-information.index") ? "active" : ""}}">
+                <span class="menu-title">{{__("Settings")}}</span>
+            </a>
+        </div>
     </div>
 </div>
 <div class="app-navbar flex-shrink-0">
