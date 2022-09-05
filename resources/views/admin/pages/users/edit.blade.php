@@ -1,85 +1,67 @@
 @extends("admin.layouts.app")
 
 @section("content")
-    <form action="{{route("admin.captain.update", $captain->id)}}" method="post" enctype="multipart/form-data">
+    <form action="{{route("admin.user.update", $user->id)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <x-card-content>
             <x-card-header>
                 <x-card-title>
-                    {{__("Edit captain")}} - {{$captain->user->name}}
+                    {{__("Edit user")}} - {{$user->name}}
                 </x-card-title>
                 <x-card-toolbar>
-                    <x-back-btn :route="route('admin.captain.index')"/>
+                    <x-back-btn :route="route('admin.user.index')"/>
                 </x-card-toolbar>
             </x-card-header>
             <x-card-body>
-                <x-fields.select-field
-                    name="vehicle_type_id"
-                    :select-box-data="$vehicleTypeServices"
-                    value-data="title"
-                    value="id"
-                    :model="$captain"
-                    :title="__('Vehicle Type')"
-                />
                 <x-input-field
-                    name="vehicle_manufacturing_date"
+                    name="name"
                     required
                     col="6"
-                    :model="$captain"
-                    :title="__('Vehicle Manufacturing Date')"
+                    :title="__('Name')"
+                    :model="$user"
                 />
                 <x-input-field
-                    name="vehicle_number"
+                    name="phone"
+                    type="tel"
                     required
-                    :model="$captain"
                     col="6"
-                    class="mt-5"
-                    :title="__('Vehicle Number')"
+                    :title="__('Phone')"
+                    :model="$user"
                 />
                 <x-input-field
-                    name="vehicle_identification_number"
+                    name="email"
+                    type="email"
                     required
-                    :model="$captain"
-                    col="6"
                     class="mt-5"
-                    :title="__('Vehicle identification number')"
+                    col="6"
+                    :title="__('Email')"
+                    :model="$user"
                 />
                 <x-input-field
-                    name="vehicle_license_plate_number"
+                    name="date_of_birth"
                     required
-                    :model="$captain"
+                    class="mt-5"
                     col="6"
-                    class="mt-5"
-                    :title="__('Vehicle license plate number')"
+                    :title="__('Date Of Birth')"
+                    :model="$user"
                 />
+                <div class="col-md-6">
+                    <div class="form-group mt-5">
+                        <label class="d-flex align-items-center fs-5 fw-bold mb-2" for="gender">{{__("Gender")}}<sup>*</sup></label>
+                        <select name="gender" data-control="select2" class="form-control form-control-lg form-control-solid" required id="gender">
+                            <option value="" selected disabled>{{__('Choose An Option')}}</option>
+                            <option {{old("gender") == "male" || $user->gender == "male" ? "selected" : ""}} value="male">{{__("Male")}}</option>
+                            <option {{old("gender") == "female" || $user->gender == "female" ? "selected" : ""}} value="female">{{__("Female")}}</option>
+                        </select>
+                    </div>
+                </div>
                 <x-file-field
                     class="mt-5"
-                    name="license_from_front"
-                    :model="$captain"
-                    :collection="\App\Enums\CaptainEnum::LICENSE_PICTURE_FROM_FRONT"
-                    :title="__('Picture of the license from the front')"
-                />
-                <x-file-field
-                    class="mt-5"
-                    name="license_from_back"
-                    :model="$captain"
-                    :collection="\App\Enums\CaptainEnum::LICENSE_PICTURE_FROM_BACK"
-                    :title="__('Picture of the license from the back')"
-                />
-                <x-file-field
-                    class="mt-5"
-                    name="car_picture_from_front"
-                    :model="$captain"
-                    :collection="\App\Enums\CaptainEnum::CAR_PICTURE_FROM_FRONT"
-                    :title="__('Picture of the car from the front')"
-                />
-                <x-file-field
-                    class="mt-5"
-                    name="car_picture_from_back"
-                    :model="$captain"
-                    :collection="\App\Enums\CaptainEnum::CAR_PICTURE_FROM_BACK"
-                    :title="__('Picture of the car from the back')"
+                    name="profile_image"
+                    :title="__('Profile Image')"
+                    :model="$user"
+                    :collection="\App\Enums\ProfileImageEnum::PROFILE_IMAGE"
                 />
             </x-card-body>
             <x-card-footer>
