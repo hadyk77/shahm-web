@@ -55,7 +55,7 @@ class CaptainController extends Controller
 
     public function edit($id)
     {
-        return view("admin.pages.users.edit")->with([
+        return view("admin.pages.captains.edit")->with([
             "vehicleTypeServices" => $this->vehicleTypeServices->get(),
             "captain" => $this->captainService->findById($id),
         ]);
