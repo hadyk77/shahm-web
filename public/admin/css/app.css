@@ -18,8 +18,13 @@
     src: url("/fonts/Droid.Arabic.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: "helvetica";
+    src: url("/fonts/helvetica.ttf");
+}
+
 body {
-    font-family: 'Nunito', 'DroidArabic', 'ArabicFontR', sans-serif;
+    font-family: 'Nunito' ,'helvetica', 'DroidArabic', 'ArabicFontR', sans-serif;
 }
 
 sup {

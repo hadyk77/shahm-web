@@ -359,6 +359,10 @@ class AdminAside
                                 "name" => __("Default Images"),
                                 "route" => route('admin.settings.default-images.index'),
                             ],
+                            [
+                                "name" => __("Translations"),
+                                "route" => "/admin/translations",
+                            ],
                         ]
                     ]
                 ]

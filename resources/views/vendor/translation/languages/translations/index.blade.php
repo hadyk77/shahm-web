@@ -19,11 +19,11 @@
                     <div class="sm:hidden lg:flex items-center">
 
                     @include('translation::forms.select', ['name' => 'group', 'items' => $groups, 'submit' => true, 'selected' => Request::get('group'), 'optional' => true])
-                    
-                    <a href="{{ route('languages.translations.create', $language) }}" class="button">
-                        {{ __('translation::translation.add') }}
-                    </a>
-                
+
+{{--                    <a href="{{ route('languages.translations.create', $language) }}" class="button">--}}
+{{--                        {{ __('translation::translation.add') }}--}}
+{{--                    </a>--}}
+
                 </div>
 
                 </div>
@@ -47,7 +47,7 @@
 
                         <tbody>
                             @foreach($translations as $type => $items)
-                                
+
                                 @foreach($items as $group => $translations)
 
                                     @foreach($translations as $key => $value)
@@ -58,11 +58,11 @@
                                                 <td>{{ $key }}</td>
                                                 <td>{{ $value[config('app.locale')] }}</td>
                                                 <td>
-                                                    <translation-input 
-                                                        initial-translation="{{ $value[$language] }}" 
-                                                        language="{{ $language }}" 
-                                                        group="{{ $group }}" 
-                                                        translation-key="{{ $key }}" 
+                                                    <translation-input
+                                                        initial-translation="{{ $value[$language] }}"
+                                                        language="{{ $language }}"
+                                                        group="{{ $group }}"
+                                                        translation-key="{{ $key }}"
                                                         route="{{ config('translation.ui_url') }}">
                                                     </translation-input>
                                                 </td>
@@ -72,7 +72,7 @@
                                     @endforeach
 
                                 @endforeach
-                                           
+
                             @endforeach
                         </tbody>
 

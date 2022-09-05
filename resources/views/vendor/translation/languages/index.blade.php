@@ -6,7 +6,7 @@
 
         <div class="panel w-1/2">
 
-            <div class="panel-header">
+            {{--<div class="panel-header">
 
                 {{ __('translation::translation.languages') }}
 
@@ -18,7 +18,7 @@
 
                 </div>
 
-            </div>
+            </div>--}}
 
             <div class="panel-body">
 
