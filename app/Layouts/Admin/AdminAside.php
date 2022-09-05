@@ -72,47 +72,13 @@ class AdminAside
                 "menu" => [
                     [
                         "name" => __("Clients"),
-                        "route" => "#",
+                        "route" => route('admin.user.index'),
                         "canShow" => true,
-                        "sub_menu" => [
-                            [
-                                "name" => __("All clients"),
-                                "route" => route("admin.user.index"),
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("Inactive clients"),
-                                "route" => route("admin.user.index", ['status' => StatusEnum::DEACTIVATED]),
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("Add new client"),
-                                "route" => route("admin.user.create"),
-                                "canShow" => true,
-                            ]
-                        ]
                     ],
                     [
                         "name" => __("Captains"),
-                        "route" => "#",
+                        "route" => route('admin.captain.index'),
                         "canShow" => true,
-                        "sub_menu" => [
-                            [
-                                "name" => __("All captain"),
-                                "route" => route("admin.captain.index"),
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("Inactive captain"),
-                                "route" => route("admin.captain.index", ['status' => StatusEnum::DEACTIVATED]),
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("Add new captain"),
-                                "route" => route("admin.captain.create"),
-                                "canShow" => true,
-                            ]
-                        ],
                     ],
                     [
                         "name" => __("Captain Verifications"),

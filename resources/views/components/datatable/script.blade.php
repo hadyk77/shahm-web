@@ -3,7 +3,11 @@
         "ajax": {
             url: "{!! $route !!}",
             data: function (d) {
-                return $.extend({}, d, {})
+                return $.extend({}, d, {
+                    @if(request()->routeIs("admin.user.index") || request()->routeIs("admin.captain.index"))
+                        status: $('.form-content').find("#status").val(),
+                    @endif
+                })
             }
         },
         columns: [

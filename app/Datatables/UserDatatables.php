@@ -59,8 +59,11 @@ class UserDatatables implements DatatableInterface
     {
         return User::query()
             ->where("is_captain", false)
-            ->when($request->filled("status") && $request->status == StatusEnum::DEACTIVATED, function ($query) use ($request) {
+            ->when($request->filled("status") && $request->status == "inactive", function ($query) use ($request) {
                 return $query->where("status", 0);
+            })
+            ->when($request->filled("status") && $request->status == "active", function ($query) use ($request) {
+                return $query->where("status", 1);
             })
             ->select("*");
     }
