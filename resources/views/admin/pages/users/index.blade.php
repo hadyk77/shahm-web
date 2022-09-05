@@ -14,8 +14,8 @@
             <x-datatable-html>
                 <td>{{__("Image")}}</td>
                 <td>{{__("Name")}}</td>
-                <td>{{__("Email")}}</td>
                 <td>{{__("Phone")}}</td>
+                <td>{{__("Email")}}</td>
                 <td>{{__("Status")}}</td>
                 <td>{{__("Created At")}}</td>
                 <td>{{__("Updated At")}}</td>

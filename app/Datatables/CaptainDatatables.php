@@ -15,6 +15,7 @@ class CaptainDatatables implements DatatableInterface
     public static function columns(): array
     {
         return [
+            "profile_image",
             "name",
             "phone",
             "email",
@@ -29,6 +30,9 @@ class CaptainDatatables implements DatatableInterface
         return Datatables::of($this->query($request))
             ->addColumn("created_at", function (User $user) {
                 return Helper::formatDate($user->created_at);
+            })
+            ->addColumn("profile_image", function (User $user) {
+                return DataTableActions::image($user->profile_image);
             })
             ->addColumn("updated_at", function (User $user) {
                 return Helper::formatDate($user->updated_at);
@@ -47,7 +51,7 @@ class CaptainDatatables implements DatatableInterface
                     ->delete(route("admin.captain.destroy", $user->captain->id))
                     ->make();
             })
-            ->rawColumns(["action", "status"])
+            ->rawColumns(["action", "status", "profile_image"])
             ->make();
     }
 
