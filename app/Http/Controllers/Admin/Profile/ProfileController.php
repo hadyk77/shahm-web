@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Profile;
 
 use App\Enums\AdminEnum;
 use App\Enums\GuardEnum;
+use App\Enums\ProfileImageEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Profile\ProfileRequest;
 use App\Http\Requests\Admin\Profile\UpdatePasswordRequest;
@@ -33,11 +34,11 @@ class ProfileController extends Controller
 
             $image = ResizeImage::make()
                 ->enableAspectRatio()
-                ->width(AdminEnum::PROFILE_IMAGE_WIDTH)
-                ->height(AdminEnum::PROFILE_IMAGE_HEIGHT)
+                ->width(ProfileImageEnum::PROFILE_IMAGE_WIDTH)
+                ->height(ProfileImageEnum::PROFILE_IMAGE_HEIGHT)
                 ->upload($request->avatar);
 
-            $admin->addMedia($image)->toMediaCollection(AdminEnum::PROFILE_IMAGE);
+            $admin->addMedia($image)->toMediaCollection(ProfileImageEnum::PROFILE_IMAGE);
 
         }
 
