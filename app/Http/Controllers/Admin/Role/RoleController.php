@@ -2,84 +2,67 @@
 
 namespace App\Http\Controllers\Admin\Role;
 
+use App\Datatables\RoleDatatables;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Role\RoleRequest;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Services\Role\RoleServices;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use function __;
+use function back;
+
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request, RoleDatatables $roleDatatables)
     {
-        //
+        if ($request->wantsJson()) {
+            return $roleDatatables->datatables($request);
+        }
+        return view("admin.pages.roles.index")->with([
+            "columns" => $roleDatatables::columns(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        $permissions = Permission::query()->get();
+        return view("admin.pages.roles.create")->with([
+            "permissions" => $permissions,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(RoleRequest $request): RedirectResponse
     {
-        //
+        RoleServices::store($request);
+        return back()->with('success', __("Role Added Successfully"));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit(Role $role): View
     {
-        //
+        $permissions = Permission::query()->get();
+        return \view("admin.pages.roles.edit")->with([
+            "role" => $role,
+            "permissions" => $permissions,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(RoleRequest $request, Role $role): RedirectResponse
     {
-        //
+        RoleServices::update($request, $role);
+        return back()->with("success", __("Role Updated Successfully"));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function destroy(Role $role): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if ($role->id === 1) {
+            return $this->sendFailedResponse(__("This role can not be deleted"));
+        }
+        $role->delete();
+        return $this::sendSuccessResponse(__("Role Deleted Successfully"));
     }
 }

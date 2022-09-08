@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\Notification\NotificationController;
 use App\Http\Controllers\Admin\Order\OrderController;
 use App\Http\Controllers\Admin\Page\PageController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
+use App\Http\Controllers\Admin\Role\RoleController;
 use App\Http\Controllers\Admin\Service\ServiceController;
 use App\Http\Controllers\Admin\Settings\AppCommissionController;
 use App\Http\Controllers\Admin\Settings\BasicInformationController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Admin\Settings\DefaultImagesController;
 use App\Http\Controllers\Admin\Settings\FirebaseController;
 use App\Http\Controllers\Admin\Settings\PaymentsController;
 use App\Http\Controllers\Admin\Settings\SocialMediaController;
+use App\Http\Controllers\Admin\Staff\StaffController;
 use App\Http\Controllers\Admin\Status\StatusController;
 use App\Http\Controllers\Admin\Translation\TranslationController;
 use App\Http\Controllers\Admin\UpgradeOptions\UpgradeOptionsController;
@@ -108,6 +110,10 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::get("translation", [TranslationController::class, "index"])->name("translation.index");
 
     Route::post("get-translations-columns", [TranslationController::class, "show"])->name("translation.show");
+
+    Route::resource("staff", StaffController::class)->except("show");
+
+    Route::resource("role", RoleController::class)->except("show");
 
     Route::post("translation", [TranslationController::class, "update"])->name("translation.update");
 

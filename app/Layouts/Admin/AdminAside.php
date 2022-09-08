@@ -170,6 +170,42 @@ class AdminAside
                 ]
             ],
             [
+                "title" => __("Staff & Permissions"),
+                "canShow" => true,
+                "menu" => [
+                    [
+                        "name" => __("Permissions"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Permissions"),
+                                "route" => route('admin.role.index'),
+                            ],
+                            [
+                                "name" => __("Add New Permission"),
+                                "route" => route('admin.role.create'),
+                            ],
+                        ]
+                    ],
+                    [
+                        "name" => __("Staff"),
+                        "route" => "#",
+                        "canShow" => true,
+                        "sub_menu" => [
+                            [
+                                "name" => __("All Staff"),
+                                "route" => route("admin.staff.index"),
+                            ],
+                            [
+                                "name" => __("Add New Staff"),
+                                "route" => route("admin.staff.create"),
+                            ],
+                        ]
+                    ]
+                ]
+            ],
+            [
                 "title" => __("General Settings"),
                 "canShow" => true,
                 "menu" => [
