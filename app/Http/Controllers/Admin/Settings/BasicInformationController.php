@@ -31,6 +31,8 @@ class BasicInformationController extends Controller
             "second_email" => $request->second_email,
             "first_phone" => $request->first_phone,
             "second_phone" => $request->second_phone,
+            "maximum_indebtedness_for_captain" => $request->maximum_indebtedness_for_captain,
+            "service_price_per_kilometer" => $request->service_price_per_kilometer,
             "tax" => $request->tax,
         ]);
 

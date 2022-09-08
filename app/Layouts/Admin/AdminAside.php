@@ -23,35 +23,8 @@ class AdminAside
                 "menu" => [
                     [
                         "name" => __("Orders"),
-                        "route" => "#",
+                        "route" => route('admin.order.index'),
                         "canShow" => true,
-                        "sub_menu" => [
-                            [
-                                "name" => __("All Orders"),
-                                "route" => "#",
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("Waiting Offers"),
-                                "route" => "#",
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("In Way Orders"),
-                                "route" => "#",
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("Completed Orders"),
-                                "route" => "#",
-                                "canShow" => true,
-                            ],
-                            [
-                                "name" => __("Canceled Orders"),
-                                "route" => "#",
-                                "canShow" => true,
-                            ],
-                        ]
                     ]
                 ]
             ],
@@ -361,7 +334,7 @@ class AdminAside
                             ],
                             [
                                 "name" => __("Translations"),
-                                "route" => "/admin/translations",
+                                "route" => "/admin/translations/ar/translations",
                             ],
                         ]
                     ]

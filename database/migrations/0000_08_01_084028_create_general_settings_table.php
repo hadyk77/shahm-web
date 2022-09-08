@@ -46,6 +46,8 @@ return new class extends Migration {
             $table->double("client_commission")->default(0);
             $table->double("captain_commission")->default(0);
             $table->double("tax")->default(15);
+            $table->double("maximum_indebtedness_for_captain")->default(100);
+            $table->double("service_price_per_kilometer")->default(10);
 
             $table->string("app_version")->default('1.0.0');
             $table->timestamps();

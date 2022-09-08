@@ -11,8 +11,10 @@ use App\Http\Controllers\Admin\Coupon\DiscountController;
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
 use App\Http\Controllers\Admin\Governorate\GovernorateController;
 use App\Http\Controllers\Admin\IntroImage\IntroImageController;
+use App\Http\Controllers\Admin\Messages\MessagesController;
 use App\Http\Controllers\Admin\Nationality\NationalityController;
 use App\Http\Controllers\Admin\Notification\NotificationController;
+use App\Http\Controllers\Admin\Order\OrderController;
 use App\Http\Controllers\Admin\Page\PageController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
 use App\Http\Controllers\Admin\Service\ServiceController;
@@ -72,6 +74,10 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::resource("nationality", NationalityController::class)->except('show');
 
     Route::resource("user", UserController::class);
+
+    Route::post('message/{user}', MessagesController::class)->name("message.send");
+
+    Route::resource("order", OrderController::class);
 
     Route::resource("captain", CaptainController::class);
 

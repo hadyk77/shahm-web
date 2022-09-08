@@ -19,10 +19,12 @@ return new class extends Migration {
             $table->foreignId("captain_id")->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("offer_id")->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->double("product_price");
-            $table->double("captain_cost");
+            $table->double("delivery_cost");
             $table->double("tax")->default(0);
+            $table->double("grand_total");
             $table->longText("order_items")->nullable();
             $table->string("payment_method");
+            $table->string("order_code")->nullable();
             $table->string("payment_status");
             $table->string("order_status");
             $table->string("order_type");

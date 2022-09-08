@@ -7,6 +7,9 @@
                     @if(request()->routeIs("admin.user.index") || request()->routeIs("admin.captain.index"))
                         status: $('.form-content').find("#status").val(),
                     @endif
+                    @if(request()->routeIs("admin.order.index"))
+                        status: $('#order_status').val(),
+                    @endif
                 })
             }
         },

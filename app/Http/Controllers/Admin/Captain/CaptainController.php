@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Captain;
 
 use App\Datatables\CaptainDatatables;
+use App\Datatables\OrderDatatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Captain\CaptainRequest;
 use App\Services\Captain\CaptainServices;
@@ -20,6 +21,7 @@ class CaptainController extends Controller
         private readonly CaptainServices     $captainService,
         private readonly UserServices        $userServices,
         private readonly VehicleTypeServices $vehicleTypeServices,
+        private readonly OrderDatatables     $orderDatatables,
     )
     {
     }
@@ -51,6 +53,20 @@ class CaptainController extends Controller
             return back()->withInput()->with("error", $exception->getMessage());
         }
         return back()->with("success", __("Captain Added Successfully"));
+    }
+
+    public function show(Request $request, $id)
+    {
+        if ($request->expectsJson()) {
+            $request->merge([
+                "captain_id" => $id
+            ]);
+            return $this->orderDatatables->datatables($request);
+        }
+        return view("admin.pages.captains.show")->with([
+            "captain" => $this->captainService->findById($id),
+            "columns" => $this->orderDatatables::columns(),
+        ]);
     }
 
     public function edit($id)

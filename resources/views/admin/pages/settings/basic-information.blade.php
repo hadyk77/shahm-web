@@ -63,6 +63,20 @@
                     class="mt-5"
                     :model="$gs"
                 />
+                <x-input-field
+                    name="maximum_indebtedness_for_captain"
+                    :title="__('Maximum Indebtedness For Captain')"
+                    type="number"
+                    class="mt-5"
+                    :model="$gs"
+                />
+                <x-input-field
+                    name="service_price_per_kilometer"
+                    :title="__('Service Price Per Kilometer')"
+                    type="number"
+                    class="mt-5"
+                    :model="$gs"
+                />
             </x-card-body>
             <x-card-footer>
                 <x-update-btn />
