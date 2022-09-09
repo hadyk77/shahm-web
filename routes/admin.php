@@ -49,73 +49,97 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
     Route::get("captain-chart", [DashboardController::class, "captainChart"])->name("captain.chart");
 
-    Route::resource('service', ServiceController::class)->except("destroy", "create", "store");
+    Route::middleware('can:orders')->group(function (){
 
-    Route::resource("contact-type", ContactTypeController::class)->except("show");
-
-    Route::resource("contact", ContactController::class)->only("show", "index", "destroy");
-
-    Route::resource("discount", DiscountController::class)->except('show');
-
-    Route::resource("verification-options", VerificationOptionsController::class)->except("show");
-
-    Route::resource("upgrade-options", UpgradeOptionsController::class)->except("show");
-
-    Route::resource("banner", BannerController::class)->except("show");
-
-    Route::resource("country", CountryController::class)->except('show');
-
-    Route::resource("governorate", GovernorateController::class);
-
-    Route::resource("page", PageController::class)->except('show');
-
-    Route::resource("vehicle-type", VehicleTypeController::class)->except('show');
-
-    Route::resource("intro-image", IntroImageController::class)->except('show');
-
-    Route::resource("nationality", NationalityController::class)->except('show');
-
-    Route::resource("user", UserController::class);
-
-    Route::post('message/{user}', MessagesController::class)->name("message.send");
-
-    Route::resource("order", OrderController::class);
-
-    Route::resource("captain", CaptainController::class);
-
-    Route::resource("verification-files", VerificationFilesController::class)->only("index", "show", "store");
-
-    Route::resource("notification", NotificationController::class)->only("index", "update");
-
-    Route::post("update-status", StatusController::class)->name("status.update");
-
-    Route::prefix("settings")->name("settings.")->group(function () {
-
-        Route::resource("basic-information", BasicInformationController::class)->only("index", "store");
-
-        Route::resource("app-commission", AppCommissionController::class)->only("index", "store");
-
-        Route::resource("payment-options", PaymentsController::class)->only("index", "store");
-
-        Route::resource("social-media", SocialMediaController::class)->only("index", "store");
-
-        Route::get("int-firebase", [FirebaseController::class, "init"])->name("init.firebase");
-
-        Route::resource("firebase", FirebaseController::class)->only("index", "store");
-
-        Route::resource("default-images", DefaultImagesController::class)->only("index", "store");
+        Route::resource("order", OrderController::class);
 
     });
 
-    Route::get("translation", [TranslationController::class, "index"])->name("translation.index");
+    Route::middleware('can:services')->group(function () {
 
-    Route::post("get-translations-columns", [TranslationController::class, "show"])->name("translation.show");
+        Route::resource('service', ServiceController::class)->except("destroy", "create", "store");
 
-    Route::resource("staff", StaffController::class)->except("show");
+    });
 
-    Route::resource("role", RoleController::class)->except("show");
+    Route::middleware('can:users')->group(function () {
 
-    Route::post("translation", [TranslationController::class, "update"])->name("translation.update");
+        Route::resource("user", UserController::class);
+
+        Route::post('message/{user}', MessagesController::class)->name("message.send");
+
+        Route::resource("captain", CaptainController::class)->middleware("can:users");
+
+        Route::resource("verification-files", VerificationFilesController::class)->middleware("can:users")->only("index", "show", "store");
+
+    });
+
+    Route::middleware("can:contact_us")->group(function () {
+
+        Route::resource("contact-type", ContactTypeController::class)->except("show");
+
+        Route::resource("contact", ContactController::class)->only("show", "index", "destroy");
+
+    });
+
+    Route::middleware("can:marketing")->group(function () {
+
+        Route::resource("discount", DiscountController::class)->except('show');
+
+        Route::resource("intro-image", IntroImageController::class)->except('show');
+
+        Route::resource("banner", BannerController::class)->except("show");
+
+    });
+
+    Route::middleware("can:general_setting")->group(function () {
+
+        Route::resource("verification-options", VerificationOptionsController::class)->except("show");
+
+        Route::resource("upgrade-options", UpgradeOptionsController::class)->except("show");
+
+        Route::resource("country", CountryController::class)->except('show');
+
+        Route::resource("governorate", GovernorateController::class);
+
+        Route::resource("page", PageController::class)->except('show');
+
+        Route::resource("vehicle-type", VehicleTypeController::class)->except('show');
+
+        Route::resource("nationality", NationalityController::class)->except('show');
+
+        Route::post("update-status", StatusController::class)->name("status.update");
+
+        Route::prefix("settings")->name("settings.")->middleware("can:general_setting")->group(function () {
+
+            Route::resource("basic-information", BasicInformationController::class)->only("index", "store");
+
+            Route::resource("app-commission", AppCommissionController::class)->only("index", "store");
+
+            Route::resource("payment-options", PaymentsController::class)->only("index", "store");
+
+            Route::resource("social-media", SocialMediaController::class)->only("index", "store");
+
+            Route::resource("firebase", FirebaseController::class)->only("index", "store");
+
+            Route::resource("default-images", DefaultImagesController::class)->only("index", "store");
+
+        });
+
+        Route::get("translation", [TranslationController::class, "index"])->name("translation.index");
+
+        Route::post("get-translations-columns", [TranslationController::class, "show"])->name("translation.show");
+
+        Route::post("translation", [TranslationController::class, "update"])->name("translation.update");
+
+    });
+
+    Route::middleware("can:staff")->group(function () {
+
+        Route::resource("staff", StaffController::class)->except("show");
+
+        Route::resource("role", RoleController::class)->except("show");
+
+    });
 
     Route::prefix("profile")->name("profile.")->group(function () {
 
@@ -128,4 +152,9 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     });
 
     Route::put("update-device-token", [DashboardController::class, "updateDeviceToken"])->name("update-device-token");
+
+    Route::resource("notification", NotificationController::class)->only("index", "update");
+
+    Route::get("int-firebase", [FirebaseController::class, "init"])->name("settings.init.firebase");
+
 });
