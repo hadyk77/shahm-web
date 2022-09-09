@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Messages;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Notifications\UserCustomNotification;
+use App\Notifications\User\UserCustomNotification;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;

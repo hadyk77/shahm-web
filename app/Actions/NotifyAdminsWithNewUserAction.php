@@ -3,7 +3,7 @@
 namespace App\Actions;
 
 use App\Models\Admin;
-use App\Notifications\NewUserRegisteredNotification;
+use App\Notifications\User\NewUserRegisteredNotification;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class NotifyAdminsWithNewUserAction

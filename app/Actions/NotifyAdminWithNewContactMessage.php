@@ -3,7 +3,7 @@
 namespace App\Actions;
 
 use App\Models\Admin;
-use App\Notifications\ContactNotification;
+use App\Notifications\User\ContactNotification;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class NotifyAdminWithNewContactMessage

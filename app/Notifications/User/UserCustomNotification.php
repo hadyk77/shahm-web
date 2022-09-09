@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\User;
 
 use App\Enums\NotificationEnum;
 use Illuminate\Notifications\Notification;

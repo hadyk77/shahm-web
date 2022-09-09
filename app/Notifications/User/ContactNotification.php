@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\User;
 
 use App\Enums\NotificationEnum;
-use App\Models\User;
+use App\Models\Contact;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Kutia\Larafirebase\Messages\FirebaseMessage;
 
-class NewUserRegisteredNotification extends Notification
+class ContactNotification extends Notification
 {
-    private string $user;
+    private Contact $contact;
 
-    public function __construct(User $user)
+    public function __construct(Contact $contact)
     {
-        $this->user = $user;
+        $this->contact = $contact;
     }
 
     public function via($notifiable): array
     {
-        return ['firebase', 'database'];
+        return ['database', "firebase"];
     }
 
     public function toMail($notifiable): MailMessage
@@ -33,8 +33,8 @@ class NewUserRegisteredNotification extends Notification
     public function toArray($notifiable): array
     {
         return [
-            "type" => NotificationEnum::NEW_USER_REGISTER,
-            "user" => $this->user,
+            "type" => NotificationEnum::NEW_CONTACT_MESSAGE,
+            "contact" => $this->contact,
         ];
     }
 
@@ -43,10 +43,8 @@ class NewUserRegisteredNotification extends Notification
         if (!is_null($notifiable->device_token)) {
             return (new FirebaseMessage)
                 ->withTitle(__("Hey,") . " " . $notifiable->name)
-                ->withBody(NotificationEnum::notificationTypes()[NotificationEnum::NEW_USER_REGISTER])
+                ->withBody(NotificationEnum::notificationTypes()[NotificationEnum::NEW_CONTACT_MESSAGE])
                 ->asMessage($notifiable->device_token);
         }
     }
-
-
 }
