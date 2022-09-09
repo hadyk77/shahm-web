@@ -2,6 +2,7 @@
 
 namespace App\Services\Order;
 
+use App\Actions\NotificationActions\NotifyAdminWithNewOrderRequest;
 use App\Enums\OrderEnum;
 use App\Models\Order;
 use App\Services\ServiceInterface;
@@ -76,6 +77,8 @@ class OrderServices implements ServiceInterface
             ]);
 
             $this->updateOrderCode($order);
+
+            NotifyAdminWithNewOrderRequest::run($order);
 
         });
     }

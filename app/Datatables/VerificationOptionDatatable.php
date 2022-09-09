@@ -15,6 +15,7 @@ class VerificationOptionDatatable implements DatatableInterface
     {
         return [
             "icon",
+            "active_icon",
             "title",
             "status",
             "created_at",
@@ -27,6 +28,9 @@ class VerificationOptionDatatable implements DatatableInterface
         return Datatables::of($this->query($request))
             ->addColumn("icon", function (VerificationOption $verificationOption) {
                 return DataTableActions::image($verificationOption->icon);
+            })
+            ->addColumn("active_icon", function (VerificationOption $verificationOption) {
+                return DataTableActions::image($verificationOption->active_icon);
             })
             ->addColumn("created_at", function (VerificationOption $verificationOption) {
                 return Helper::formatDate($verificationOption->created_at);
@@ -47,7 +51,7 @@ class VerificationOptionDatatable implements DatatableInterface
                     ->delete(route("admin.verification-options.destroy", $verificationOption->id))
                     ->make();
             })
-            ->rawColumns(["action", "icon", "status"])
+            ->rawColumns(["action", "icon", "status", 'active_icon'])
             ->make();
     }
 

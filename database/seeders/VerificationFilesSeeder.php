@@ -23,6 +23,7 @@ class VerificationFilesSeeder extends Seeder
             "related_orders" => "all"
         ]);
         $verification1->addMedia(public_path("test_images/verifications/image-01.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON);
+        $verification1->addMedia(public_path("test_images/verifications/image-01.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON_ACTIVE);
 
         $verification2 = VerificationOption::query()->create([
             "title" => [
@@ -36,6 +37,7 @@ class VerificationFilesSeeder extends Seeder
             "related_orders" => "all"
         ]);
         $verification2->addMedia(public_path("test_images/verifications/image-02.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON);
+        $verification2->addMedia(public_path("test_images/verifications/image-02.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON_ACTIVE);
 
         $verification3 = VerificationOption::query()->create([
             "title" => [
@@ -51,6 +53,7 @@ class VerificationFilesSeeder extends Seeder
             'sale_link' => "https://google.com",
         ]);
         $verification3->addMedia(public_path("test_images/verifications/image-03.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON);
+        $verification3->addMedia(public_path("test_images/verifications/image-03-active.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON_ACTIVE);
 
         $verification4 = VerificationOption::query()->create([
             "title" => [
@@ -66,6 +69,7 @@ class VerificationFilesSeeder extends Seeder
             'sale_link' => "https://google.com",
         ]);
         $verification4->addMedia(public_path("test_images/verifications/image-04.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON);
+        $verification4->addMedia(public_path("test_images/verifications/image-04-active.png"))->preservingOriginal()->toMediaCollection(VerificationOptionEnum::ICON_ACTIVE);
 
 
     }

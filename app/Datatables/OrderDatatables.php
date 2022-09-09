@@ -77,6 +77,7 @@ class OrderDatatables implements DatatableInterface
             ->when($request->filled("status") && in_array($request->status, array_keys(OrderEnum::statues())), function ($query) use ($request) {
                 $query->where('order_status', $request->status);
             })
+            ->latest("orders.created_at")
             ->select("*");
     }
 }

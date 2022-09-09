@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API\Auth;
 
-use App\Actions\NotifyAdminsWithNewUserAction;
+use App\Actions\NotificationActions\NotifyAdminsWithNewUserAction;
 use App\Enums\ProfileImageEnum;
 use App\Enums\UserEnum;
 use App\Models\Admin;

@@ -17,14 +17,7 @@ class DiscountController extends Controller
 
     public function randomDiscount()
     {
-        $discount = $this->discountServices->randomOne();
-        if (!is_null($discount)) {
-            return $this::sendSuccessResponse([
-                "code" => $discount->code,
-                "type" => $discount->type,
-                "value" => $discount->type == DiscountEnum::PERCENTAGE ? $discount->percentage : $discount->amount,
-            ]);
-        }
+
         return $this::sendSuccessResponse([], __("There is no discount"));
     }
 }

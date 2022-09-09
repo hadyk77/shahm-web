@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Contact;
 
-use App\Actions\NotifyAdminWithNewContactMessage;
+use App\Actions\NotificationActions\NotifyAdminWithNewContactMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Auth;

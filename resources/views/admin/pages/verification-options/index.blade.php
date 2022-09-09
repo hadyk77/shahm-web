@@ -12,7 +12,8 @@
         </x-card-header>
         <x-card-body>
             <x-datatable-html>
-                <td>{{__("Icon")}}</td>
+                <td>{{__("In active Icon")}}</td>
+                <td>{{__("Active Icon")}}</td>
                 <td>{{__("Title")}}</td>
                 <td>{{__("Status")}}</td>
                 <td>{{__("Created At")}}</td>

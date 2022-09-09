@@ -3,7 +3,7 @@
 @section("content")
     <div class="row">
         <div class="col-md-3">
-            <a href="#" class="card bg-white hoverable card-xl-stretch mb-xl-8">
+            <a href="{{route('admin.order.index')}}" class="card bg-white hoverable card-xl-stretch mb-xl-8">
                 <div class="card-body text-center">
                     <span class="svg-icon svg-icon-black svg-icon-3x ms-n1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

@@ -9,7 +9,7 @@ use Kutia\Larafirebase\Messages\FirebaseMessage;
 
 class NewOrderNotification extends Notification
 {
-    public function __construct(Order $order)
+    public function __construct(public Order $order)
     {
     }
 
@@ -20,12 +20,10 @@ class NewOrderNotification extends Notification
 
     public function toDatabase($notifiable): array
     {
-        return [];
-    }
-
-    public function toArray($notifiable): array
-    {
-        return [];
+        return [
+            "type" => NotificationEnum::NEW_ORDER_REQUEST,
+            "order" => $this->order,
+        ];
     }
 
     public function toFirebase($notifiable)

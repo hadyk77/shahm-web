@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\NotificationActions;
 
 use App\Models\Admin;
 use App\Notifications\User\NewUserRegisteredNotification;
