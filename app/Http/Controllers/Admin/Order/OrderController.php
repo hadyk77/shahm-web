@@ -22,4 +22,11 @@ class OrderController extends Controller
             "columns" => $this->orderDatatables::columns(),
         ]);
     }
+
+    public function show($id)
+    {
+        return view("admin.pages.orders.show")->with([
+            "order" => $this->orderServices->findById($id),
+        ]);
+    }
 }

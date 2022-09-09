@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->double("items_price")->nullable();
             $table->double("delivery_cost")->nullable();
             $table->double("tax")->default(0);
+            $table->double("tax_percentage")->default(0);
             $table->double("grand_total")->nullable();
             $table->longText("order_items")->nullable();
             $table->string("payment_method");
@@ -36,6 +37,7 @@ return new class extends Migration {
             $table->string("pickup_location_lat")->nullable();
             $table->string("pickup_location_long")->nullable();
             $table->string("coupon_code")->nullable();
+            $table->string("discount_amount")->nullable();
             $table->timestamps();
         });
     }
