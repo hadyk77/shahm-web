@@ -26,7 +26,7 @@ class OrderRequest extends FormRequest
             "pickup_location_long" => "required|numeric",
 
             // Payment Details
-            "payment_method" => "required|in:" . implode(",", OrderEnum::enabledPaymentMethods()),
+            "payment_method" => "required|in:" . implode(",", array_keys(OrderEnum::enabledPaymentMethods())),
             "coupon_code" => "nullable|exists:discounts,code",
         ];
     }

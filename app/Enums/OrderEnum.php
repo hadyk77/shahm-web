@@ -39,19 +39,13 @@ enum OrderEnum
         $gs = GeneralSetting::query()->first();
         $paymentMethods = [];
         if ($gs->is_credit_card_enabled) {
-            $paymentMethods[] = [
-                self::CREDIT_CARD => __("Credit Cart"),
-            ];
+            $paymentMethods[self::CREDIT_CARD] = __("Credit Cart");
         }
         if ($gs->is_wallet_enabled) {
-            $paymentMethods[] = [
-                self::WALLET => __("Wallet"),
-            ];
+            $paymentMethods[self::WALLET] = __("Wallet");
         }
         if ($gs->is_cash_enabled) {
-            $paymentMethods[] = [
-                self::CASH => __("Cash")
-            ];
+            $paymentMethods[self::CASH] = __("Cash");
         }
         return $paymentMethods;
     }
