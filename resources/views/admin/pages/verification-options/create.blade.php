@@ -40,6 +40,14 @@
                     name="icon"
                     required
                     col="6"
+                    :title="__('Inactive Icon')"
+                    class="mt-5"
+                />
+                <x-file-field
+                    name="active_icon"
+                    required
+                    :title="__('Active Icon')"
+                    col="6"
                     class="mt-5"
                 />
                 <x-input-field

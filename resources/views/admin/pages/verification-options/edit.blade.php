@@ -50,6 +50,15 @@
                     col="6"
                     class="mt-5"
                 />
+                <x-file-field
+                    name="active_icon"
+                    required
+                    :model="$option"
+                    :collection="\App\Enums\VerificationOptionEnum::ICON_ACTIVE"
+                    :title="__('Active Icon')"
+                    col="6"
+                    class="mt-5"
+                />
                 <x-input-field
                     name="purchase_link"
                     col="6"

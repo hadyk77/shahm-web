@@ -16,6 +16,7 @@ class VerificationOptionRequest extends FormRequest
             "description" => "required|array|min:1",
             "description.ar" => "required|string",
             "icon" => Helper::imageRules($this->isMethod("PUT")),
+            "active_icon" => Helper::imageRules($this->isMethod("PUT")),
             "related_orders" => "required|in:" . implode(",", array_keys(VerificationOptionEnum::relatedOrders()))
         ];
     }

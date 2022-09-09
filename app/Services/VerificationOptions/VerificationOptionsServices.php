@@ -79,5 +79,11 @@ class VerificationOptionsServices implements ServiceInterface
             $option->addMedia($request->icon)->toMediaCollection(VerificationOptionEnum::ICON);
 
         }
+
+        if ($request->hasFile('active_icon')) {
+
+            $option->addMedia($request->active_icon)->toMediaCollection(VerificationOptionEnum::ICON_ACTIVE);
+
+        }
     }
 }

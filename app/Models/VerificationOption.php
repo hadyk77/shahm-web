@@ -18,12 +18,20 @@ class VerificationOption extends BaseModel implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(VerificationOptionEnum::ICON)->singleFile();
+        $this->addMediaCollection(VerificationOptionEnum::ICON_ACTIVE)->singleFile();
     }
 
     public function icon(): Attribute
     {
         return Attribute::get(function () {
             return $this->getFirstMediaUrl(VerificationOptionEnum::ICON);
+        });
+    }
+
+    public function activeIcon(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->getFirstMediaUrl(VerificationOptionEnum::ICON_ACTIVE);
         });
     }
 
