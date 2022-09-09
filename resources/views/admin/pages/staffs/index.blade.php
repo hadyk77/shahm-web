@@ -7,7 +7,7 @@
                 <x-datatable-search-input/>
             </x-card-title>
             <x-card-toolbar>
-                <x-add-btn :title="__('Add Staff')" :route="route('admin.admin-staff.create')"/>
+                <x-add-btn :title="__('Add Staff')" :route="route('admin.staff.create')"/>
             </x-card-toolbar>
         </x-card-header>
         <x-card-body>
@@ -24,7 +24,7 @@
 
 @section("scripts")
     <x-datatable.script
-        :columns="['user_profile_image','name', 'status','created_at', 'updated_at']"
-        :route="route('admin.admin-staff.index')"
+        :columns="$columns"
+        :route="route('admin.staff.index')"
     />
 @endsection

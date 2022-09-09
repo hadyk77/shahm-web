@@ -48,6 +48,6 @@ class RoleDatatables implements DatatableInterface
 
     public function query($request): Builder
     {
-        return Role::query()->select("*");
+        return Role::query()->where("id", "!=", 1)->select("*");
     }
 }

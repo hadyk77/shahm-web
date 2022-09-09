@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section("content")
-    <form action="{{route("admin.admin-staff.update", $staff->id)}}" method="post" enctype="multipart/form-data">
+    <form action="{{route("admin.staff.update", $staff->id)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method("PUT")
         <x-card-content>
@@ -10,7 +10,7 @@
                     {{__("Edit Staff")}} - {{$staff->name}}
                 </x-card-title>
                 <x-card-toolbar>
-                    <x-back-btn :route="route('admin.admin-staff.index')"/>
+                    <x-back-btn :route="route('admin.staff.index')"/>
                 </x-card-toolbar>
             </x-card-header>
             <x-card-body>
@@ -63,7 +63,7 @@
                     name="user_profile_image"
                     class="mt-5"
                     :model="$staff"
-                    :collection="\App\Enums\UserEnums::USER_PROFILE_IMAGE"
+                    :collection="\App\Enums\ProfileImageEnum::PROFILE_IMAGE"
                     :title="__('Profile Image')"
                 />
             </x-card-body>

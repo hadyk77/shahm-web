@@ -2,7 +2,7 @@
 
 namespace App\Datatables;
 
-use App\Enums\RoleEnums;
+use App\Models\Admin;
 use App\Models\User;
 use App\Support\DataTableActions;
 use Exception;
@@ -11,46 +11,48 @@ use Log;
 
 class StaffDatatables implements DatatableInterface
 {
-    public static function columns()
+    public static function columns(): array
     {
-        // TODO: Implement columns() method.
+        return [
+            'user_profile_image',
+            'name',
+            'status',
+            'created_at',
+            'updated_at'
+        ];
     }
 
     public function datatables($request)
     {
-        try {
-            return datatables($this->query($request))
-                ->addColumn("user_profile_image", function (User $user) {
-                    return DataTableActions::image($user->profile_user_image);
-                })
-                ->addColumn("action", function (User $user) {
-                    return (new DataTableActions())
-                        ->edit(route("admin.admin-staff.edit", $user->id))
-                        ->delete(route("admin.admin-staff.destroy", $user->id))
-                        ->make();
-                })
-                ->addColumn("status", function (User $user) {
-                    return (new DataTableActions())
-                        ->model($user)
-                        ->modelId($user->id)
-                        ->checkStatus($user->status)
-                        ->switcher();
-                })
-                ->addColumn("created_at", function (User $user) {
-                    return $user->created_at->format('Y-m-d');
-                })
-                ->addColumn("updated_at", function (User $user) {
-                    return $user->updated_at->format('Y-m-d');
-                })
-                ->rawColumns(['action', 'status', 'user_profile_image'])
-                ->make(true);
-        } catch (Exception $e) {
-            Log::error(get_class($this) . " Error " . $e->getMessage());
-        }
+        return datatables($this->query($request))
+            ->addColumn("user_profile_image", function (Admin $admin) {
+                return DataTableActions::image($admin->profile_image);
+            })
+            ->addColumn("action", function (Admin $admin) {
+                return (new DataTableActions())
+                    ->edit(route("admin.staff.edit", $admin->id))
+                    ->delete(route("admin.staff.destroy", $admin->id))
+                    ->make();
+            })
+            ->addColumn("status", function (Admin $admin) {
+                return (new DataTableActions())
+                    ->model($admin)
+                    ->modelId($admin->id)
+                    ->checkStatus($admin->status)
+                    ->switcher();
+            })
+            ->addColumn("created_at", function (Admin $admin) {
+                return $admin->created_at->format('Y-m-d');
+            })
+            ->addColumn("updated_at", function (Admin $admin) {
+                return $admin->updated_at->format('Y-m-d');
+            })
+            ->rawColumns(['action', 'status', 'user_profile_image'])
+            ->toJson(true);
     }
 
     public function query($request): Builder
     {
-        return User::query()->where("id", "!=", 1)->select("*");
+        return Admin::query()->where("id", "!=", 1)->select("*");
     }
 }

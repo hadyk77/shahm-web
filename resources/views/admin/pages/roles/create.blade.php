@@ -6,16 +6,18 @@
         <x-card-content>
             <x-card-header>
                 <x-card-title>
-                    {{__("Add New Role")}}
+                    {{__("Add New Permission")}}
                 </x-card-title>
                 <x-card-toolbar>
                     <x-back-btn :route="route('admin.role.index')"/>
                 </x-card-toolbar>
             </x-card-header>
             <x-card-body>
-                <x-translation-input-field
+                <x-input-field
+                    translated-input=""
                     required
-                    :title="__('Role')"
+                    col="12"
+                    :title="__('Permission Title')"
                     name="title"
                 />
                 <div class="col-md-12 mt-5">

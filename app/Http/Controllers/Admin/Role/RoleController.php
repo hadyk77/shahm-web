@@ -4,27 +4,32 @@ namespace App\Http\Controllers\Admin\Role;
 
 use App\Datatables\RoleDatatables;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Role\RoleRequest;
+use App\Http\Requests\Admin\Role\RoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Services\Role\RoleServices;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use function __;
-use function back;
-
+use Log;
+use Throwable;
 
 class RoleController extends Controller
 {
-    public function index(Request $request, RoleDatatables $roleDatatables)
+
+    public function __construct(private readonly RoleDatatables $roleDatatables, private readonly RoleServices $roleServices)
+    {
+    }
+
+    public function index(Request $request)
     {
         if ($request->wantsJson()) {
-            return $roleDatatables->datatables($request);
+            return $this->roleDatatables->datatables($request);
         }
         return view("admin.pages.roles.index")->with([
-            "columns" => $roleDatatables::columns(),
+            "columns" => $this->roleDatatables::columns(),
         ]);
     }
 
@@ -38,31 +43,46 @@ class RoleController extends Controller
 
     public function store(RoleRequest $request): RedirectResponse
     {
-        RoleServices::store($request);
-        return back()->with('success', __("Role Added Successfully"));
+        try {
+            $this->roleServices->store($request);
+        } catch (Exception|Throwable $exception) {
+            Log::error($exception->getMessage());
+            return back()->withInput()->with("error", $exception->getMessage());
+        }
+        return back()->with('success', __("Permission Added Successfully"));
     }
 
-    public function edit(Role $role): View
+    public function edit($id): View
     {
         $permissions = Permission::query()->get();
-        return \view("admin.pages.roles.edit")->with([
-            "role" => $role,
+        return view("admin.pages.roles.edit")->with([
+            "role" => $this->roleServices->findById($id),
             "permissions" => $permissions,
         ]);
     }
 
-    public function update(RoleRequest $request, Role $role): RedirectResponse
+    public function update(RoleRequest $request, $id): RedirectResponse
     {
-        RoleServices::update($request, $role);
-        return back()->with("success", __("Role Updated Successfully"));
+        try {
+            $this->roleServices->update($request, $id);
+        } catch (Exception|Throwable $exception) {
+            Log::error($exception->getMessage());
+            return back()->withInput()->with("error", $exception->getMessage());
+        }
+        return back()->with("success", __("Permission Updated Successfully"));
     }
 
-    public function destroy(Role $role): JsonResponse
+    public function destroy($id): JsonResponse
     {
-        if ($role->id === 1) {
-            return $this->sendFailedResponse(__("This role can not be deleted"));
+        if ($this->roleServices->findById($id)->id === 1) {
+            return $this->sendFailedResponse(__("This permission can not be deleted"));
         }
-        $role->delete();
-        return $this::sendSuccessResponse(__("Role Deleted Successfully"));
+        try {
+            $this->roleServices->destroy($id);
+        } catch (Exception|Throwable $exception) {
+            Log::error($exception->getMessage());
+            return $this::sendFailedResponse($exception->getMessage());
+        }
+        return $this::sendSuccessResponse(__("Permission Deleted Successfully"));
     }
 }

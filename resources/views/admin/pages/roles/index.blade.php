@@ -7,7 +7,7 @@
                 <x-datatable-search-input/>
             </x-card-title>
             <x-card-toolbar>
-                <x-add-btn :title="__('Add Role')" :route="route('admin.role.create')"/>
+                <x-add-btn :title="__('Add Permission')" :route="route('admin.role.create')"/>
             </x-card-toolbar>
         </x-card-header>
         <x-card-body>

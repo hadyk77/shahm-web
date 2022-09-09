@@ -7,17 +7,19 @@
         <x-card-content>
             <x-card-header>
                 <x-card-title>
-                    {{__("Edit Role")}} - {{$role->name}}
+                    {{__("Edit Permission")}} - {{$role->title}}
                 </x-card-title>
                 <x-card-toolbar>
                     <x-back-btn :route="route('admin.role.index')"/>
                 </x-card-toolbar>
             </x-card-header>
             <x-card-body>
-                <x-translation-input-field
+                <x-input-field
                     required
+                    translated-input
                     :model="$role"
-                    :title="__('Role')"
+                    col="12"
+                    :title="__('Permission Title')"
                     name="title"
                 />
                 <div class="col-md-12 mt-5">
