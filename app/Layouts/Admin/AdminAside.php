@@ -19,7 +19,7 @@ class AdminAside
             ],
             [
                 "title" => __("Orders"),
-                "canShow" => true,
+                "canShow" => \Gate::allows("orders"),
                 "menu" => [
                     [
                         "name" => __("Orders"),
@@ -30,7 +30,7 @@ class AdminAside
             ],
             [
                 "title" => __("Services"),
-                "canShow" => true,
+                "canShow" => \Gate::allows("services"),
                 "menu" => [
                     [
                         "name" => __("Services"),
@@ -41,7 +41,7 @@ class AdminAside
             ],
             [
                 "title" => __("Users"),
-                "canShow" => true,
+                "canShow" => \Gate::allows("users"),
                 "menu" => [
                     [
                         "name" => __("Clients"),
@@ -68,7 +68,7 @@ class AdminAside
             ],
             [
                 "title" => __("Contacts"),
-                "canShow" => true,
+                "canShow" => \Gate::allows("contact_us"),
                 "menu" => [
                     [
                         "name" => __("Contact Types"),
@@ -108,7 +108,7 @@ class AdminAside
             ],
             [
                 "title" => __("Marketing"),
-                "canShow" => true,
+                "canShow" => \Gate::allows("marketing"),
                 "menu" => [
                     [
                         "name" => __("Coupons"),
@@ -171,7 +171,7 @@ class AdminAside
             ],
             [
                 "title" => __("Staff & Permissions"),
-                "canShow" => true,
+                "canShow" => \Gate::allows("staff"),
                 "menu" => [
                     [
                         "name" => __("Permissions"),
@@ -207,7 +207,7 @@ class AdminAside
             ],
             [
                 "title" => __("General Settings"),
-                "canShow" => true,
+                "canShow" => \Gate::allows("general_setting"),
                 "menu" => [
                     [
                         "name" => __("Translation Center"),

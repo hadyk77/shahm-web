@@ -36,7 +36,7 @@ class PermissionSeeder extends Seeder
             ],
             [
                 "title" => [
-                    'ar' => "طلبات الدعم الفني",
+                    'ar' => "رسائل الدعم الفني",
                     "en" => "Contact Us"
                 ],
                 "name" => "contact_us"
