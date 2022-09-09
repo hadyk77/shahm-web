@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\V1\Order\OrderController;
 use App\Http\Controllers\API\V1\Auth\CheckPhoneController;
 use App\Http\Controllers\API\V1\Auth\GetUserByTokenController;
 use App\Http\Controllers\API\V1\Auth\LoginController;
@@ -100,6 +101,8 @@ Route::prefix("api/v1")->group(function () {
                 Route::delete("delete-account", DeleteAccountController::class);
 
             });
+
+            Route::apiResource("order", OrderController::class);
 
             Route::post("contact", ContactController::class);
 

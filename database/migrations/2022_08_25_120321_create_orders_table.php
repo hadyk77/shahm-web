@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\OrderEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,15 +19,15 @@ return new class extends Migration {
             $table->foreignId("user_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("captain_id")->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("offer_id")->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->double("product_price");
-            $table->double("delivery_cost");
+            $table->double("items_price")->nullable();
+            $table->double("delivery_cost")->nullable();
             $table->double("tax")->default(0);
-            $table->double("grand_total");
+            $table->double("grand_total")->nullable();
             $table->longText("order_items")->nullable();
             $table->string("payment_method");
             $table->string("order_code")->nullable();
-            $table->string("payment_status");
-            $table->string("order_status");
+            $table->string("payment_status")->default(OrderEnum::UNPAID);
+            $table->string("order_status")->default(OrderEnum::WAITING_OFFERS);
             $table->string("order_type");
             $table->string("drop_off_location")->nullable();
             $table->string("drop_off_location_lat")->nullable();
