@@ -15,13 +15,13 @@
         <div class="d-flex flex-wrap flex-stack gap-5 gap-lg-10">
             <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-lg-n2 me-auto" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_summary" aria-selected="true" role="tab">{{__("Order Summary")}}</a>
+                    <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#order_summary" aria-selected="true" role="tab">{{__("Order Summary")}}</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_history" aria-selected="false" role="tab" tabindex="-1">{{__("Order History")}}</a>
+                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#order_histories" aria-selected="false" role="tab" tabindex="-1">{{__("Order History")}}</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_history" aria-selected="false" role="tab" tabindex="-1">{{__("Order Chat")}}</a>
+                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#order_chat" aria-selected="false" role="tab" tabindex="-1">{{__("Order Chat")}}</a>
                 </li>
             </ul>
         </div>
@@ -234,7 +234,7 @@
             </div>
         </div>
         <div class="tab-content">
-            <div class="tab-pane fade active show" id="kt_ecommerce_sales_order_summary" role="tab-panel">
+            <div class="tab-pane fade active show" id="order_summary" role="tab-panel">
                 <div class="d-flex flex-column gap-7 gap-lg-10">
                     <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
                         <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
@@ -309,7 +309,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="kt_ecommerce_sales_order_history" role="tab-panel">
+            <div class="tab-pane fade" id="order_histories" role="tab-panel">
                 <div class="d-flex flex-column gap-7 gap-lg-10">
                     <div class="card card-flush py-4 flex-row-fluid">
                         <div class="card-header">
@@ -329,17 +329,46 @@
                                     </tr>
                                     </thead>
                                     <tbody class="fw-semibold text-gray-600">
-                                    <tr>
-                                        <td>09/09/2022</td>
-                                        <td>Order completed</td>
-                                        <td>
-                                            <div class="badge badge-light-success">Completed</div>
-                                        </td>
-                                        <td>No</td>
-                                    </tr>
+                                    @foreach($order->histories()->latest("order_histories.created_at")->get() as $history)
+                                        <tr>
+                                            <td>{{$history->created_at->format("Y/m/d")}}</td>
+                                            <td>{{$history->comment}}</td>
+                                            <td>
+                                                @if($history->type == "change_order_status")
+                                                    @if($history->order_status == \App\Enums\OrderEnum::DELIVERED)
+                                                        <div class="badge badge-light-success">{{__("Delivered")}}</div>
+                                                    @endif
+                                                    @if($history->order_status == \App\Enums\OrderEnum::WAITING_OFFERS)
+                                                        <div class="badge badge-light-info">{{__("Waiting Offers")}}</div>
+                                                    @endif
+                                                    @if($history->order_status == \App\Enums\OrderEnum::CANCELED)
+                                                        <div class="badge badge-light-danger">{{__("Canceled")}}</div>
+                                                    @endif
+                                                    @if($history->order_status == \App\Enums\OrderEnum::IN_PROGRESS)
+                                                        <div class="badge badge-light-primary">{{__("In Progress")}}</div>
+                                                    @endif
+                                                @endif
+                                            </td>
+                                            <td>{{$history->is_client_notified == 1 ? __("Yes") : __("No")}}</td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="order_chat" role="tab-panel">
+                <div class="d-flex flex-column gap-7 gap-lg-10">
+                    <div class="card card-flush py-4 flex-row-fluid">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>{{__("Chats")}}</h2>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+
                         </div>
                     </div>
                 </div>

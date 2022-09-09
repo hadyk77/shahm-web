@@ -3,8 +3,11 @@
 namespace App\Services\Order;
 
 use App\Actions\NotificationActions\NotifyAdminWithNewOrderRequest;
+use App\Actions\NotificationActions\NotifyClientWithCreationOfOrderAction;
 use App\Enums\OrderEnum;
+use App\Models\GeneralSetting;
 use App\Models\Order;
+use App\Models\OrderHistory;
 use App\Services\ServiceInterface;
 use Auth;
 use DB;
@@ -53,12 +56,14 @@ class OrderServices implements ServiceInterface
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
     {
-        return Order::query()->findOrFail($id);
+        return Order::query()->with(["client", "service"])->findOrFail($id);
     }
 
     public function store($request)
     {
         return DB::transaction(function () use ($request) {
+
+            $gs = GeneralSetting::query()->first();
 
             $order = Order::query()->create([
                 "service_id" => $request->service_id,
@@ -74,12 +79,23 @@ class OrderServices implements ServiceInterface
                 "pickup_location" => $request->pickup_location,
                 "pickup_location_lat" => $request->pickup_location_lat,
                 "pickup_location_long" => $request->pickup_location_long,
+
+                "tax" => 0,
+                "tax_percentage" => $gs->tax,
+                "discount_code" => $request->discount_code,
             ]);
+
+            $order->refresh();
 
             $this->updateOrderCode($order);
 
             NotifyAdminWithNewOrderRequest::run($order);
 
+            $this->storeHistoryForOrder(order: $order, is_client_notified: true);
+
+            NotifyClientWithCreationOfOrderAction::run(Auth::user(), $order);
+
+            return $order;
         });
     }
 
@@ -97,6 +113,42 @@ class OrderServices implements ServiceInterface
     {
         $order->update([
             "order_code" => "0000" . $order->id,
+        ]);
+    }
+
+    private function storeHistoryForOrder($order, $type = "change_order_status", $is_client_notified = false): void
+    {
+        $commentAr = "";
+        $commentEn = "";
+
+        if ($type == "change_order_status") {
+            if ($order->order_status == OrderEnum::WAITING_OFFERS) {
+                $commentAr = "تم إستلام الطلب";
+                $commentEn = "Order Received";
+            }
+            if ($order->order_status == OrderEnum::IN_PROGRESS) {
+                $commentAr = "الطلب تحت التنفيذ";
+                $commentEn = "Order is in progress";
+            }
+            if ($order->order_status == OrderEnum::DELIVERED) {
+                $commentAr = "تم تسليم الطلب";
+                $commentEn = "Order is Delivered";
+            }
+            if ($order->order_status == OrderEnum::CANCELED) {
+                $commentAr = "تم إلغاء الطلب";
+                $commentEn = "Order is Canceled";
+            }
+        }
+
+        OrderHistory::query()->create([
+            "order_id" => $order->id,
+            "comment" => [
+                "ar" => $commentAr,
+                "en" => $commentEn
+            ],
+            "type" => $type,
+            "order_status" => $order->order_status,
+            "is_client_notified" => $is_client_notified,
         ]);
     }
 }
