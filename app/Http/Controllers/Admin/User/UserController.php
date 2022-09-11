@@ -46,6 +46,13 @@ class UserController extends Controller
         return back()->with("success", __("User Added Successfully"));
     }
 
+    public function show($id)
+    {
+        return view("admin.pages.users.show")->with([
+            "user" => $this->userService->findById($id),
+        ]);
+    }
+
     public function edit($id)
     {
         return view("admin.pages.users.edit")->with([

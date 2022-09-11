@@ -67,6 +67,8 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
         Route::post('message/{user}', MessagesController::class)->name("message.send");
 
+        Route::post('add-transaction/{user}', [UserController::class, "addTransaction"])->name("add.transaction");
+
         Route::resource("captain", CaptainController::class)->middleware("can:users");
 
         Route::resource("verification-files", VerificationFilesController::class)->middleware("can:users")->only("index", "show", "store");

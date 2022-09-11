@@ -10,7 +10,7 @@ class UserTransactionRequest extends FormRequest
     {
         return [
             "amount" => "required|numeric",
-            "notes" => "string|string",
+            "notes" => "nullable|string",
         ];
     }
 

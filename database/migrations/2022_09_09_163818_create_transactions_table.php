@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->foreignId("user_id")->nullable()->constrained("users")->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId("captain_id")->nullable()->constrained("users")->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId("order_id")->nullable()->constrained("users")->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId("done_by")->nullable()->constrained("admins")->cascadeOnUpdate()->cascadeOnDelete();
             $table->string("transaction_type");
             $table->double("price_amount");
             $table->boolean("is_added_price")->default(StatusEnum::ENABLED);
