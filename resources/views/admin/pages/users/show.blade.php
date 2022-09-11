@@ -6,7 +6,7 @@
             <div class="d-flex flex-wrap flex-sm-nowrap">
                 <div class="me-7 mb-4">
                     <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                        <img src="{{$captain->user->profile_image}}" alt="image">
+                        <img src="{{$user->profile_image}}" alt="image">
                         <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                     </div>
                 </div>
@@ -14,7 +14,7 @@
                     <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                         <div class="d-flex flex-column">
                             <div class="d-flex align-items-center mb-2">
-                                <a href="javascript:;" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{$captain->user->name}}</a>
+                                <a href="javascript:;" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{$user->name}}</a>
                                 <a href="javascript:;">
                                     <span class="svg-icon svg-icon-1 svg-icon-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
@@ -33,7 +33,7 @@
                                             <rect x="7" y="6" width="4" height="4" rx="2" fill="currentColor"></rect>
                                         </svg>
                                     </span>
-                                    {{__("Captain")}}
+                                    {{__("Client")}}
                                 </a>
                                 <a href="javascript:;" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                     <span class="svg-icon svg-icon-4 me-1">
@@ -42,7 +42,7 @@
                                             <path d="M12.0624 13.0453C13.7193 13.0453 15.0624 11.7022 15.0624 10.0453C15.0624 8.38849 13.7193 7.04535 12.0624 7.04535C10.4056 7.04535 9.06241 8.38849 9.06241 10.0453C9.06241 11.7022 10.4056 13.0453 12.0624 13.0453Z" fill="currentColor"></path>
                                         </svg>
                                     </span>
-                                    {{$captain->user->address}}
+                                    {{$user->address}}
                                 </a>
                                 <a href="javascript:;" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
                                     <span class="svg-icon svg-icon-4 me-1">
@@ -51,7 +51,7 @@
                                             <path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="currentColor"></path>
                                         </svg>
                                     </span>
-                                    {{$captain->user->email}}
+                                    {{$user->email}}
                                 </a>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                         </span>
                                         <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="0" data-kt-countup-prefix="$" data-kt-initialized="1">0.00</div>
                                     </div>
-                                    <div class="fw-semibold fs-6 text-gray-400">{{__("Earnings")}}</div>
+                                    <div class="fw-semibold fs-6 text-gray-400">{{__("Payments")}}</div>
                                 </div>
                                 <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                     <div class="d-flex align-items-center">
@@ -102,16 +102,13 @@
             </div>
             <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                 <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->routeIs("admin.captain.show") ? "active" : ""}}" href="{{route('admin.captain.show', $captain->id)}}">{{__("Overview")}}</a>
-                </li>
-                <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">{{__("Offers")}}</a>
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->routeIs("admin.captain.show") ? "active" : ""}}" href="{{route('admin.user.show', $user->id)}}">{{__("Overview")}}</a>
                 </li>
                 <li class="nav-item mt-2">
                     <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">{{__('Orders')}}</a>
                 </li>
                 <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">{{__("Account Upgrades")}}</a>
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">{{__("Transactions")}}</a>
                 </li>
             </ul>
         </div>
@@ -121,43 +118,43 @@
             <div class="card-title m-0">
                 <h3 class="fw-bold m-0">{{__("Profile Details")}}</h3>
             </div>
-            <a href="{{route('admin.captain.edit', $captain->id)}}" class="btn btn-primary align-self-center">{{__("Edit Profile")}}</a>
+            <a href="{{route('admin.user.edit', $user->id)}}" class="btn btn-primary align-self-center">{{__("Edit Profile")}}</a>
         </div>
         <div class="card-body p-9">
             <div class="row mb-7">
                 <label class="col-lg-4 fw-bold text-bold">{{__("Full Name")}}</label>
                 <div class="col-lg-8">
-                    <span class="fw-bold fs-6 text-gray-800">{{$captain->user->name}}</span>
+                    <span class="fw-bold fs-6 text-gray-800">{{$user->name}}</span>
                 </div>
             </div>
             <div class="row mb-7">
                 <label class="col-lg-4 fw-bold text-bold">{{__("Gender")}}</label>
                 <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->gender}}</span>
+                    <span class="fw-bold text-gray-800 fs-6">{{$user->gender}}</span>
                 </div>
             </div>
             <div class="row mb-7">
                 <label class="col-lg-4 fw-bold text-bold">{{__("Phone")}}</label>
                 <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->phone}}</span>
+                    <span class="fw-bold text-gray-800 fs-6">{{$user->phone}}</span>
                 </div>
             </div>
             <div class="row mb-7">
                 <label class="col-lg-4 fw-bold text-bold">{{__("Email")}}</label>
                 <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->email}}</span>
+                    <span class="fw-bold text-gray-800 fs-6">{{$user->email}}</span>
                 </div>
             </div>
             <div class="row mb-7">
                 <label class="col-lg-4 fw-bold text-bold">{{__("Date Of Birth")}}</label>
                 <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->date_of_birth}}</span>
+                    <span class="fw-bold text-gray-800 fs-6">{{$user->date_of_birth}}</span>
                 </div>
             </div>
             <div class="row">
                 <label class="col-lg-4 fw-bold text-bold">{{__("Address")}}</label>
                 <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->address}}</span>
+                    <span class="fw-bold text-gray-800 fs-6">{{$user->address}}</span>
                 </div>
             </div>
         </div>
