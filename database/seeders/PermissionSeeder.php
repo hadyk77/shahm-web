@@ -22,6 +22,13 @@ class PermissionSeeder extends Seeder
             ],
             [
                 "title" => [
+                    'ar' => "المعاملات المالية",
+                    "en" => "Transactions"
+                ],
+                "name" => "transactions"
+            ],
+            [
+                "title" => [
                     'ar' => "الخدمات",
                     "en" => "Services"
                 ],

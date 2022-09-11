@@ -6,6 +6,7 @@ use App\Enums\StatusEnum;
 use App\Models\Service;
 use Cache;
 use DB;
+use Gate;
 
 class AdminAside
 {
@@ -19,7 +20,7 @@ class AdminAside
             ],
             [
                 "title" => __("Orders"),
-                "canShow" => \Gate::allows("orders"),
+                "canShow" => Gate::allows("orders"),
                 "menu" => [
                     [
                         "name" => __("Orders"),
@@ -29,8 +30,19 @@ class AdminAside
                 ]
             ],
             [
+                "title" => __("Transactions"),
+                "canShow" => Gate::allows("transactions"),
+                "menu" => [
+                    [
+                        "name" => __("Transactions"),
+                        "route" => route('admin.transactions.index'),
+                        "canShow" => true,
+                    ]
+                ]
+            ],
+            [
                 "title" => __("Services"),
-                "canShow" => \Gate::allows("services"),
+                "canShow" => Gate::allows("services"),
                 "menu" => [
                     [
                         "name" => __("Services"),
@@ -41,7 +53,7 @@ class AdminAside
             ],
             [
                 "title" => __("Users"),
-                "canShow" => \Gate::allows("users"),
+                "canShow" => Gate::allows("users"),
                 "menu" => [
                     [
                         "name" => __("Clients"),
@@ -68,7 +80,7 @@ class AdminAside
             ],
             [
                 "title" => __("Contacts"),
-                "canShow" => \Gate::allows("contact_us"),
+                "canShow" => Gate::allows("contact_us"),
                 "menu" => [
                     [
                         "name" => __("Contact Types"),
@@ -96,11 +108,11 @@ class AdminAside
                             ],
                             [
                                 "name" => __("UnRead Messages"),
-                                "route" => route("admin.contact.index",["status" => "unread"]),
+                                "route" => route("admin.contact.index", ["status" => "unread"]),
                             ],
                             [
                                 "name" => __("Read Messages"),
-                                "route" => route("admin.contact.index",["status" => "read"]),
+                                "route" => route("admin.contact.index", ["status" => "read"]),
                             ],
                         ]
                     ]
@@ -108,7 +120,7 @@ class AdminAside
             ],
             [
                 "title" => __("Marketing"),
-                "canShow" => \Gate::allows("marketing"),
+                "canShow" => Gate::allows("marketing"),
                 "menu" => [
                     [
                         "name" => __("Coupons"),
@@ -171,7 +183,7 @@ class AdminAside
             ],
             [
                 "title" => __("Staff & Permissions"),
-                "canShow" => \Gate::allows("staff"),
+                "canShow" => Gate::allows("staff"),
                 "menu" => [
                     [
                         "name" => __("Permissions"),
@@ -207,7 +219,7 @@ class AdminAside
             ],
             [
                 "title" => __("General Settings"),
-                "canShow" => \Gate::allows("general_setting"),
+                "canShow" => Gate::allows("general_setting"),
                 "menu" => [
                     [
                         "name" => __("Translation Center"),

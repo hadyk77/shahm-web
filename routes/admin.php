@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Settings\PaymentsController;
 use App\Http\Controllers\Admin\Settings\SocialMediaController;
 use App\Http\Controllers\Admin\Staff\StaffController;
 use App\Http\Controllers\Admin\Status\StatusController;
+use App\Http\Controllers\Admin\Transaction\TransactionController;
 use App\Http\Controllers\Admin\Translation\TranslationController;
 use App\Http\Controllers\Admin\UpgradeOptions\UpgradeOptionsController;
 use App\Http\Controllers\Admin\User\UserController;
@@ -72,6 +73,12 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
         Route::resource("captain", CaptainController::class)->middleware("can:users");
 
         Route::resource("verification-files", VerificationFilesController::class)->middleware("can:users")->only("index", "show", "store");
+
+    });
+
+    Route::middleware('can:transactions')->group(function () {
+
+        Route::resource("transactions", TransactionController::class)->only("index", "show");
 
     });
 
