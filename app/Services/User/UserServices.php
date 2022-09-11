@@ -2,7 +2,11 @@
 
 namespace App\Services\User;
 
+use App\Actions\Transactions\AddTransactionAction;
+use App\Actions\Transactions\AddTransactionToUserWalletAction;
 use App\Enums\ProfileImageEnum;
+use App\Enums\TransactionEnum;
+use App\Http\Requests\Admin\User\UserTransactionRequest;
 use App\Models\User;
 use App\Services\ServiceInterface;
 use Carbon\Carbon;
@@ -78,8 +82,19 @@ class UserServices implements ServiceInterface
         });
     }
 
-    public function getUsersWithoutCaptains()
+    public function getUsersWithoutCaptains(): Collection|array
     {
         return User::query()->where("is_captain", false)->get();
+    }
+
+    public function addTransaction(UserTransactionRequest $request, $id)
+    {
+        return DB::transaction(function () use ($request, $id) {
+
+            $user = $this->findById($id);
+
+            AddTransactionToUserWalletAction::run($user, $request->amount);
+
+        });
     }
 }

@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->double("price_amount");
             $table->boolean("is_added_price")->default(StatusEnum::ENABLED);
             $table->longText("title");
-            $table->string("notes");
+            $table->string("notes")->nullable();
             $table->timestamps();
         });
     }

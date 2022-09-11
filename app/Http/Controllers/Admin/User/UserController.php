@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin\User;
 use App\Datatables\UserDatatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserRequest;
+use App\Http\Requests\Admin\User\UserTransactionRequest;
 use App\Services\User\UserServices;
 use Exception;
 use Illuminate\Http\Request;
 use Log;
 use Throwable;
+use function Symfony\Component\Translation\t;
 
 class UserController extends Controller
 {
@@ -62,7 +64,6 @@ class UserController extends Controller
         return back()->with("success", __("User Updated Successfully"));
     }
 
-
     public function destroy($id)
     {
         try {
@@ -72,6 +73,17 @@ class UserController extends Controller
             return $this::sendFailedResponse($exception->getMessage());
         }
         return $this::sendSuccessResponse([], __("User Deleted Successfully"));
+    }
+
+    public function addTransaction(UserTransactionRequest $request, $id)
+    {
+        try {
+            $this->userService->addTransaction($request, $id);
+        } catch (Exception|Throwable $exception) {
+            Log::error($exception->getMessage());
+            return $this::sendFailedResponse($exception->getMessage());
+        }
+        return $this::sendSuccessResponse([], __("Transaction added successfully"));
     }
 
 }
