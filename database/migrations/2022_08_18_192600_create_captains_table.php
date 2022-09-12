@@ -20,7 +20,6 @@ return new class extends Migration {
             $table->string("vehicle_number")->nullable();
             $table->string("vehicle_identification_number")->nullable();
             $table->string("vehicle_license_plate_number")->nullable();
-            $table->double("captain_wallet")->default(0);
             $table->double("exceed_indebtedness")->default(0);
             $table->timestamps();
         });

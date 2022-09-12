@@ -19,6 +19,7 @@ class CaptainDatatables implements DatatableInterface
             "name",
             "phone",
             "email",
+            "captain_wallet",
             "status",
             "created_at",
             "updated_at",
@@ -45,7 +46,7 @@ class CaptainDatatables implements DatatableInterface
                     ->switcher();
             })
             ->addColumn("action", function (User $user) {
-                $sendMessageBtn = '<a data-bs-toggle="modal" data-bs-target="#send_message" href="javascript:;" data-url="' .  route('admin.message.send', $user->id) . '" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                $buttons = '<a data-bs-toggle="modal" data-bs-target="#send_message" href="javascript:;" data-url="' .  route('admin.message.send', $user->id) . '" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                         <span class="svg-icon svg-icon-2 svg-icon-gray-500">
 											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<path opacity="0.3" d="M2 4V16C2 16.6 2.4 17 3 17H13L16.6 20.6C17.1 21.1 18 20.8 18 20V17H21C21.6 17 22 16.6 22 16V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4Z" fill="currentColor"></path>
@@ -53,9 +54,17 @@ class CaptainDatatables implements DatatableInterface
 											</svg>
 										</span>
 									</a>';
+                $buttons .= '<a data-bs-toggle="modal" data-bs-target="#add_money_to_captain" href="javascript:;" data-url="' .  route('admin.add.transaction', $user->id) . '" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <span class="svg-icon svg-icon-2 svg-icon-gray-500">
+											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor"></rect>
+                                                <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect>
+                                            </svg>
+										</span>
+									</a>';
                 return (new DataTableActions())
                     ->show(route("admin.captain.show", $user->id))
-                    ->button($sendMessageBtn)
+                    ->button($buttons)
                     ->edit(route("admin.captain.edit", $user->captain->id))
                     ->delete(route("admin.captain.destroy", $user->captain->id))
                     ->make();

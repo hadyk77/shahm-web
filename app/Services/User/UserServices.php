@@ -93,7 +93,7 @@ class UserServices implements ServiceInterface
 
             $user = $this->findById($id);
 
-            AddTransactionToUserWalletAction::run($user, $request->amount);
+            AddTransactionToUserWalletAction::run($user, $request->amount, accountType: $request->accountType);
 
         });
     }

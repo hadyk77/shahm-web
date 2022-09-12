@@ -9,6 +9,7 @@ class UserTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "accountType" => "required|in:user,captain",
             "amount" => "required|numeric",
             "notes" => "nullable|string",
         ];

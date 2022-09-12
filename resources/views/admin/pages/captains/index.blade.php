@@ -49,6 +49,7 @@
                 <td>{{__("Name")}}</td>
                 <td>{{__("Phone")}}</td>
                 <td>{{__("Email")}}</td>
+                <td>{{__("Wallet")}}</td>
                 <td>{{__("Status")}}</td>
                 <td>{{__("Created At")}}</td>
                 <td>{{__("Updated At")}}</td>
@@ -107,6 +108,60 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" tabindex="-1" id="add_money_to_captain" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded">
+                <form action="" class="add_money_to_captain_form" method="post">
+                    @csrf
+                    <div class="modal-header py-3">
+                        <h3 class="modal-title" id="send_message_title">
+                            {{__('Add Money to captain wallet')}}
+                        </h3>
+                        <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                      transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                      fill="currentColor"></rect>
+                            </svg>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="modal-body text-center" id="overlay">
+                        <div class="row">
+                            <input type="hidden" name="accountType" value="captain" required>
+                            <x-input-field
+                                name="amount"
+                                type="number"
+                                required
+                                :title="__('Amount')"
+                                col="12"
+                            />
+                            <x-input-field
+                                name="notes"
+                                class="mt-5"
+                                :title="__('Notes')"
+                                col="12"
+                            />
+                        </div>
+                        <div id="data"></div>
+                    </div>
+                    <div class="modal-footer py-3">
+                        <button type="button" class="btn btn-light-primary font-weight-bold"
+                                data-bs-dismiss="modal">{{__('Close')}}</button>
+                        <button type="submit" class="btn btn-success font-weight-bold">
+                            <span class="indicator-label">{{__('Save')}}</span>
+                            <span class="indicator-progress"> {{__("Please wait...")}}
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section("scripts")
@@ -153,6 +208,44 @@
                 },
                 error: function error(response) {
                     $('#send_message').modal('hide');
+                    toastr.error(response.responseJSON.message);
+                    hideSpinner(form);
+                }
+            });
+        });
+    </script>
+    <script>
+        const add_money_to_captain = document.getElementById('add_money_to_captain')
+
+        add_money_to_captain.addEventListener('show.bs.modal', function (e) {
+            $("#add_money_to_captain").find('.add_money_to_captain_form').attr('action', $(e.relatedTarget).data('url'));
+        });
+
+        $('#add_money_to_captain .add_money_to_captain_form').submit(function (e) {
+            e.preventDefault();
+            let form = $(this);
+            let action = form.attr('action');
+            $.ajax({
+                url: action,
+                type: 'POST',
+                data: form.serialize(),
+                beforeSend: function () {
+                    showSpinner(form)
+                },
+                success: function success(result) {
+                    hideSpinner(form);
+                    $('#add_money_to_captain').modal('hide');
+                    $("#datatables").DataTable().ajax.reload();
+                    $('#add_money_to_captain #amount').val("");
+                    $('#add_money_to_captain #notes').val("");
+                    if (result.success) {
+                        toastr.success(result.message);
+                    } else {
+                        toastr.error(result.message);
+                    }
+                },
+                error: function error(response) {
+                    $('#add_money_to_captain').modal('hide');
                     toastr.error(response.responseJSON.message);
                     hideSpinner(form);
                 }

@@ -134,6 +134,7 @@
                     </div>
                     <div class="modal-body text-center" id="overlay">
                         <div class="row">
+                            <input type="hidden" name="accountType" value="user" required>
                             <x-input-field
                                 name="amount"
                                 type="number"
