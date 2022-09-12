@@ -38,6 +38,7 @@ class UserServices implements ServiceInterface
             $user = User::query()->create([
                 "name" => $request->name,
                 "phone" => $request->phone,
+                "address" => $request->address,
                 "phone_verified_at" => Carbon::now(),
                 "email" => $request->email,
                 "date_of_birth" => $request->date_of_birth,
@@ -60,6 +61,7 @@ class UserServices implements ServiceInterface
             $user->update([
                 "name" => $request->name,
                 "phone" => $request->phone,
+                "address" => $request->address,
                 "email" => $request->email,
                 "date_of_birth" => $request->date_of_birth,
                 "gender" => $request->gender,

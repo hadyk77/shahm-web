@@ -6,7 +6,7 @@
             <div class="d-flex flex-wrap flex-sm-nowrap">
                 <div class="me-7 mb-4">
                     <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                        <img src="{{$captain->user->profile_image}}" alt="image">
+                        <img src="{{$user->profile_image}}" alt="image">
                         <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                     </div>
                 </div>
@@ -14,7 +14,7 @@
                     <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                         <div class="d-flex flex-column">
                             <div class="d-flex align-items-center mb-2">
-                                <a href="javascript:;" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{$captain->user->name}}</a>
+                                <a href="javascript:;" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{$user->name}}</a>
                                 <a href="javascript:;">
                                     <span class="svg-icon svg-icon-1 svg-icon-primary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
@@ -42,7 +42,7 @@
                                             <path d="M12.0624 13.0453C13.7193 13.0453 15.0624 11.7022 15.0624 10.0453C15.0624 8.38849 13.7193 7.04535 12.0624 7.04535C10.4056 7.04535 9.06241 8.38849 9.06241 10.0453C9.06241 11.7022 10.4056 13.0453 12.0624 13.0453Z" fill="currentColor"></path>
                                         </svg>
                                     </span>
-                                    {{$captain->user->address}}
+                                    {{$user->address}}
                                 </a>
                                 <a href="javascript:;" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
                                     <span class="svg-icon svg-icon-4 me-1">
@@ -51,7 +51,7 @@
                                             <path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="currentColor"></path>
                                         </svg>
                                     </span>
-                                    {{$captain->user->email}}
+                                    {{$user->email}}
                                 </a>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                                 <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor"></path>
                                             </svg>
                                         </span>
-                                        <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="0" data-kt-countup-prefix="$" data-kt-initialized="1">0.00</div>
+                                        <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="{{$user->captain_wallet}}" data-kt-initialized="1">{{number_format($user->captain_wallet)}}</div>
                                     </div>
                                     <div class="fw-semibold fs-6 text-gray-400">{{__("Earnings")}}</div>
                                 </div>
@@ -79,7 +79,7 @@
                                                 <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor"></path>
                                             </svg>
                                         </span>
-                                        <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="0" data-kt-initialized="1">0</div>
+                                        <div class="fs-2 fw-bold counted" data-kt-countup="true" data-kt-countup-value="0" data-kt-initialized="1">{{$user->captain->orders()->count()}}</div>
                                     </div>
                                     <div class="fw-semibold fs-6 text-gray-400">{{__("Orders")}}</div>
                                 </div>
@@ -102,64 +102,108 @@
             </div>
             <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                 <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->routeIs("admin.captain.show") ? "active" : ""}}" href="{{route('admin.captain.show', $captain->id)}}">{{__("Overview")}}</a>
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->routeIs("admin.captain.show") && request()->type == "overview" ? "active" : ""}}" href="{{route('admin.captain.show', [$user->id, 'type' => 'overview'])}}">{{__("Overview")}}</a>
                 </li>
                 <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">{{__("Offers")}}</a>
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->routeIs("admin.captain.show") && request()->type == "orders" ? "active" : ""}} " href="{{route('admin.captain.show', [$user->id, 'type' => 'orders'])}}">{{__('Orders')}}</a>
                 </li>
                 <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">{{__('Orders')}}</a>
-                </li>
-                <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">{{__("Account Upgrades")}}</a>
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->routeIs("admin.captain.show") && request()->type == "account_upgrade" ? "active" : ""}} " href="{{route('admin.captain.show', [$user->id, 'type' => 'account_upgrade'])}}">{{__("Account Upgrades")}}</a>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
-        <div class="card-header cursor-pointer">
-            <div class="card-title m-0">
-                <h3 class="fw-bold m-0">{{__("Profile Details")}}</h3>
+    @if(request()->type == 'overview')
+        <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+            <div class="card-header cursor-pointer">
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">{{__("Profile Details")}}</h3>
+                </div>
+                <a href="{{route('admin.user.edit', $user->id)}}" class="btn btn-primary align-self-center">{{__("Edit Profile")}}</a>
             </div>
-            <a href="{{route('admin.captain.edit', $captain->id)}}" class="btn btn-primary align-self-center">{{__("Edit Profile")}}</a>
+            <div class="card-body p-9">
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Full Name")}}</label>
+                    <div class="col-lg-8">
+                        <span class="fw-bold fs-6 text-gray-800">{{$user->name}}</span>
+                    </div>
+                </div>
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Gender")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->gender}}</span>
+                    </div>
+                </div>
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Phone")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->phone}}</span>
+                    </div>
+                </div>
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Email")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->email}}</span>
+                    </div>
+                </div>
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Date Of Birth")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->date_of_birth}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Address")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->address}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body p-9">
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Full Name")}}</label>
-                <div class="col-lg-8">
-                    <span class="fw-bold fs-6 text-gray-800">{{$captain->user->name}}</span>
+    @endif
+    @if(request()->type == 'account_upgrade')
+        <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+            <div class="card-header cursor-pointer">
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">{{__("Account Upgrades")}}</h3>
                 </div>
             </div>
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Gender")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->gender}}</span>
-                </div>
-            </div>
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Phone")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->phone}}</span>
-                </div>
-            </div>
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Email")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->email}}</span>
-                </div>
-            </div>
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Date Of Birth")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->date_of_birth}}</span>
-                </div>
-            </div>
-            <div class="row">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Address")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$captain->user->address}}</span>
-                </div>
+            <div class="card-body p-9">
+                <h3>
+                    {{__("No files uploaded from captain")}}
+                </h3>
             </div>
         </div>
-    </div>
+    @endif
+    @if(request()->type == "orders")
+        <x-card-content>
+            <x-card-header>
+                <x-card-title>
+                    <x-datatable-search-input />
+                </x-card-title>
+            </x-card-header>
+            <x-card-body>
+                <x-datatable-html>
+                    <td>{{__("Order Code")}}</td>
+                    <td>{{__("Captain")}}</td>
+                    <td>{{__("Client")}}</td>
+                    <td>{{__("Service")}}</td>
+                    <td>{{__("Delivery Cost")}}</td>
+                    <td>{{__("Total Cost")}}</td>
+                    <td>{{__("Payment Method")}}</td>
+                    <td>{{__("Order Status")}}</td>
+                    <td>{{__("Created At")}}</td>
+                </x-datatable-html>
+            </x-card-body>
+        </x-card-content>
+    @endif
+@endsection
+
+@section("scripts")
+    @if(request()->type == "orders")
+        <x-datatable-script
+            :route="route('admin.order.index', ['captain_id' => $user->captain->id])"
+            :columns="$columns"
+        />
+    @endif
 @endsection

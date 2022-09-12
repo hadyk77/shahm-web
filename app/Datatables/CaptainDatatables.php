@@ -63,7 +63,7 @@ class CaptainDatatables implements DatatableInterface
 										</span>
 									</a>';
                 return (new DataTableActions())
-                    ->show(route("admin.captain.show", $user->id))
+                    ->show(route("admin.captain.show", [$user->id, 'type' => "overview"]))
                     ->button($buttons)
                     ->edit(route("admin.captain.edit", $user->captain->id))
                     ->delete(route("admin.captain.destroy", $user->captain->id))

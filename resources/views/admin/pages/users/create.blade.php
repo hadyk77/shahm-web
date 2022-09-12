@@ -35,6 +35,13 @@
                     :title="__('Email')"
                 />
                 <x-input-field
+                    name="address"
+                    required
+                    class="mt-5"
+                    col="6"
+                    :title="__('Address')"
+                />
+                <x-input-field
                     name="date_of_birth"
                     required
                     class="mt-5"

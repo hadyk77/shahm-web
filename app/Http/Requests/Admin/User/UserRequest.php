@@ -10,6 +10,7 @@ class UserRequest extends FormRequest
     {
         return [
             "name" => "required",
+            "address" => "required",
             "email" => "required|email:rfc,dns|unique:users,email" . ($this->isMethod("PUT") ? ("," . $this->route("user")) : ""),
             "phone" => "required|string|unique:users,phone" . ($this->isMethod("PUT") ? ("," . $this->route("user")) : ""),
             "date_of_birth" => "required|date",

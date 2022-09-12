@@ -58,13 +58,10 @@ class CaptainController extends Controller
     public function show(Request $request, $id)
     {
         if ($request->expectsJson()) {
-            $request->merge([
-                "captain_id" => $id
-            ]);
             return $this->orderDatatables->datatables($request);
         }
         return view("admin.pages.captains.show")->with([
-            "captain" => $this->captainService->findById($id),
+            "user" => $this->userServices->findById($id),
             "columns" => $this->orderDatatables::columns(),
         ]);
     }
