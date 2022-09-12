@@ -17,4 +17,14 @@ class Transaction extends Model
         return $this->belongsTo(Admin::class, "done_by");
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "user_id");
+    }
+
+    public function captain(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "captain_id");
+    }
+
 }

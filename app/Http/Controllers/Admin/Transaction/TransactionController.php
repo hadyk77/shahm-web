@@ -22,4 +22,12 @@ class TransactionController extends Controller
             "columns" => $this->transactionDatatables::columns(),
         ]);
     }
+
+    public function show($id)
+    {
+        $transaction = $this->transactionServices->findById($id);
+        return $this::sendSuccessResponse([
+            "html" => view("admin.pages.transactions.show")->with(['transaction' => $transaction])->render()
+        ]);
+    }
 }

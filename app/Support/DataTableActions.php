@@ -3,7 +3,6 @@
 namespace App\Support;
 
 use Str;
-use UsingRefs\Model;
 
 class DataTableActions
 {
