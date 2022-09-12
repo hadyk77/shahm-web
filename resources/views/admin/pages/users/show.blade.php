@@ -102,61 +102,91 @@
             </div>
             <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                 <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->routeIs("admin.captain.show") ? "active" : ""}}" href="{{route('admin.user.show', $user->id)}}">{{__("Overview")}}</a>
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->routeIs("admin.user.show") && request()->type == "overview" ? "active" : ""}}" href="{{route('admin.user.show', [$user->id, 'type' => 'overview'])}}">{{__("Overview")}}</a>
                 </li>
                 <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">{{__('Orders')}}</a>
-                </li>
-                <li class="nav-item mt-2">
-                    <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#">{{__("Transactions")}}</a>
+                    <a class="nav-link text-active-primary ms-0 me-10 py-5 {{request()->routeIs("admin.user.show") && request()->type == "orders" ? "active" : ""}}" href="{{route('admin.user.show', [$user->id, 'type' => 'orders'])}}">{{__('Orders')}}</a>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
-        <div class="card-header cursor-pointer">
-            <div class="card-title m-0">
-                <h3 class="fw-bold m-0">{{__("Profile Details")}}</h3>
+    @if(request()->type == "overview")
+        <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+            <div class="card-header cursor-pointer">
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">{{__("Profile Details")}}</h3>
+                </div>
+                <a href="{{route('admin.user.edit', $user->id)}}" class="btn btn-primary align-self-center">{{__("Edit Profile")}}</a>
             </div>
-            <a href="{{route('admin.user.edit', $user->id)}}" class="btn btn-primary align-self-center">{{__("Edit Profile")}}</a>
+            <div class="card-body p-9">
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Full Name")}}</label>
+                    <div class="col-lg-8">
+                        <span class="fw-bold fs-6 text-gray-800">{{$user->name}}</span>
+                    </div>
+                </div>
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Gender")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->gender}}</span>
+                    </div>
+                </div>
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Phone")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->phone}}</span>
+                    </div>
+                </div>
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Email")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->email}}</span>
+                    </div>
+                </div>
+                <div class="row mb-7">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Date Of Birth")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->date_of_birth}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-lg-4 fw-bold text-bold">{{__("Address")}}</label>
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold text-gray-800 fs-6">{{$user->address}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body p-9">
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Full Name")}}</label>
-                <div class="col-lg-8">
-                    <span class="fw-bold fs-6 text-gray-800">{{$user->name}}</span>
-                </div>
-            </div>
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Gender")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$user->gender}}</span>
-                </div>
-            </div>
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Phone")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$user->phone}}</span>
-                </div>
-            </div>
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Email")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$user->email}}</span>
-                </div>
-            </div>
-            <div class="row mb-7">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Date Of Birth")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$user->date_of_birth}}</span>
-                </div>
-            </div>
-            <div class="row">
-                <label class="col-lg-4 fw-bold text-bold">{{__("Address")}}</label>
-                <div class="col-lg-8 fv-row">
-                    <span class="fw-bold text-gray-800 fs-6">{{$user->address}}</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    @endif
+    @if(request()->type == "orders")
+        <x-card-content>
+            <x-card-header>
+                <x-card-title>
+                    <x-datatable-search-input />
+                </x-card-title>
+            </x-card-header>
+            <x-card-body>
+                <x-datatable-html>
+                    <td>{{__("Order Code")}}</td>
+                    <td>{{__("Captain")}}</td>
+                    <td>{{__("Client")}}</td>
+                    <td>{{__("Service")}}</td>
+                    <td>{{__("Delivery Cost")}}</td>
+                    <td>{{__("Total Cost")}}</td>
+                    <td>{{__("Payment Method")}}</td>
+                    <td>{{__("Order Status")}}</td>
+                    <td>{{__("Created At")}}</td>
+                </x-datatable-html>
+            </x-card-body>
+        </x-card-content>
+    @endif
+@endsection
+
+@section("scripts")
+    @if(request()->type == "orders")
+        <x-datatable-script
+            :route="route('admin.order.index', ['user_id' => $user->id])"
+            :columns="$columns"
+        />
+    @endif
 @endsection

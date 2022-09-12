@@ -63,7 +63,7 @@ class UserDatatables implements DatatableInterface
 										</span>
 									</a>';
                 return (new DataTableActions())
-                    ->show(route("admin.user.show", $user->id))
+                    ->show(route("admin.user.show",  [$user->id, 'type' => 'overview']))
                     ->edit(route("admin.user.edit", $user->id))
                     ->button($buttons)
                     ->delete(route("admin.user.destroy", $user->id))

@@ -63,7 +63,7 @@ class OrderDatatables implements DatatableInterface
             })
             ->addColumn("action", function (Order $order) {
                 return (new DataTableActions())
-                    ->show(route("admin.order.show", $order->id))
+                    ->show(route("admin.order.show"))
                     ->make();
             })
             ->rawColumns(["action", "order_status"])

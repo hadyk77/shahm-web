@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\User;
 
+use App\Datatables\OrderDatatables;
 use App\Datatables\UserDatatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserRequest;
@@ -15,7 +16,7 @@ use function Symfony\Component\Translation\t;
 
 class UserController extends Controller
 {
-    public function __construct(private readonly UserDatatables $userDatatables, private readonly UserServices $userService)
+    public function __construct(private readonly UserDatatables $userDatatables, private readonly UserServices $userService, private readonly OrderDatatables $orderDatatables)
     {
 
     }
@@ -46,17 +47,21 @@ class UserController extends Controller
         return back()->with("success", __("User Added Successfully"));
     }
 
-    public function show($id)
+    public function show(Request $request,  $id)
     {
+        if ($request->expectsJson()) {
+            return $this->orderDatatables->datatables($request);
+        }
         return view("admin.pages.users.show")->with([
             "user" => $this->userService->findById($id),
+            "columns" => $this->orderDatatables::columns(),
         ]);
     }
 
     public function edit($id)
     {
-        return view("admin.pages.users.edit")->with([
-            "user" => $this->userService->findById($id),
+        return view("admin.pages.users.show")->with([
+            "user" => $this->userServices->findById($id),
         ]);
     }
 
