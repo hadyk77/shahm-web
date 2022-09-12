@@ -31,7 +31,7 @@ class OrderReceivedNotification extends Notification
         if (!is_null($notifiable->device_token)) {
             return (new FirebaseMessage)
                 ->withTitle(__("Hey,") . " " . $notifiable->name)
-                ->withBody(NotificationEnum::notificationTypes()[NotificationEnum::YOUR_ORDER_RECEIVED] . " " . __("and proper waiting offers"))
+                ->withBody(NotificationEnum::notificationTypes()[NotificationEnum::YOUR_ORDER_RECEIVED] . " " . __("and waiting proper offers"))
                 ->asMessage($notifiable->device_token);
         }
     }

@@ -11,7 +11,7 @@ else
     fi
 
     if [ $1 == "a" ]; then
-        docker-compose run --rm artisan_sham $2
+        docker-compose run --rm artisan_sham $2 $3 $4
     fi
 
     if [ $1 == "m" ]; then
