@@ -60,8 +60,8 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        return view("admin.pages.users.show")->with([
-            "user" => $this->userServices->findById($id),
+        return view("admin.pages.users.edit")->with([
+            "user" => $this->userService->findById($id),
         ]);
     }
 
