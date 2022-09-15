@@ -51,4 +51,9 @@ class Service extends BaseModel implements HasMedia
             return $this->getFirstMediaUrl(ServiceEnum::ICON);
         });
     }
+
+    public function rates(): HasMany
+    {
+        return $this->hasMany(Rate::class);
+    }
 }
