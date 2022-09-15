@@ -6,6 +6,7 @@ use App\Enums\StatusEnum;
 use App\Helper\Helper;
 use App\Models\Transaction;
 use App\Support\DataTableActions;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -79,6 +80,21 @@ class TransactionDatatables implements DatatableInterface
         return Transaction::query()
             ->with(["admin"])
             ->latest("transactions.created_at")
+            ->when($request->filled("client_id") && $request->client_id != "", function ($query) {
+                return $query->where('user_id', request()->client_id);
+            })
+            ->when($request->filled("captain_id") && $request->captain_id != "", function ($query) {
+                return $query->where('captain_id', request()->captain_id);
+            })
+            ->when($request->filled("txn_code") && $request->txn_code != "", function ($query) {
+                return $query->where('transaction_code', "LIKE", "%" . request()->txn_code . "%");
+            })
+            ->when($request->filled("date_range") && $request->date_range != "", function ($query) {
+                $date = explode("/", request()->date_range);
+                $startDate = Carbon::parse(trim($date[0]))->startOfDay()->format("Y-m-d H:i:s");
+                $endDate = Carbon::parse(trim($date[1]))->endOfDay()->format("Y-m-d H:i:s");
+                $query->whereBetween("created_at", [$startDate, $endDate]);
+            })
             ->select("*");
     }
 }

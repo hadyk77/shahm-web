@@ -4,12 +4,18 @@ namespace App\Http\Controllers\Admin\Transaction;
 
 use App\Datatables\TransactionDatatables;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Services\Captain\CaptainServices;
 use App\Services\Transaction\TransactionServices;
+use App\Services\User\UserServices;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    public function __construct(private readonly TransactionDatatables $transactionDatatables, private readonly TransactionServices $transactionServices)
+    public function __construct(
+        private readonly TransactionDatatables $transactionDatatables,
+        private readonly TransactionServices $transactionServices
+    )
     {
     }
 
@@ -19,6 +25,8 @@ class TransactionController extends Controller
             return $this->transactionDatatables->datatables($request);
         }
         return view("admin.pages.transactions.index")->with([
+            "captains" => User::query()->where("is_captain", true)->select("id", "name")->get(),
+            "clients" => User::query()->where("is_captain", false)->select("id", "name")->get(),
             "columns" => $this->transactionDatatables::columns(),
         ]);
     }

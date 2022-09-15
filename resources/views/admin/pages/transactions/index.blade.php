@@ -4,6 +4,50 @@
     <x-card-content>
         <x-card-header>
             <x-card-title>
+                {{__("Transaction Search Box")}}
+            </x-card-title>
+        </x-card-header>
+        <x-card-body>
+            <x-fields.select-field
+                name="captain_id"
+                col="4"
+                :select-box-data="$captains"
+                value="id"
+                value-data="name"
+                required
+                :title="__('Captains')"
+            />
+            <x-fields.select-field
+                name="client_id"
+                col="4"
+                :select-box-data="$clients"
+                value="id"
+                value-data="name"
+                required
+                :title="__('Clients')"
+            />
+            <x-input-field
+                col="4"
+                name="transcation_code"
+                :title="__('Transaction Code')"
+            />
+            <div class="col-md-4 mt-5">
+                <label for="date_range" class="form-label fs-5 fw-bold mb-3">{{__("Date")}}:</label>
+                <input class="form-control form-control-lg form-control-solid" placeholder="{{__("Pick date range")}}"  name="date_range" id="date_range"/>
+            </div>
+        </x-card-body>
+        <x-card-footer>
+            <button type="submit" class="btn btn-primary py-3" id="searchBtn">
+                <span class="indicator-label">{{__('Search')}}</span>
+                <span class="indicator-progress">{{__("Please wait...")}}
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+        </x-card-footer>
+    </x-card-content>
+    <x-card-content>
+        <x-card-header>
+            <x-card-title>
                 <x-datatable-search-input />
             </x-card-title>
         </x-card-header>
@@ -51,6 +95,27 @@
         :route="route('admin.transactions.index')"
         :columns="$columns"
     />
+    <script>
+        $("#date_range").daterangepicker({
+            autoUpdateInput: false,
+            rtl: true,
+            locale: {
+                format: 'DD-MM-YYYY',
+                cancelLabel: 'Clear'
+            },
+        }, function (start, end) {
+            $("#date_range").attr("value",start.format("DD-MM-YYYY") + " / " + end.format("DD-MM-YYYY"));
+        });
+        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        });
+        $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+        $('#searchBtn').on('click', function () {
+            table.draw();
+        });
+    </script>
     <script>
         $(function () {
 

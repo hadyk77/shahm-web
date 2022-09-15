@@ -10,6 +10,12 @@
                     @if(request()->routeIs("admin.order.index"))
                         status: $('#order_status').val(),
                     @endif
+                    @if(request()->routeIs("admin.transactions.index"))
+                        client_id: $('#client_id').val(),
+                        captain_id: $('#captain_id').val(),
+                        txn_code: $('#transcation_code').val(),
+                        date_range: $('#date_range').val(),
+                    @endif
                 })
             }
         },
