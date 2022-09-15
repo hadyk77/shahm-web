@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Contact\ContactTypeController;
 use App\Http\Controllers\Admin\Country\CountryController;
 use App\Http\Controllers\Admin\Coupon\DiscountController;
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
+use App\Http\Controllers\Admin\ExpectedPriceRange\ExpectedPriceRangeController;
 use App\Http\Controllers\Admin\Governorate\GovernorateController;
 use App\Http\Controllers\Admin\IntroImage\IntroImageController;
 use App\Http\Controllers\Admin\Messages\MessagesController;
@@ -103,6 +104,8 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
     Route::middleware("can:general_setting")->group(function () {
 
         Route::resource("verification-options", VerificationOptionsController::class)->except("show");
+
+        Route::resource("expected-price-range", ExpectedPriceRangeController::class)->except("show");
 
         Route::resource("upgrade-options", UpgradeOptionsController::class)->except("show");
 

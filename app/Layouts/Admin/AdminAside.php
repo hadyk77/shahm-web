@@ -227,6 +227,11 @@ class AdminAside
                         "canShow" => true,
                     ],
                     [
+                        "name" => __("Expected Price Ranges"),
+                        "route" => route('admin.expected-price-range.index'),
+                        "canShow" => true,
+                    ],
+                    [
                         "name" => __("Upgrade options"),
                         "route" => "#",
                         "canShow" => true,

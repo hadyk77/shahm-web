@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ExpectedPriceRange\ExpectedPriceRangeController;
 use App\Http\Controllers\API\V1\Notification\NotificationController;
 use App\Http\Controllers\API\V1\Order\OrderController;
 use App\Http\Controllers\API\V1\Auth\CheckPhoneController;
@@ -50,6 +51,8 @@ Route::prefix("api/v1")->group(function () {
     Route::get('intro-images', IntroImagesController::class);
 
     Route::get("contact-types", ContactTypeController::class);
+
+    Route::apiResource("expected-price-range", ExpectedPriceRangeController::class)->only("index", "show");
 
     Route::apiResource("account-upgrade-options", UpgradeOptionsController::class)->only("index", "show");
 
