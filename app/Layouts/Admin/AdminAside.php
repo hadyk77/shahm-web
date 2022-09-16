@@ -71,7 +71,7 @@ class AdminAside
                         "canShow" => true,
                         "badge" => [
                             "id" => "captain_verifications",
-                            "count" => DB::table("captain_verification_files")->where("is_read", 1)->count(),
+                            "count" => DB::table("captain_verification_files")->where("is_read", 0)->count(),
                             "color" => "danger",
                             "show" => true,
                         ],
