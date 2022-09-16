@@ -162,18 +162,22 @@
         </div>
     @endif
     @if(request()->type == 'account_upgrade')
-        <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
-            <div class="card-header cursor-pointer">
-                <div class="card-title m-0">
-                    <h3 class="fw-bold m-0">{{__("Account Upgrades")}}</h3>
-                </div>
-            </div>
-            <div class="card-body p-9">
-                <h3>
-                    {{__("No files uploaded from captain")}}
-                </h3>
-            </div>
-        </div>
+        <x-card-content>
+            <x-card-header>
+                <x-card-title>
+                    <x-datatable-search-input />
+                </x-card-title>
+            </x-card-header>
+            <x-card-body>
+                <x-datatable-html>
+                    <td>{{__("Captain Name")}}</td>
+                    <td>{{__("Option")}}</td>
+                    <td>{{__("Status")}}</td>
+                    <td>{{__("Created At")}}</td>
+                    <td>{{__("Updated At")}}</td>
+                </x-datatable-html>
+            </x-card-body>
+        </x-card-content>
     @endif
     @if(request()->type == "orders")
         <x-card-content>
@@ -204,6 +208,12 @@
         <x-datatable-script
             :route="route('admin.order.index', ['captain_id' => $user->captain->id])"
             :columns="$columns"
+        />
+    @endif
+    @if(request()->type == "account_upgrade")
+        <x-datatable-script
+            :route="route('admin.verification-files.index', ['captain_id' => $user->captain->id])"
+            :columns="$verificationFilesColumns"
         />
     @endif
 @endsection

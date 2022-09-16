@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Captain;
 
 use App\Datatables\CaptainDatatables;
 use App\Datatables\OrderDatatables;
+use App\Datatables\VerificationFilesDatatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Captain\CaptainRequest;
 use App\Services\Captain\CaptainServices;
@@ -18,12 +19,13 @@ use Throwable;
 class CaptainController extends Controller
 {
     public function __construct(
-        private readonly CaptainDatatables   $captainDatatables,
-        private readonly CaptainServices     $captainService,
-        private readonly UserServices        $userServices,
-        private readonly VehicleTypeServices $vehicleTypeServices,
-        private readonly OrderDatatables     $orderDatatables,
-        private readonly NationalityService  $nationalityService,
+        private readonly CaptainDatatables           $captainDatatables,
+        private readonly CaptainServices             $captainService,
+        private readonly UserServices                $userServices,
+        private readonly VehicleTypeServices         $vehicleTypeServices,
+        private readonly OrderDatatables             $orderDatatables,
+        private readonly NationalityService          $nationalityService,
+        private readonly VerificationFilesDatatables $verificationFilesDatatables,
     )
     {
     }
@@ -60,12 +62,22 @@ class CaptainController extends Controller
 
     public function show(Request $request, $id)
     {
-        if ($request->expectsJson()) {
-            return $this->orderDatatables->datatables($request);
+        if ($request->type == "orders") {
+            if ($request->expectsJson()) {
+                return $this->orderDatatables->datatables($request);
+            }
         }
+
+        if ($request->type == "account_upgrade") {
+            if ($request->expectsJson()) {
+                return $this->verificationFilesDatatables->datatables($request);
+            }
+        }
+
         return view("admin.pages.captains.show")->with([
             "user" => $this->userServices->findById($id),
             "columns" => $this->orderDatatables::columns(),
+            "verificationFilesColumns" => $this->verificationFilesDatatables::columns(),
         ]);
     }
 
