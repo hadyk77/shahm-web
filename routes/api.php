@@ -126,6 +126,8 @@ Route::prefix("api/v1")->group(function () {
 
                 Route::post("verify-otp", [CaptainNewAccountController::class, "verifyOtp"]);
 
+                Route::post("open-new-account", [CaptainNewAccountController::class, "openNewAccount"]);
+
             });
 
             Route::prefix("captain")->middleware("api.check.captain.phone")->group(function () {

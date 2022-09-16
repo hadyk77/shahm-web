@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\Captain\CaptainResource;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
@@ -27,6 +28,7 @@ class UserResource extends JsonResource
             "default_lang" => $this->default_lang,
             "enable_notification" => $this->enable_notification == 1,
             "is_phone_verified" => !is_null($this->phone_verified_at),
+            'captain' => $this->is_captain ? CaptainResource::make($this->captain) : null,
         ];
     }
 }

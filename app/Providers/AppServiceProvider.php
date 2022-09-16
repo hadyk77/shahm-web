@@ -10,6 +10,7 @@ use App\Models\GeneralSetting;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Config;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Translatable\Translatable;
@@ -20,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
+
     }
 
     public function boot()

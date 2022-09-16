@@ -75,4 +75,14 @@ class Captain extends Model implements HasMedia
     {
         return $this->hasMany(Order::class);
     }
+
+    public function vehicleType(): BelongsTo
+    {
+        return $this->belongsTo(VehicleType::class);
+    }
+
+    public function nationality(): BelongsTo
+    {
+        return $this->belongsTo(Nationality::class);
+    }
 }

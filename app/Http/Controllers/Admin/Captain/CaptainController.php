@@ -7,6 +7,7 @@ use App\Datatables\OrderDatatables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Captain\CaptainRequest;
 use App\Services\Captain\CaptainServices;
+use App\Services\Nationality\NationalityService;
 use App\Services\User\UserServices;
 use App\Services\VehicleType\VehicleTypeServices;
 use Exception;
@@ -22,6 +23,7 @@ class CaptainController extends Controller
         private readonly UserServices        $userServices,
         private readonly VehicleTypeServices $vehicleTypeServices,
         private readonly OrderDatatables     $orderDatatables,
+        private readonly NationalityService  $nationalityService,
     )
     {
     }
@@ -40,7 +42,8 @@ class CaptainController extends Controller
     {
         return view("admin.pages.captains.create")->with([
             "users" => $this->userServices->getUsersWithoutCaptains(),
-            "vehicleTypeServices" => $this->vehicleTypeServices->get()
+            "vehicleTypeServices" => $this->vehicleTypeServices->get(),
+            "nationalities" => $this->nationalityService->get(),
         ]);
     }
 
@@ -71,6 +74,7 @@ class CaptainController extends Controller
         return view("admin.pages.captains.edit")->with([
             "vehicleTypeServices" => $this->vehicleTypeServices->get(),
             "captain" => $this->captainService->findById($id),
+            "nationalities" => $this->nationalityService->get(),
         ]);
     }
 

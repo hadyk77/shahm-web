@@ -15,6 +15,15 @@
             </x-card-header>
             <x-card-body>
                 <x-fields.select-field
+                    name="nationality_id"
+                    :select-box-data="$nationalities"
+                    value-data="title"
+                    value="id"
+                    required
+                    :model="$captain"
+                    :title="__('Nationality')"
+                />
+                <x-fields.select-field
                     name="vehicle_type_id"
                     :select-box-data="$vehicleTypeServices"
                     value-data="title"
@@ -23,8 +32,25 @@
                     :title="__('Vehicle Type')"
                 />
                 <x-input-field
+                    name="identification_number"
+                    required
+                    col="6"
+                    class="mt-5"
+                    :model="$captain"
+                    :title="__('Identification Number')"
+                />
+                <x-input-field
+                    name="wallet_number"
+                    required
+                    col="6"
+                    :model="$captain"
+                    class="mt-5"
+                    :title="__('Wallet Number')"
+                />
+                <x-input-field
                     name="vehicle_manufacturing_date"
                     required
+                    class="mt-5"
                     col="6"
                     :model="$captain"
                     :title="__('Vehicle Manufacturing Date')"

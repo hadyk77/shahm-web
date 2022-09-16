@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->double("exceed_indebtedness")->default(0);
             $table->foreignId("nationality_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string("identification_number");
-            $table->string("waller_number")->nullable();
+            $table->string("wallet_number")->nullable();
             $table->timestamps();
         });
     }

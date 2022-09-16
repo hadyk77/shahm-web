@@ -18,14 +18,38 @@
                     :select-box-data="$users"
                     value-data="name"
                     value="id"
+                    required
                     :title="__('User')"
+                />
+                <x-fields.select-field
+                    name="nationality_id"
+                    :select-box-data="$nationalities"
+                    value-data="title"
+                    value="id"
+                    required
+                    :title="__('Nationality')"
                 />
                 <x-fields.select-field
                     name="vehicle_type_id"
                     :select-box-data="$vehicleTypeServices"
                     value-data="title"
                     value="id"
+                    class="mt-5"
                     :title="__('Vehicle Type')"
+                />
+                <x-input-field
+                    name="identification_number"
+                    required
+                    col="6"
+                    class="mt-5"
+                    :title="__('Identification Number')"
+                />
+                <x-input-field
+                    name="wallet_number"
+                    required
+                    col="6"
+                    class="mt-5"
+                    :title="__('Wallet Number')"
                 />
                 <x-input-field
                     name="vehicle_manufacturing_date"
