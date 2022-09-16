@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->foreignId("captain_id")->constrained("captains")->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId("verification_option_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("user_id")->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string("status")->default(StatusEnum::DISABLED);
+            $table->boolean("status")->default(StatusEnum::DISABLED);
             $table->boolean("is_read")->default(StatusEnum::DISABLED);
             $table->timestamps();
         });

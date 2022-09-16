@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Captain;
 
 use App\Datatables\VerificationFilesDatatables;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class VerificationFilesController extends Controller
@@ -18,7 +19,8 @@ class VerificationFilesController extends Controller
             return $this->verificationFilesDatatables->datatables($request);
         }
         return view("admin.pages.verification-files.index")->with([
-            "columns" => $this->verificationFilesDatatables::columns()
+            "columns" => $this->verificationFilesDatatables::columns(),
+            "captains" => User::query()->where("is_captain", true)->get()
         ]);
     }
 }

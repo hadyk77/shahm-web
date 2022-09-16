@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\CaptainEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * App\Models\CaptainVerificationFile
@@ -33,9 +36,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|CaptainVerificationFile whereVerificationOptionId($value)
  * @mixin \Eloquent
  */
-class CaptainVerificationFile extends Model
+class CaptainVerificationFile extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(CaptainEnum::VERIFICATION_FILE)->singleFile();
+    }
 
     public function user(): BelongsTo
     {

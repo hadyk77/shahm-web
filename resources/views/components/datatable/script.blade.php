@@ -10,6 +10,9 @@
                     @if(request()->routeIs("admin.order.index"))
                         status: $('#order_status').val(),
                     @endif
+                    @if(request()->routeIs("admin.verification-files.index"))
+                        captain_id: $('#captain_id').val(),
+                    @endif
                     @if(request()->routeIs("admin.transactions.index"))
                         client_id: $('#client_id').val(),
                         captain_id: $('#captain_id').val(),

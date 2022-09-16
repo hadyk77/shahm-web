@@ -47,13 +47,17 @@ class UserController extends Controller
         return back()->with("success", __("User Added Successfully"));
     }
 
-    public function show(Request $request,  $id)
+    public function show(Request $request, $id)
     {
+        $user = $this->userService->findById($id);
         if ($request->expectsJson()) {
             return $this->orderDatatables->datatables($request);
         }
+        if ($user->is_captain) {
+            return redirect()->route('admin.captain.show', [$user->id, 'type' => 'overview']);
+        }
         return view("admin.pages.users.show")->with([
-            "user" => $this->userService->findById($id),
+            "user" => $user,
             "columns" => $this->orderDatatables::columns(),
         ]);
     }

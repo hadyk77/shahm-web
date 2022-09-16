@@ -13,4 +13,9 @@ enum CaptainEnum
 
     const CAR_PICTURE_FROM_BACK = "car_picture_from_back";
 
+    const IDENTIFICATION_FROM_BACK = "identification_from_back";
+
+    const IDENTIFICATION_FROM_FRONT = "identification_from_front";
+
+    const VERIFICATION_FILE = "verification_file";
 }

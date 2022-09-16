@@ -7,7 +7,7 @@ use Auth;
 use Closure;
 use Illuminate\Http\Request;
 
-class CheckCaptainPhoneIsVerifiedMiddleware
+class CheckCaptainMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
@@ -20,6 +20,10 @@ class CheckCaptainPhoneIsVerifiedMiddleware
 
             if (!Auth::user()->is_captain) {
                 return Controller::sendFailedResponse(__("You Does not have permission to access these resources"));
+            }
+
+            if (!Auth::user()->captain_status) {
+                return Controller::sendFailedResponse(__("Your Account as captain is disabled"));
             }
 
         }

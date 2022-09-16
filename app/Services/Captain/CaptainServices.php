@@ -4,6 +4,7 @@ namespace App\Services\Captain;
 
 use App\Enums\CaptainEnum;
 use App\Models\Captain;
+use App\Models\CaptainVerificationFile;
 use App\Services\ServiceInterface;
 use DB;
 use Exception;
@@ -109,6 +110,33 @@ class CaptainServices implements ServiceInterface
 
         if ($request->hasFile('car_picture_from_back')) {
             $captain->addMedia($request->car_picture_from_back)->toMediaCollection(CaptainEnum::CAR_PICTURE_FROM_BACK);
+        }
+
+        if ($request->hasFile('identification_from_back')) {
+            $captain->addMedia($request->identification_from_back)->toMediaCollection(CaptainEnum::IDENTIFICATION_FROM_BACK);
+        }
+
+        if ($request->hasFile('identification_from_front')) {
+            $captain->addMedia($request->identification_from_front)->toMediaCollection(CaptainEnum::IDENTIFICATION_FROM_FRONT);
+        }
+
+
+        if ($request->hasFile('coronavirus_certificate')) {
+            $verificationFile = CaptainVerificationFile::query()->create([
+                "captain_id" => $captain->id,
+                "verification_option_id" => 1,
+                "user_id" => $captain->user->id,
+            ]);
+            $verificationFile->addMedia($request->coronavirus_certificate)->toMediaCollection(CaptainEnum::VERIFICATION_FILE);
+        }
+
+        if ($request->hasFile('no_criminal_record_certificate')) {
+            $verificationFile = CaptainVerificationFile::query()->create([
+                "captain_id" => $captain->id,
+                "verification_option_id" => 2,
+                "user_id" => $captain->user->id,
+            ]);
+            $verificationFile->addMedia($request->no_criminal_record_certificate)->toMediaCollection(CaptainEnum::VERIFICATION_FILE);
         }
     }
 

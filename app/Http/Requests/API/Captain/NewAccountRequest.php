@@ -22,6 +22,10 @@ class NewAccountRequest extends FormRequest
             "license_from_front" => Helper::imageRules(),
             "car_picture_from_front" => Helper::imageRules(),
             "car_picture_from_back" => Helper::imageRules(),
+            "identification_from_back" => Helper::imageRules(),
+            "identification_from_front" => Helper::imageRules(),
+            "coronavirus_certificate" => Helper::imageRules(),
+            "no_criminal_record_certificate" => Helper::imageRules(),
         ];
     }
 

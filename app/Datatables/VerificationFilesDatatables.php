@@ -30,6 +30,9 @@ class VerificationFilesDatatables implements DatatableInterface
                 if ($captainVerificationFile->status) {
                     return DataTableActions::bgColor("success", __("Accepted"));
                 }
+                if (!$captainVerificationFile->is_read) {
+                    return DataTableActions::bgColor("danger", __("Not Read"));
+                }
                 return DataTableActions::bgColor("danger", __("Rejected"));
             })
             ->addColumn("captainName", function (CaptainVerificationFile $captainVerificationFile) {
@@ -46,7 +49,7 @@ class VerificationFilesDatatables implements DatatableInterface
             })
             ->addColumn("action", function (CaptainVerificationFile $captainVerificationFile) {
                 return (new DataTableActions())
-                    ->edit(route("admin.verification-files.show", $captainVerificationFile->id))
+                    ->show(route("admin.verification-files.show", $captainVerificationFile->id))
                     ->delete(route("admin.verification-files.destroy", $captainVerificationFile->id))
                     ->make();
             })
@@ -56,6 +59,11 @@ class VerificationFilesDatatables implements DatatableInterface
 
     public function query(Request $request)
     {
-        return CaptainVerificationFile::query()->with(["captain.user", "option"])->select("*");
+        return CaptainVerificationFile::query()
+            ->when($request->filled("captain_id") && $request->captain_id != "" && $request->captain_id != "all", function ($query) {
+                $query->where('captain_id', request()->captain_id);
+            })
+            ->with(["captain.user", "option"])
+            ->select("*");
     }
 }

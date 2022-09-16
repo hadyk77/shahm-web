@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\CheckCaptainPhoneIsVerifiedMiddleware;
+use App\Http\Middleware\CheckCaptainMiddleware;
 use App\Http\Middleware\CheckPhoneVerificationMiddleware;
 use App\Http\Middleware\CheckUserStatusMiddleware;
 use App\Http\Middleware\Domain\CheckSubDomainForUserMiddleware;
@@ -75,7 +75,7 @@ class Kernel extends HttpKernel
 
         'api.lang' => LanguageApiMiddleware::class,
         'api.check.phone' => CheckPhoneVerificationMiddleware::class,
-        'api.check.captain.phone' => CheckCaptainPhoneIsVerifiedMiddleware::class,
+        'api.check.captain.phone' => CheckCaptainMiddleware::class,
         'api.check.status' => CheckUserStatusMiddleware::class,
         'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
         'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,

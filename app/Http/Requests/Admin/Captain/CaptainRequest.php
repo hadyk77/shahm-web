@@ -27,6 +27,10 @@ class CaptainRequest extends FormRequest
             "license_from_front" => Helper::imageRules($this->isMethod("PUT")),
             "car_picture_from_front" => Helper::imageRules($this->isMethod("PUT")),
             "car_picture_from_back" => Helper::imageRules($this->isMethod("PUT")),
+            "identification_from_back" => Helper::imageRules($this->isMethod("PUT")),
+            "identification_from_front" => Helper::imageRules($this->isMethod("PUT")),
+            "coronavirus_certificate" => Helper::imageRules($this->isMethod("PUT")),
+            "no_criminal_record_certificate" => Helper::imageRules($this->isMethod("PUT")),
         ];
     }
 

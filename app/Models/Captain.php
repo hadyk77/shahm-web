@@ -85,4 +85,9 @@ class Captain extends Model implements HasMedia
     {
         return $this->belongsTo(Nationality::class);
     }
+
+    public function verificationFiles(): HasMany
+    {
+        return $this->hasMany(CaptainVerificationFile::class);
+    }
 }

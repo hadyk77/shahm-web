@@ -73,7 +73,7 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
 
         Route::resource("captain", CaptainController::class)->middleware("can:users");
 
-        Route::resource("verification-files", VerificationFilesController::class)->middleware("can:users")->only("index", "show", "store");
+        Route::resource("verification-files", VerificationFilesController::class)->middleware("can:users")->only("index", "show", "store", "destroy");
 
     });
 
