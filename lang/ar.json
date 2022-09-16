@@ -485,5 +485,21 @@
     "Price": "سعر",
     "Transaction Search Box": "البحث عن المعاملات",
     "Date": "تاريخ",
-    "Pick date range": "اختر النطاق الزمني"
+    "Pick date range": "اختر النطاق الزمني",
+    "Status Updated Successfully": "تم تحديث الحالة بنجاح",
+    "File Deleted Successfully": "تم حذف الملف بنجاح",
+    "Identification from front": "الهوية الشخصية من الأمام",
+    "Identification from back": "الهوية الشخصية من الخلف",
+    "Coronavirus Certificate": "شهادة فيروس كورونا",
+    "No Criminal Record Certificate": "شهادة عدم وجود سجل جنائي",
+    "Not Read File": "ملفات غير مقرؤة",
+    "Read File": "ملفات مقرؤة",
+    "Verification File From": "ملف التحقق من",
+    "File Name": "اسم الملف",
+    "File": "ملف",
+    "Download": "تحميل الملف",
+    "File is under revision or rejected": "الملف قيد المراجعة أو مرفوض",
+    "File is accepted": "تم قبول الملف",
+    "Accept File": "قبول الملف",
+    "Rejected File": "رفض الملف"
 }
