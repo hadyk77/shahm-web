@@ -42,7 +42,8 @@ class CaptainDatatables implements DatatableInterface
                 return (new DataTableActions())
                     ->model($user)
                     ->modelId($user->id)
-                    ->checkStatus($user->status)
+                    ->column("captain_status")
+                    ->checkStatus($user->captain_status)
                     ->switcher();
             })
             ->addColumn("action", function (User $user) {
@@ -78,10 +79,10 @@ class CaptainDatatables implements DatatableInterface
         return User::query()
             ->where("is_captain", true)
             ->when($request->filled("status") && $request->status == "inactive", function ($query) use ($request) {
-                return $query->where("status", 0);
+                return $query->where("captain_status", 0);
             })
             ->when($request->filled("status") && $request->status == "active", function ($query) use ($request) {
-                return $query->where("status", 1);
+                return $query->where("captain_status", 1);
             })
             ->select("*");
     }
