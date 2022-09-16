@@ -33,6 +33,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|ServiceUsage whereTitle($value)
  * @method static Builder|ServiceUsage whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read int|null $media_count
  */
 class ServiceUsage extends BaseModel implements HasMedia
 {

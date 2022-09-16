@@ -165,7 +165,6 @@
             });
 
 
-
             $('#notification').load("{{route("admin.notification.index")}}");
 
             $(document).on("click", ".notification_record", function () {
@@ -179,7 +178,9 @@
                     },
                     success: function (response) {
                         that.removeClass("fw-bolder");
-                        that.removeClass("notification_record");
+                        if (response.data.hasOwnProperty("redirect_url") && response.data.redirect_url != null) {
+                            window.location.href = response.data.redirect_url;
+                        }
                         $('#notification_count').html(response.data.remaining_notification);
                         if (response.data.remaining_notification === 0) {
                             $('#notification_dots').remove();

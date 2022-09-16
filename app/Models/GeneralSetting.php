@@ -69,6 +69,24 @@ use Spatie\Translatable\HasTranslations;
  * @method static Builder|GeneralSetting whereTwitterLink($value)
  * @method static Builder|GeneralSetting whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int $is_credit_card_enabled
+ * @property int $is_wallet_enabled
+ * @property int $is_cash_enabled
+ * @property float $client_commission
+ * @property float $captain_commission
+ * @property float $tax
+ * @property float $maximum_indebtedness_for_captain
+ * @property float $service_price_per_kilometer
+ * @property string $app_version
+ * @method static Builder|GeneralSetting whereAppVersion($value)
+ * @method static Builder|GeneralSetting whereCaptainCommission($value)
+ * @method static Builder|GeneralSetting whereClientCommission($value)
+ * @method static Builder|GeneralSetting whereIsCashEnabled($value)
+ * @method static Builder|GeneralSetting whereIsCreditCardEnabled($value)
+ * @method static Builder|GeneralSetting whereIsWalletEnabled($value)
+ * @method static Builder|GeneralSetting whereMaximumIndebtednessForCaptain($value)
+ * @method static Builder|GeneralSetting whereServicePricePerKilometer($value)
+ * @method static Builder|GeneralSetting whereTax($value)
  */
 class GeneralSetting extends Model implements HasMedia
 {

@@ -32,6 +32,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Country whereTitle($value)
  * @method static Builder|Country whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read int|null $media_count
  */
 class Country extends BaseModel implements HasMedia
 {

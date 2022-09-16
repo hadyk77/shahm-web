@@ -18,10 +18,10 @@ class OrderDatatables implements DatatableInterface
             "captainName" => ["captain.name"],
             "clientName" => ["client.name"],
             "serviceName" => ["service.title->ar"],
-            "delivery_cost",
-            "grand_total",
-            "payment_method",
-            "order_status",
+            "delivery_cost" => ['delivery_cost'],
+            "grand_total" => ['grand_total'],
+            "payment_method" => ['payment_method'],
+            "order_status" => ['order_status'],
             "created_at",
         ];
     }
@@ -57,6 +57,9 @@ class OrderDatatables implements DatatableInterface
             })
             ->addColumn("grand_total", function (Order $order) {
                 return $order->grand_total == null ? __("No Yet") : $order->grand_total;
+            })
+            ->addColumn("payment_method", function (Order $order) {
+                return OrderEnum::paymentMethods()[$order->payment_method];
             })
             ->addColumn("created_at", function (Order $order) {
                 return Helper::formatDate($order->created_at);

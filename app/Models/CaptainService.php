@@ -27,6 +27,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|CaptainService whereServiceId($value)
  * @method static Builder|CaptainService whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read int|null $media_count
  */
 class CaptainService extends Model implements HasMedia
 {

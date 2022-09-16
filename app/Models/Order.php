@@ -9,6 +9,73 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+/**
+ * App\Models\Order
+ *
+ * @property int $id
+ * @property int $service_id
+ * @property int $user_id
+ * @property int|null $captain_id
+ * @property int|null $offer_id
+ * @property float|null $items_price
+ * @property float|null $delivery_cost
+ * @property float $tax
+ * @property float $tax_percentage
+ * @property float|null $grand_total
+ * @property string|null $order_items
+ * @property string $payment_method
+ * @property string|null $order_code
+ * @property string $payment_status
+ * @property string $order_status
+ * @property string $order_type
+ * @property string|null $drop_off_location
+ * @property string|null $drop_off_location_lat
+ * @property string|null $drop_off_location_long
+ * @property string|null $pickup_location
+ * @property string|null $pickup_location_lat
+ * @property string|null $pickup_location_long
+ * @property string|null $discount_code
+ * @property string|null $discount_amount
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $captain
+ * @property-read \App\Models\User $client
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\OrderHistory[] $histories
+ * @property-read int|null $histories_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read int|null $media_count
+ * @property-read \App\Models\Service $service
+ * @method static \Illuminate\Database\Eloquent\Builder|Order newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Order newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Order query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereCaptainId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDeliveryCost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDiscountAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDiscountCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDropOffLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDropOffLocationLat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDropOffLocationLong($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereGrandTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereItemsPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereOfferId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereOrderCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereOrderItems($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereOrderStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereOrderType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePaymentMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePaymentStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePickupLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePickupLocationLat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePickupLocationLong($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereServiceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereTax($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereTaxPercentage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Order extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;

@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('phone')->nullable()->unique();
+            $table->string("captain_phone_number")->nullable()->unique();
+            $table->boolean("is_captain_phone_number_verified")->default(0);
             $table->string('email')->unique();
             $table->date('date_of_birth')->nullable();
             $table->string("gender")->nullable();

@@ -32,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Rate whereUpdatedAt($value)
  * @method static Builder|Rate whereUserId($value)
  * @mixin Eloquent
+ * @property-read \App\Models\User $client
  */
 class Rate extends Model
 {

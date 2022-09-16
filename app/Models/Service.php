@@ -30,6 +30,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Service whereTitle($value)
  * @method static Builder|Service whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property array|null $description
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Rate[] $rates
+ * @property-read int|null $rates_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ServiceUsage[] $serviceUsages
+ * @property-read int|null $service_usages_count
+ * @method static Builder|Service whereDescription($value)
  */
 class Service extends BaseModel implements HasMedia
 {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Captain\CaptainNewAccountController;
 use App\Http\Controllers\API\ExpectedPriceRange\ExpectedPriceRangeController;
 use App\Http\Controllers\API\V1\Notification\NotificationController;
 use App\Http\Controllers\API\V1\Order\OrderController;
@@ -117,8 +118,23 @@ Route::prefix("api/v1")->group(function () {
             Route::post("notification-mark-all-as-read", [NotificationController::class, "markAllAsRead"]);
 
             Route::delete("notification-delete-all", [NotificationController::class, "destroyAll"]);
-        });
 
+
+            Route::prefix("captain")->middleware("throttle:api-auth")->group(function () {
+
+                Route::post("add-phone", [CaptainNewAccountController::class, "addPhone"]);
+
+                Route::post("verify-otp", [CaptainNewAccountController::class, "verifyOtp"]);
+
+            });
+
+            Route::prefix("captain")->middleware("api.check.captain.phone")->group(function () {
+
+                Route::get("me", MeController::class);
+
+            });
+
+        });
 
     });
 

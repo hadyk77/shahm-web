@@ -29,7 +29,7 @@
             <div class="card card-flush py-4 flex-row-fluid">
                 <div class="card-header">
                     <div class="card-title">
-                        <h2>{{__("Order Details")}} (#{{$order->order_code}})</h2>
+                        <h2>{{__("Order Details")}} ({{$order->order_code}})</h2>
                     </div>
                 </div>
                 <div class="card-body pt-0">
@@ -271,7 +271,7 @@
                     <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
                         <div class="card-header">
                             <div class="card-title">
-                                <h2>{{__("Order Code")}} #{{$order->order_code}}</h2>
+                                <h2>{{__("Order Code")}} {{$order->order_code}}</h2>
                             </div>
                             <div class="card-toolbar">
                                 <a href="" class="btn btn-success">{{__("Download Invoice")}}</a>

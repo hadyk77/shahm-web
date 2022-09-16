@@ -11,6 +11,7 @@ use App\Services\Order\OrderServices;
 use Http\Discovery\Exception;
 use Illuminate\Http\Request;
 use Log;
+use Throwable;
 
 class OrderController extends Controller
 {
@@ -35,7 +36,7 @@ class OrderController extends Controller
     {
         try {
             $this->orderServices->store($request);
-        } catch (Exception|\Throwable $exception) {
+        } catch (Exception|Throwable $exception) {
             Log::error($exception->getMessage());
             return $this::sendFailedResponse($exception->getMessage());
         }

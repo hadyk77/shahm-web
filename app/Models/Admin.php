@@ -27,6 +27,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $name
  * @property string $email
  * @property string $username
+ * @property string|null $device_token
+ * @property int $status
  * @property string|null $last_login_at
  * @property Carbon|null $email_verified_at
  * @property string $password
@@ -37,9 +39,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $media_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read Collection|Permission[] $permissions
+ * @property-read Collection|\App\Models\Permission[] $permissions
  * @property-read int|null $permissions_count
- * @property-read Collection|Role[] $roles
+ * @property-read Collection|\App\Models\Role[] $roles
  * @property-read int|null $roles_count
  * @property-read Collection|PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
@@ -49,6 +51,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|Admin query()
  * @method static Builder|Admin role($roles, $guard = null)
  * @method static Builder|Admin whereCreatedAt($value)
+ * @method static Builder|Admin whereDeviceToken($value)
  * @method static Builder|Admin whereEmail($value)
  * @method static Builder|Admin whereEmailVerifiedAt($value)
  * @method static Builder|Admin whereId($value)
@@ -56,6 +59,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|Admin whereName($value)
  * @method static Builder|Admin wherePassword($value)
  * @method static Builder|Admin whereRememberToken($value)
+ * @method static Builder|Admin whereStatus($value)
  * @method static Builder|Admin whereUpdatedAt($value)
  * @method static Builder|Admin whereUsername($value)
  * @mixin Eloquent

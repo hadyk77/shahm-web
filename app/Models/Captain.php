@@ -38,6 +38,23 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Captain whereVehicleNumber($value)
  * @method static Builder|Captain whereVehicleTypeId($value)
  * @mixin Eloquent
+ * @property float $exceed_indebtedness
+ * @property string|null $captain_phone_number
+ * @property int $is_captain_phone_number_verified
+ * @property int $nationality_id
+ * @property string $identification_number
+ * @property string|null $waller_number
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @property-read int|null $orders_count
+ * @property-read \App\Models\User $user
+ * @method static Builder|Captain whereCaptainPhoneNumber($value)
+ * @method static Builder|Captain whereExceedIndebtedness($value)
+ * @method static Builder|Captain whereIdentificationNumber($value)
+ * @method static Builder|Captain whereIsCaptainPhoneNumberVerified($value)
+ * @method static Builder|Captain whereNationalityId($value)
+ * @method static Builder|Captain whereWallerNumber($value)
  */
 class Captain extends Model implements HasMedia
 {
