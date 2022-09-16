@@ -103,6 +103,35 @@
                     required
                     :title="__('Picture of the car from the back')"
                 />
+
+
+                <x-file-field
+                    class="mt-5"
+                    name="identification_from_front"
+                    required
+                    :title="__('Identification from front')"
+                />
+                <x-file-field
+                    class="mt-5"
+                    name="identification_from_back"
+                    required
+                    :title="__('Identification from back')"
+                />
+
+
+                <x-file-field
+                    class="mt-5"
+                    name="coronavirus_certificate"
+                    required
+                    :title="__('Coronavirus Certificate')"
+                />
+                <x-file-field
+                    class="mt-5"
+                    name="no_criminal_record_certificate"
+                    required
+                    :title="__('No Criminal Record Certificate')"
+                />
+
             </x-card-body>
             <x-card-footer>
                 <x-save-btn/>

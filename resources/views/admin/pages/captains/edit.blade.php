@@ -107,6 +107,38 @@
                     :collection="\App\Enums\CaptainEnum::CAR_PICTURE_FROM_BACK"
                     :title="__('Picture of the car from the back')"
                 />
+                <x-file-field
+                    class="mt-5"
+                    name="identification_from_front"
+                    required
+                    :collection="\App\Enums\CaptainEnum::IDENTIFICATION_FROM_FRONT"
+                    :model="$captain"
+                    :title="__('Identification from front')"
+                />
+                <x-file-field
+                    class="mt-5"
+                    name="identification_from_back"
+                    required
+                    :collection="\App\Enums\CaptainEnum::IDENTIFICATION_FROM_BACK"
+                    :model="$captain"
+                    :title="__('Identification from back')"
+                />
+                <x-file-field
+                    class="mt-5"
+                    name="coronavirus_certificate"
+                    required
+                    :model="$captain->verificationFiles()->where('option_id', 1)->first()"
+                    :collection="\App\Enums\CaptainEnum::VERIFICATION_FILE"
+                    :title="__('Coronavirus Certificate')"
+                />
+                <x-file-field
+                    class="mt-5"
+                    name="no_criminal_record_certificate"
+                    required
+                    :model="$captain->verificationFiles()->where('option_id', 2)->first()"
+                    :collection="\App\Enums\CaptainEnum::VERIFICATION_FILE"
+                    :title="__('No Criminal Record Certificate')"
+                />
             </x-card-body>
             <x-card-footer>
                 <x-save-btn/>
