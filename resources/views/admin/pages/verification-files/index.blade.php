@@ -31,10 +31,22 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mb-2">
+                            <label for="status" class="form-label fs-5 fw-bold mb-3">{{__("Status")}}:</label>
+                            <select id="status" name="status" class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="{{__("Select option")}}" data-allow-clear="true"  data-dropdown-parent="#kt-toolbar-filter">
+                                <option></option>
+                                <option value="all">{{__("All")}}</option>
+                                <option value="accepted">{{__("Accepted")}}</option>
+                                <option value="rejected">{{__("Rejected")}}</option>
+                                <option value="not_read">{{__("Not Read File")}}</option>
+                                <option value="is_read">{{__("Read File")}}</option>
+                            </select>
+                        </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-customer-table-filter="filter">{{__("Apply")}}</button>
                         </div>
                     </div>
+                    <div class="separator border-gray-200"></div>
                 </form>
             </x-card-toolbar>
         </x-card-header>

@@ -60,4 +60,26 @@ class CaptainVerificationFile extends Model implements HasMedia
         return $this->belongsTo(VerificationOption::class, "verification_option_id");
     }
 
+    public function markAsRead(): void
+    {
+        $this->update([
+            "is_read" => 1,
+        ]);
+    }
+
+    public function markAsAccepted(): void
+    {
+        $this->update([
+            "status" => 1,
+        ]);
+    }
+
+    public function markAsRejected(): void
+    {
+        $this->update([
+            "status" => 0,
+        ]);
+    }
+
+
 }

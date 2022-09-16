@@ -63,6 +63,22 @@ class VerificationFilesDatatables implements DatatableInterface
             ->when($request->filled("captain_id") && $request->captain_id != "" && $request->captain_id != "all", function ($query) {
                 $query->where('captain_id', request()->captain_id);
             })
+            ->when($request->filled("status") && $request->status != "" && $request->status != "all", function ($query) {
+                if (\request()->status == "accepted") {
+                    return $query->where("status", 1);
+                }
+                if (\request()->status == "rejected") {
+                    return $query
+                        ->where("status", 0)
+                        ->where('is_read', 1);
+                }
+                if (\request()->status == "not_read") {
+                    return $query->where("is_read", 0);
+                }
+                if (\request()->status == "is_read") {
+                    return $query->where("is_read", 1);
+                }
+            })
             ->with(["captain.user", "option"])
             ->select("*");
     }

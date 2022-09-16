@@ -12,6 +12,7 @@
                     @endif
                     @if(request()->routeIs("admin.verification-files.index"))
                         captain_id: $('#captain_id').val(),
+                        status: $('#status').val(),
                     @endif
                     @if(request()->routeIs("admin.transactions.index"))
                         client_id: $('#client_id').val(),
