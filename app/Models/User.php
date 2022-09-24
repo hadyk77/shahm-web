@@ -101,6 +101,7 @@ class User extends Authenticatable implements HasMedia
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        "social_login_id" => "integer"
     ];
 
     public function registerMediaCollections(): void
