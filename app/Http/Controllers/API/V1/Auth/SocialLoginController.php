@@ -17,7 +17,7 @@ class SocialLoginController extends Controller
         $this->validateLogin($request);
 
         try {
-            $user = $this->geUser($request);
+            $user = $this->getUser($request);
 
             $data = [
                 "access_token" => $user->createToken("user_login_token_" . Str::random(5))->plainTextToken,
@@ -26,7 +26,7 @@ class SocialLoginController extends Controller
 
         } catch (Exception $exception) {
 
-            return $this::sendFailedResponse(__("Email is already token"));
+            return $this::sendFailedResponse($exception->getMessage());
 
         }
 
@@ -44,7 +44,7 @@ class SocialLoginController extends Controller
         ]);
     }
 
-    private function geUser(Request $request): User|null
+    private function getUser(Request $request): User|null
     {
         $user = User::query()->where([
             "social_login_type" => $request->social_login_type,
