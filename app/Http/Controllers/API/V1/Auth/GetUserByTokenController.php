@@ -29,7 +29,7 @@ class GetUserByTokenController extends Controller
 
         $data = [
             "access_token" => $currentUser->createToken("user_login_token_" . Str::random(5))->plainTextToken,
-            "user" => UserResource::make($user),
+            "user" => UserResource::make($currentUser),
         ];
 
         return $this::sendSuccessResponse($data);
