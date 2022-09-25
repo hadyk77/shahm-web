@@ -25,8 +25,10 @@ class GetUserByTokenController extends Controller
 
         }
 
+        $currentUser = User::query()->find($user->tokenable->id);
+
         $data = [
-            "access_token" => $user->tokenable->createToken("user_login_token_" . Str::random(5))->plainTextToken,
+            "access_token" => $currentUser->createToken("user_login_token_" . Str::random(5))->plainTextToken,
             "user" => UserResource::make($user),
         ];
 
