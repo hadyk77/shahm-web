@@ -71,11 +71,12 @@ class DiscountServices implements ServiceInterface
         });
     }
 
-    public function randomOne()
+    public function checkIfCouponIsVerified($code): Discount|null
     {
         return Discount::query()
-            ->whereDate("start_at", "<=", Carbon::now()->format("Y-m-d"))
-            ->whereDate("end_at", ">=", Carbon::now()->format("Y-m-d"))
+            ->where("code", $code)
+            ->whereDate("start_at", "<=", Carbon::now()->format("Y-m-d") . ' 00:00:00')
+            ->whereDate("end_at", ">=", Carbon::now()->format("Y-m-d") . ' 00:00:00')
             ->where("status", 1)
             ->first();
     }
