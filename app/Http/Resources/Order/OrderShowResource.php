@@ -33,9 +33,11 @@ class OrderShowResource extends JsonResource
 
             // Locations
             "drop_off_location" => $this->drop_off_location,
+            "drop_off_description" => $this->drop_off_description,
             "drop_off_location_lat" => $this->drop_off_location,
             "drop_off_location_long" => $this->drop_off_location,
             "pickup_location" => $this->drop_off_location,
+            "pickup_description" => $this->pickup_description,
             "pickup_location_lat" => $this->drop_off_location,
             "pickup_location_long" => $this->drop_off_location,
 

@@ -74,9 +74,11 @@ class OrderServices implements ServiceInterface
 
                 //Locations
                 "drop_off_location" => $request->drop_off_location,
+                "drop_off_description" => $request->drop_off_description,
                 "drop_off_location_lat" => $request->drop_off_location_lat,
                 "drop_off_location_long" => $request->drop_off_location_long,
                 "pickup_location" => $request->pickup_location,
+                "pickup_description" => $request->pickup_description,
                 "pickup_location_lat" => $request->pickup_location_lat,
                 "pickup_location_long" => $request->pickup_location_long,
 
