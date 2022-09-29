@@ -14,6 +14,7 @@ class UserResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "image" => $this->profile_image,
             "phone" => $this->phone,
             "email" => $this->email,
             "date_of_birth" => $this->date_of_birth,
@@ -31,6 +32,7 @@ class UserResource extends JsonResource
             "social_login_id" => $this->social_login_id,
             "enable_notification" => $this->enable_notification == 1,
             "is_phone_verified" => !is_null($this->phone_verified_at),
+            "user_rate" => 0,
             'captain' => $this->is_captain ? CaptainResource::make($this->captain) : null,
         ];
     }

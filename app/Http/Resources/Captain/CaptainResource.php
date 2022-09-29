@@ -26,6 +26,7 @@ class CaptainResource extends JsonResource
             "is_captain_phone_number_verified" => $this->user->is_captain_phone_number_verified == 1,
             "captain_wallet" => doubleval($this->user->captain_wallet),
             "verificationFiles" => VerificationFileResource::collection($this->verificationFiles),
+            "captain_rate" => 0,
         ];
     }
 }

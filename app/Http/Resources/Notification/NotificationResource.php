@@ -25,7 +25,7 @@ class NotificationResource extends JsonResource
     }
 
 
-    private function title($data)
+    private function title($data): string
     {
         if ($data['type'] == NotificationEnum::USER_CUSTOM_MESSAGE) {
             return $data["title"];
@@ -33,7 +33,7 @@ class NotificationResource extends JsonResource
         return NotificationEnum::notificationTypes()[$data['type']];
     }
 
-    private function content($data)
+    private function content($data): string
     {
         if ($data['type'] == NotificationEnum::USER_CUSTOM_MESSAGE) {
             return $data["body"];
