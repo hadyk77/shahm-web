@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SOCKET IO SERVER</title>
+</head>
+<body>
+<h1>SOCKET IO SERVER</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+<script>
+    const socket = io.connect("http://localhost:3001");
+
+    // let contact_uuid = "fc61e3de-a59e-499f-8efe-aa2181469dff";
+    // let token = "1|Lnl68FqoEplger0u4uXdBkatvkn8OVC8LniCovGX9GViLWw4TtFhC12JehgMwpGbWcKbiEnxbtoUKtqT9hk6t9mPysqicMCmXJhk1QFek1uPVssUFDfZfcNUPUz3VPACWsrOPmOm6A9YxecpjnIU3v";
+    // let contact_id = 1;
+    // let message_id = 1;
+    //
+    // socket.on('connect', function () {
+    //     socket.on("message", (data) => {
+    //         console.log(data);
+    //     });
+    //     socket.emit("addUserToComplainRoom", {
+    //         contact_uuid: contact_uuid
+    //     });
+    //     socket.on("messageResponseForComplain", (data) => {
+    //         console.log(data);
+    //     });
+    //     socket.emit("sendComplainMessage", {
+    //         token: token,
+    //         contact_uuid: contact_uuid,
+    //         contact_id: contact_id,
+    //         message_id: message_id
+    //     })
+    // });
+
+    let chat_uuid = "5f4c7abf-1855-4fe2-9655-7761ae4d376d";
+    let token = "1|PLb9Q4pmAH5ZHxePmaCLx7NjSQPWaPAEuQSooRj4E7w5jEAN3YIsnrUCBqtPnxfbXzwxQBw3mFgX4UOpaYPyQ1jPVzpBgJifpt9rOYva2OvlW2hiETUKkm0JVue3SdgltghCTetL4PMO7NZEjgFU4z";
+    let chat_id = 6;
+    let message_id = 1;
+
+    socket.on('connect', function () {
+        socket.on("message", (data) => {
+            console.log(data);
+        });
+        socket.emit("addUserToChatRoom", {
+            chat_uuid: chat_uuid
+        });
+        socket.on("messageResponseForChat", (data) => {
+            console.log(data);
+        });
+        socket.emit("sendChatMessage", {
+            token: token,
+            chat_uuid: chat_uuid,
+            message_id: message_id,
+            message_from: "tenant"
+        })
+    });
+
+</script>
+</body>
+</html>
