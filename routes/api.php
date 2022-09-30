@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\API\Captain\CaptainNewAccountController;
-use App\Http\Controllers\API\Captain\CaptainSettingController;
-use App\Http\Controllers\API\Coupon\CouponController;
-use App\Http\Controllers\API\ExpectedPriceRange\ExpectedPriceRangeController;
+use App\Http\Controllers\API\V1\Captain\CaptainNewAccountController;
+use App\Http\Controllers\API\V1\Captain\CaptainSettingController;
+use App\Http\Controllers\API\V1\Captain\OfferController;
+use App\Http\Controllers\API\V1\Coupon\CouponController;
+use App\Http\Controllers\API\V1\ExpectedPriceRange\ExpectedPriceRangeController;
 use App\Http\Controllers\API\V1\Notification\NotificationController;
 use App\Http\Controllers\API\V1\Order\OrderController;
 use App\Http\Controllers\API\V1\Auth\CheckPhoneController;
@@ -143,6 +144,11 @@ Route::prefix("api/v1")->group(function () {
 
                 Route::post("update-between-governorate-service", [CaptainSettingController::class, 'updateBetweenGovernorateService']);
 
+                Route::apiResource("offer", OfferController::class);
+
+                Route::get("get-offer-by-order/{id}", [OfferController::class, "getOfferByOrder"]);
+
+                Route::post("send-offer/{id}", [OfferController::class, "sendOffer"]);
             });
 
         });

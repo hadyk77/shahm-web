@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\ExpectedPriceRange;
+namespace App\Http\Controllers\API\V1\ExpectedPriceRange;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ExpectedPriceRange\ExpectedPriceRangeResource;
