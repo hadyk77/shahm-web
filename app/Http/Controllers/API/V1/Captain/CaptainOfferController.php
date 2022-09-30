@@ -12,7 +12,7 @@ use Auth;
 use DB;
 use Illuminate\Http\Request;
 
-class OfferController extends Controller
+class CaptainOfferController extends Controller
 {
     public function index()
     {

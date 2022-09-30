@@ -112,4 +112,8 @@ class Order extends Model implements HasMedia
         return $this->belongsTo(ExpectedPriceRange::class);
     }
 
+    public function offers(): HasMany
+    {
+        return $this->hasMany(Offer::class);
+    }
 }

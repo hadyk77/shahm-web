@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\API\V1\Captain\CaptainNewAccountController;
 use App\Http\Controllers\API\V1\Captain\CaptainSettingController;
-use App\Http\Controllers\API\V1\Captain\OfferController;
+use App\Http\Controllers\API\V1\Captain\CaptainOfferController;
 use App\Http\Controllers\API\V1\Coupon\CouponController;
 use App\Http\Controllers\API\V1\ExpectedPriceRange\ExpectedPriceRangeController;
 use App\Http\Controllers\API\V1\Notification\NotificationController;
+use App\Http\Controllers\API\V1\Offer\OfferController;
 use App\Http\Controllers\API\V1\Order\OrderController;
 use App\Http\Controllers\API\V1\Auth\CheckPhoneController;
 use App\Http\Controllers\API\V1\Auth\GetUserByTokenController;
@@ -112,6 +113,12 @@ Route::prefix("api/v1")->group(function () {
 
             Route::apiResource("order", OrderController::class);
 
+            Route::get('offers/{order_id}', [OfferController::class, "index"]);
+
+            Route::post('accept/order/{order_id}/offer/{offer_id}', [OfferController::class, "acceptOffer"]);
+
+            Route::post('reject/order/{order_id}/offer/{offer_id}', [OfferController::class, "rejectOffer"]);
+
             Route::post("check-coupon", CouponController::class);
 
             Route::post("contact", ContactController::class);
@@ -144,11 +151,11 @@ Route::prefix("api/v1")->group(function () {
 
                 Route::post("update-between-governorate-service", [CaptainSettingController::class, 'updateBetweenGovernorateService']);
 
-                Route::apiResource("offer", OfferController::class);
+                Route::apiResource("offer", CaptainOfferController::class);
 
-                Route::get("get-offer-by-order/{id}", [OfferController::class, "getOfferByOrder"]);
+                Route::get("get-offer-by-order/{id}", [CaptainOfferController::class, "getOfferByOrder"]);
 
-                Route::post("send-offer/{id}", [OfferController::class, "sendOffer"]);
+                Route::post("send-offer/{id}", [CaptainOfferController::class, "sendOffer"]);
             });
 
         });
