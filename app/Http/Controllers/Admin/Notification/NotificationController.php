@@ -34,13 +34,13 @@ class NotificationController extends Controller
     {
         $redirect_url = null;
         if ($notification->data['type'] == NotificationEnum::NEW_ORDER_REQUEST) {
-            $redirect_url = route("admin.order.show", json_decode($notification->data["order"])->id);
+            $redirect_url = route("admin.order.show", $notification->data["order"]['id']);
         }
         if ($notification->data['type'] == NotificationEnum::NEW_USER_REGISTER) {
-            $redirect_url = route("admin.user.show", [json_decode($notification->data["user"])->id, 'type' => "overview"]);
+            $redirect_url = route("admin.user.show", [$notification->data["user"]['id'], 'type' => "overview"]);
         }
         if ($notification->data['type'] == NotificationEnum::NEW_CONTACT_MESSAGE) {
-            $redirect_url = route("admin.contact.show", json_decode($notification->data["contact"])->id);
+            $redirect_url = route("admin.contact.show", $notification->data["contact"]['id']);
         }
         return $redirect_url;
     }

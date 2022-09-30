@@ -250,6 +250,9 @@
                                 {{$order->pickup_location}}
                                 <br> {{__("Latitude")}} : {{$order->pickup_location_lat}}
                                 <br>{{__("Longitude")}} : {{$order->pickup_location_long}}
+                                @if($order->pickup_description)
+                                    <br> {{__("Pickup Description")}} : {{$order->pickup_description}}
+                                @endif
                             </div>
                         </div>
                         <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
@@ -265,6 +268,9 @@
                                 {{$order->drop_off_location}}
                                 <br> {{__("Latitude")}} : {{$order->drop_off_location_lat}}
                                 <br>{{__("Longitude")}} : {{$order->drop_off_location_long}}
+                                @if($order->drop_off_description)
+                                    <br> {{__("Location Description")}} : {{$order->drop_off_description}}
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -319,16 +325,16 @@
                         </div>
                         <div class="card-body pt-0">
                             <div class="table-responsive">
-                                <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                <table class="table align-middle text-center table-row-dashed fs-6 gy-5 mb-0">
                                     <thead>
-                                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                    <tr class="text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                         <th class="min-w-100px">{{__("Date Added")}}</th>
                                         <th class="min-w-175px">{{__("Comment")}}</th>
                                         <th class="min-w-70px">{{__("Order Status")}}</th>
                                         <th class="min-w-100px">{{__("Client Notified")}}</th>
                                     </tr>
                                     </thead>
-                                    <tbody class="fw-semibold text-gray-600">
+                                    <tbody class="fw-semibold text-center text-gray-600">
                                     @foreach($order->histories()->latest("order_histories.created_at")->get() as $history)
                                         <tr>
                                             <td>{{$history->created_at->format("Y/m/d")}}</td>

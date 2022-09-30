@@ -13,12 +13,14 @@ return new class extends Migration {
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId("service_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("user_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("captain_id")->nullable()->constrained("users")->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("offer_id")->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('expected_price_range_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->double("items_price")->nullable();
             $table->double("delivery_cost")->nullable();
             $table->double("tax")->default(0);
@@ -32,16 +34,18 @@ return new class extends Migration {
             $table->string("order_type");
             $table->string("drop_off_location")->nullable();
             $table->string("drop_off_description")->nullable();
-            $table->string("drop_off_location_lat")->nullable();
-            $table->string("drop_off_location_long")->nullable();
+            $table->double("drop_off_location_lat")->nullable();
+            $table->double("drop_off_location_long")->nullable();
             $table->string("pickup_location")->nullable();
             $table->string("pickup_description")->nullable();
-            $table->string("pickup_location_lat")->nullable();
-            $table->string("pickup_location_long")->nullable();
+            $table->double("pickup_location_lat")->nullable();
+            $table->double("pickup_location_long")->nullable();
+            $table->double("distance")->nullable();
             $table->string("discount_code")->nullable();
             $table->string("discount_amount")->nullable();
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

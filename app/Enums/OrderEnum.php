@@ -24,6 +24,8 @@ enum OrderEnum
 
     const CASH = "cash";
 
+    const IMAGE  = "image";
+
     public static function statues(): array
     {
         return [

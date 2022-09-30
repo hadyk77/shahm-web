@@ -4,6 +4,7 @@ namespace App\Http\Requests\API\Order;
 
 use App\Enums\OrderEnum;
 use App\Enums\VerificationOptionEnum;
+use App\Helper\Helper;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrderRequest extends FormRequest
@@ -19,15 +20,20 @@ class OrderRequest extends FormRequest
 
             // Locations
             "drop_off_location" => "required|string",
+            "drop_off_location_description" => "nullable|string",
             "drop_off_location_lat" => "required|numeric",
             "drop_off_location_long" => "required|numeric",
             "pickup_location" => "required|string",
+            "pickup_location_description" => "nullable|string",
             "pickup_location_lat" => "required|numeric",
             "pickup_location_long" => "required|numeric",
 
             // Payment Details
             "payment_method" => "required|in:" . implode(",", array_keys(OrderEnum::enabledPaymentMethods())),
+
             "coupon_code" => "nullable|exists:discounts,code",
+
+            "image" => Helper::imageRules(true)
         ];
     }
 

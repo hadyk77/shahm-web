@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('data');
             $table->timestamp('read_at')->nullable();
             $table->boolean("for_captain")->default(0);
+            $table->foreignId("captain_id")->nullable()->constrained("users")->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

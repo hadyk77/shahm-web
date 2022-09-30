@@ -80,6 +80,13 @@ class Order extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
+    protected $casts = [
+        "drop_off_location_lat" => "float",
+        "drop_off_location_long" => "float",
+        "pickup_location_lat" => "float",
+        "pickup_location_long" => "float",
+    ];
+
     public function captain(): BelongsTo
     {
         return $this->belongsTo(User::class, "captain_id");
@@ -98,6 +105,11 @@ class Order extends Model implements HasMedia
     public function histories(): HasMany
     {
         return $this->hasMany(OrderHistory::class);
+    }
+
+    public function expectedPriceRange(): BelongsTo
+    {
+        return $this->belongsTo(ExpectedPriceRange::class);
     }
 
 }

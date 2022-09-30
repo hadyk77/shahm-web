@@ -5,12 +5,15 @@ namespace App\Services\Order;
 use App\Actions\NotificationActions\NotifyAdminWithNewOrderRequest;
 use App\Actions\NotificationActions\NotifyClientWithCreationOfOrderAction;
 use App\Enums\OrderEnum;
+use App\Models\ExpectedPriceRange;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\OrderHistory;
 use App\Services\ServiceInterface;
+use App\Support\CalculateDistanceBetweenTwoPoints;
 use Auth;
 use DB;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -39,7 +42,7 @@ class OrderServices implements ServiceInterface
         return $orders->get();
     }
 
-    public function findClientOrderById($id)
+    public function findClientOrderById($id): Order
     {
         return Order::query()->where("user_id", Auth::id())->findOrFail($id);
     }
@@ -49,7 +52,7 @@ class OrderServices implements ServiceInterface
         return Order::query()->where("captain_id", Auth::id())->get();
     }
 
-    public function findCaptainOrderById($id)
+    public function findCaptainOrderById($id): Order
     {
         return Order::query()->where("captain_id", Auth::id())->findOrFail($id);
     }
@@ -64,6 +67,13 @@ class OrderServices implements ServiceInterface
         return DB::transaction(function () use ($request) {
 
             $gs = GeneralSetting::query()->first();
+
+            [$distance, $expectedRangeId] = $this->calculateLocationDistance(
+                lat1: $request->pickup_location_lat,
+                long1: $request->pickup_location_long,
+                lat2: $request->drop_off_location_lat,
+                long2: $request->drop_off_location_long,
+            );
 
             $order = Order::query()->create([
                 "service_id" => $request->service_id,
@@ -81,11 +91,19 @@ class OrderServices implements ServiceInterface
                 "pickup_description" => $request->pickup_description,
                 "pickup_location_lat" => $request->pickup_location_lat,
                 "pickup_location_long" => $request->pickup_location_long,
+                "distance" => $distance,
+                "expected_price_range_id" => $expectedRangeId,
 
                 "tax" => 0,
                 "tax_percentage" => $gs->tax,
                 "discount_code" => $request->discount_code,
             ]);
+
+            if ($request->hasFile('image')) {
+
+                $order->addMedia($request->image)->toMediaCollection(OrderEnum::IMAGE);
+
+            }
 
             $order->refresh();
 
@@ -125,7 +143,7 @@ class OrderServices implements ServiceInterface
 
         if ($type == "change_order_status") {
             if ($order->order_status == OrderEnum::WAITING_OFFERS) {
-                $commentAr = "تم إستلام الطلب";
+                $commentAr = "تم استلام الطلب";
                 $commentEn = "Order Received";
             }
             if ($order->order_status == OrderEnum::IN_PROGRESS) {
@@ -152,5 +170,23 @@ class OrderServices implements ServiceInterface
             "order_status" => $order->order_status,
             "is_client_notified" => $is_client_notified,
         ]);
+    }
+
+    private function calculateLocationDistance($lat1, $long1, $lat2, $long2): array
+    {
+        $distance = CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints($lat1, $long1, $lat2, $long2);
+
+        $maximumExpectedDistance = ExpectedPriceRange::query()->max("kilometer_to");
+
+        if ($distance > $maximumExpectedDistance) {
+            throw new Exception(__("Can't deliver for this distance"));
+        }
+
+        $expectedRangeId = ExpectedPriceRange::query()
+            ->where("kilometer_from", "<=", $distance)
+            ->where("kilometer_to", ">=", $distance)
+            ->first()?->id;
+
+        return [$distance, $expectedRangeId];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Order;
 
 use App\Helper\Helper;
+use App\Http\Resources\ExpectedPriceRange\ExpectedPriceRangeResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -30,6 +31,11 @@ class OrderShowResource extends JsonResource
             "grand_total" => $this->grand_total,
             "order_status" => $this->order_status,
             "order_items" => $this->order_items,
+            "distance" => $this->distance,
+            "expected_price_range" => [
+                "price_from" => $this->expectedPriceRange?->price_from,
+                "price_to" => $this->expectedPriceRange?->price_to,
+            ],
 
             // Locations
             "drop_off_location" => $this->drop_off_location,
@@ -43,6 +49,8 @@ class OrderShowResource extends JsonResource
 
             "payment_method" => $this->payment_method,
             "payment_status" => $this->payment_status,
+
+
             "created_at" => Helper::formatDate($this->created_at)
         ];
     }
