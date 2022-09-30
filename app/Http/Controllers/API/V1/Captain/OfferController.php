@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Offer\OfferResource;
 use App\Models\Offer;
 use App\Models\Order;
+use App\Support\CalculateDistanceBetweenTwoPoints;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -35,10 +36,16 @@ class OfferController extends Controller
     {
 
         $this->validate($request, [
-            "price" => "required|numeric"
+            "price" => "required|numeric",
+            "captain_lat" => "required|numeric",
+            "captain_long" => "required|numeric",
         ]);
 
-        $order = Order::query()->where("order_status", OrderEnum::WAITING_OFFERS)->findOrFail($order_id);
+        $order = Order::query()->where("order_status", OrderEnum::WAITING_OFFERS)->find($order_id);
+
+        if (!$order) {
+            return $this::sendFailedResponse(__("Order is not found"));
+        }
 
         if (DB::table("offers")->where("captain_id", Auth::id())->where("order_id", $order_id)->exists()) {
 
@@ -46,12 +53,24 @@ class OfferController extends Controller
 
         }
 
+        $distance = CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints(
+            $order->pickup_location_lat,
+            $order->pickup_location_long,
+            $request->captain_lat,
+            $request->captain_long,
+        );
+
         $offer = Offer::query()->create([
             "service_id" => $order->service_id,
             "order_id" => $order->id,
             "captain_id" => Auth::user()->id,
             "price" => $request->price,
+            "captain_lat" => $request->captain_lat,
+            "captain_long" => $request->captain_long,
+            "distance" => $distance,
         ]);
+
+        $offer->refresh();
 
         return $this::sendSuccessResponse(OfferResource::make($offer));
 
