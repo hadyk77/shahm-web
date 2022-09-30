@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Captain\CaptainNewAccountController;
+use App\Http\Controllers\API\Captain\CaptainSettingController;
 use App\Http\Controllers\API\Coupon\CouponController;
 use App\Http\Controllers\API\ExpectedPriceRange\ExpectedPriceRangeController;
 use App\Http\Controllers\API\V1\Notification\NotificationController;
@@ -135,6 +136,12 @@ Route::prefix("api/v1")->group(function () {
             Route::prefix("captain")->middleware("api.check.captain.phone")->group(function () {
 
                 Route::get("me", MeController::class);
+
+                Route::post("toggle-orders", [CaptainSettingController::class, 'toggleOrders']);
+
+                Route::post("toggle-between-governorate-service", [CaptainSettingController::class, 'toggleBetweenGovernorateService']);
+
+                Route::post("update-between-governorate-service", [CaptainSettingController::class, 'updateBetweenGovernorateService']);
 
             });
 

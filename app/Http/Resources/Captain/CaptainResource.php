@@ -27,6 +27,15 @@ class CaptainResource extends JsonResource
             "captain_wallet" => doubleval($this->user->captain_wallet),
             "verificationFiles" => VerificationFileResource::collection($this->verificationFiles),
             "captain_rate" => 0,
+
+            "enable_order" => $this->enable_order,
+            "enable_between_governorate_service" => $this->enable_between_governorate_service,
+            "pickup_id" => $this->pickup_id,
+            "pickup_details" => $this->pickup_details,
+            "drop_off_id" => $this->drop_off_id,
+            "drop_off_details" => $this->drop_off_details,
+            "between_governorate_service_time" => $this->between_governorate_time,
+            "between_governorate_service_date" => $this->between_governorate_date,
         ];
     }
 }

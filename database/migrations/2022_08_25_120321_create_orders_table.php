@@ -32,14 +32,17 @@ return new class extends Migration {
             $table->string("payment_status")->default(OrderEnum::UNPAID);
             $table->string("order_status")->default(OrderEnum::WAITING_OFFERS);
             $table->string("order_type");
+
             $table->string("drop_off_location")->nullable();
             $table->string("drop_off_description")->nullable();
             $table->double("drop_off_location_lat")->nullable();
             $table->double("drop_off_location_long")->nullable();
+
             $table->string("pickup_location")->nullable();
             $table->string("pickup_description")->nullable();
             $table->double("pickup_location_lat")->nullable();
             $table->double("pickup_location_long")->nullable();
+
             $table->double("distance")->nullable();
             $table->string("discount_code")->nullable();
             $table->string("discount_amount")->nullable();

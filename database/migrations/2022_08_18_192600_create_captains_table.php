@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,17 @@ return new class extends Migration {
             $table->foreignId("nationality_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string("identification_number");
             $table->string("wallet_number")->nullable();
+            $table->boolean("enable_order")->default(StatusEnum::ENABLED);
+
+            // between_governorate_service
+            $table->boolean("enable_between_governorate_service")->default(StatusEnum::DISABLED);
+            $table->foreignId("pickup_id")->nullable()->constrained("governorates")->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string("pickup_details")->nullable();
+            $table->foreignId("drop_off_id")->nullable()->constrained("governorates")->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string("drop_off_details")->nullable();
+            $table->time("between_governorate_time")->nullable();
+            $table->date("between_governorate_date")->nullable();
+
             $table->timestamps();
         });
     }
