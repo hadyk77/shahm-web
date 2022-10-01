@@ -20,19 +20,31 @@ class NotificationController extends Controller
 
     public function index()
     {
-        $notifications = $this->notificationServices->getNotificationForClients();
+        if (Auth::user()->is_captain) {
+            $notifications = $this->notificationServices->getNotificationForCaptains();
+        } else {
+            $notifications = $this->notificationServices->getNotificationForClients();
+        }
         return $this::sendSuccessResponse(NotificationResource::collection($notifications));
     }
 
     public function show($id)
     {
-        $notification = $this->notificationServices->findNotificationForClientById($id);
+        if (Auth::user()->is_captain) {
+            $notification = $this->notificationServices->findNotificationForCaptainById($id);
+        } else {
+            $notification = $this->notificationServices->findNotificationForClientById($id);
+        }
         return $this::sendSuccessResponse(NotificationResource::make($notification));
     }
 
     public function markAsRead($id)
     {
-        $notification = $this->notificationServices->findNotificationForClientById($id);
+        if (Auth::user()->is_captain) {
+            $notification = $this->notificationServices->findNotificationForCaptainById($id);
+        } else {
+            $notification = $this->notificationServices->findNotificationForClientById($id);
+        }
         try {
             $notification->markAsRead();
         } catch (Exception|Throwable $exception) {
@@ -44,7 +56,11 @@ class NotificationController extends Controller
 
     public function markAllAsRead()
     {
-        $notifications = $this->notificationServices->getNotificationForClients();
+        if (Auth::user()->is_captain) {
+            $notifications = $this->notificationServices->getNotificationForCaptains();
+        } else {
+            $notifications = $this->notificationServices->getNotificationForClients();
+        }
         try {
             foreach ($notifications as $notification) {
                 $notification->markAsRead();
@@ -58,7 +74,11 @@ class NotificationController extends Controller
 
     public function destroy($id)
     {
-        $notification = $this->notificationServices->findNotificationForClientById($id);
+        if (Auth::user()->is_captain) {
+            $notification = $this->notificationServices->findNotificationForCaptainById($id);
+        } else {
+            $notification = $this->notificationServices->findNotificationForClientById($id);
+        }
         try {
             $this->notificationServices->destroy($notification->id);
         } catch (Exception|Throwable $exception) {

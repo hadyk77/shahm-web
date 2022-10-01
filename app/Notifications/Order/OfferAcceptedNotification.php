@@ -9,7 +9,7 @@ use Kutia\Larafirebase\Messages\FirebaseMessage;
 
 class OfferAcceptedNotification extends Notification
 {
-    private Offer $offer;
+    public Offer $offer;
 
     public function __construct(Offer $offer)
     {
@@ -26,6 +26,7 @@ class OfferAcceptedNotification extends Notification
         return [
             "type" => NotificationEnum::OFFER_ACCEPTED,
             "offer" => $this->offer,
+            "order_code" => $this->offer->order->order_code,
         ];
     }
 

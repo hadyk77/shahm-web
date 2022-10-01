@@ -24,7 +24,6 @@ class NotificationResource extends JsonResource
         ];
     }
 
-
     private function title($data): string
     {
         if ($data['type'] == NotificationEnum::USER_CUSTOM_MESSAGE) {
@@ -38,7 +37,15 @@ class NotificationResource extends JsonResource
         if ($data['type'] == NotificationEnum::USER_CUSTOM_MESSAGE) {
             return $data["body"];
         }
-        $order = $data["order"];
-        return NotificationEnum::notificationTypes()[$data['type']] . " " . __("With Code") . " " . $order["order_code"];
+        if ($data['type'] == NotificationEnum::NEW_ORDER_REQUEST) {
+            $order = $data["order"];
+            return NotificationEnum::notificationTypes()[$data['type']] . " " . __("With Code") . " " . $order["order_code"];
+        }
+        if ($data['type'] == NotificationEnum::OFFER_ACCEPTED) {
+            return __("Offer Accepted For Order") . " " . $data['order_code'];
+        }
+        if ($data['type'] == NotificationEnum::OFFER_REJECTED) {
+            return __("Offer Rejected For Order") . " " . $data['order_code'];
+        }
     }
 }

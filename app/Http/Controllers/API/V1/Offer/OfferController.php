@@ -7,6 +7,8 @@ use App\Enums\OrderEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Offer\OfferResource;
 use App\Models\Order;
+use App\Notifications\Order\OfferAcceptedNotification;
+use App\Notifications\Order\OfferRejectedNotification;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -40,11 +42,16 @@ class OfferController extends Controller
         $order->update([
             "offer_id" => $offer->id,
             "order_status" => OrderEnum::IN_PROGRESS,
+            "captain_id" => $offer->captain_id
         ]);
 
         $offer->update([
             "offer_status" => OfferEnum::ACCEPTED,
         ]);
+
+        $offer->refresh();
+
+        $offer->captain->notify(new OfferAcceptedNotification($offer));
 
         return $this::sendSuccessResponse([], __("Offer Accepted"));
     }
@@ -64,6 +71,8 @@ class OfferController extends Controller
         $offer->update([
             "offer_status" => OfferEnum::REJECTED,
         ]);
+
+        $offer->captain->notify(new OfferRejectedNotification($offer));
 
         return $this::sendSuccessResponse([], __("Offer Rejected"));
     }

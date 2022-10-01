@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications\User;
+namespace App\Notifications\Order;
 
 use App\Enums\NotificationEnum;
 use App\Models\Offer;
@@ -26,6 +26,7 @@ class OfferRejectedNotification extends Notification
         return [
             "type" => NotificationEnum::OFFER_REJECTED,
             "offer" => $this->offer,
+            "order_code" => $this->offer->order->order_code,
         ];
     }
 
