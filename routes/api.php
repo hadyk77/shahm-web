@@ -119,10 +119,14 @@ Route::prefix("api/v1")->group(function () {
 
             Route::post('reject/order/{order_id}/offer/{offer_id}', [OfferController::class, "rejectOffer"]);
 
+            Route::get("captains-enabled-between-governorate-service", [OrderController::class, "getEnabledBetweenGovernorateService"]);
+
             Route::post("check-coupon", CouponController::class);
 
             Route::post("contact", ContactController::class);
 
+
+            // Notifications
             Route::resource("notification", NotificationController::class)->only("index", "show", "destroy");
 
             Route::post("notification-mark-as-read/{id}", [NotificationController::class, "markAsRead"]);
@@ -131,6 +135,7 @@ Route::prefix("api/v1")->group(function () {
 
             Route::delete("notification-delete-all", [NotificationController::class, "destroyAll"]);
 
+            // Captains
             Route::prefix("captain")->middleware("throttle:api-auth")->group(function () {
 
                 Route::post("add-phone", [CaptainNewAccountController::class, "addPhone"]);

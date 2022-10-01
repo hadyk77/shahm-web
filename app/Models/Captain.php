@@ -90,4 +90,14 @@ class Captain extends Model implements HasMedia
     {
         return $this->hasMany(CaptainVerificationFile::class);
     }
+
+    public function governorateFrom(): BelongsTo
+    {
+        return $this->belongsTo(Governorate::class, "pickup_id");
+    }
+
+    public function governorateTo(): BelongsTo
+    {
+        return $this->belongsTo(Governorate::class, "drop_off_id");
+    }
 }

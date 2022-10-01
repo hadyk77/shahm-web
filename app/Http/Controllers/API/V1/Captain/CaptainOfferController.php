@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Offer\OfferResource;
 use App\Models\Offer;
 use App\Models\Order;
+use App\Notifications\Order\NewOfferNotification;
 use App\Support\CalculateDistanceBetweenTwoPoints;
 use Auth;
 use DB;
@@ -69,6 +70,8 @@ class CaptainOfferController extends Controller
             "captain_long" => $request->captain_long,
             "distance" => $distance,
         ]);
+
+        $offer->order->client->notify(new NewOfferNotification($offer));
 
         $offer->refresh();
 
