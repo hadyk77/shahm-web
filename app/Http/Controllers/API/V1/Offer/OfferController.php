@@ -9,6 +9,7 @@ use App\Http\Resources\Offer\OfferResource;
 use App\Models\Order;
 use App\Notifications\Order\OfferAcceptedNotification;
 use App\Notifications\Order\OfferRejectedNotification;
+use App\Services\Order\OrderServices;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,11 @@ class OfferController extends Controller
 
         $offer->refresh();
 
+        $order->refresh();
+
         $offer->captain->notify(new OfferAcceptedNotification($offer));
+
+        (new OrderServices())->storeHistoryForOrder($order);
 
         return $this::sendSuccessResponse([], __("Offer Accepted"));
     }

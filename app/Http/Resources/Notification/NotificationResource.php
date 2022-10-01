@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Notification;
 
 use App\Enums\NotificationEnum;
+use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -47,5 +48,9 @@ class NotificationResource extends JsonResource
         if ($data['type'] == NotificationEnum::OFFER_REJECTED) {
             return __("Offer Rejected For Order") . " " . $data['order_code'];
         }
+        if ($data['type'] == NotificationEnum::ORDER_STATUS_CHANGED) {
+            return __("Order With Code") . ' ' . $data['order_code'] . " " . __("changed to") . " " . OrderEnum::statues()[$data['order_status']];
+        }
+        return "";
     }
 }

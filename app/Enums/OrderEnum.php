@@ -10,6 +10,10 @@ enum OrderEnum
 
     const IN_PROGRESS = "in_progress";
 
+    const CAPTAIN_RECEIVED_ORDER = "captain_received_order";
+
+    const CAPTAIN_IN_CLIENT_LOCATION = "captain_in_client_location";
+
     const DELIVERED = "delivered";
 
     const CANCELED = "canceled";
@@ -24,13 +28,15 @@ enum OrderEnum
 
     const CASH = "cash";
 
-    const IMAGE  = "image";
+    const IMAGE = "image";
 
     public static function statues(): array
     {
         return [
             self::WAITING_OFFERS => __("Waiting Offers"),
             self::IN_PROGRESS => __("In Progress"),
+            self::CAPTAIN_RECEIVED_ORDER => __("Captain received order"),
+            self::CAPTAIN_IN_CLIENT_LOCATION => __("Captain in your location"),
             self::DELIVERED => __("Delivered"),
             self::CANCELED => __("Canceled")
         ];

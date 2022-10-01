@@ -13,6 +13,7 @@ enum NotificationEnum
     const NEW_OFFER = "NEW_OFFER";
     const OFFER_ACCEPTED = "OFFER_ACCEPTED";
     const OFFER_REJECTED = "OFFER_REJECTED";
+    const ORDER_STATUS_CHANGED = "ORDER_STATUS_CHANGED";
 
     public static function notificationTypes(): array
     {
@@ -23,8 +24,9 @@ enum NotificationEnum
             self::NEW_ORDER_REQUEST => __("New Order Request"),
             self::YOUR_ORDER_RECEIVED => __("Your Order Received"),
             self::NEW_OFFER => __("Your order has new offer"),
-            self::OFFER_ACCEPTED => __("Your offer has been accepted 🎉"),
+            self::OFFER_ACCEPTED => __("Your offer has been accepted"),
             self::OFFER_REJECTED => __("Your offer has been rejected"),
+            self::ORDER_STATUS_CHANGED => __("Your order status has been changed"),
         ];
     }
 

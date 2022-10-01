@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\Captain\CaptainNewAccountController;
+use App\Http\Controllers\API\V1\Captain\CaptainOrderController;
 use App\Http\Controllers\API\V1\Captain\CaptainSettingController;
 use App\Http\Controllers\API\V1\Captain\CaptainOfferController;
 use App\Http\Controllers\API\V1\Coupon\CouponController;
@@ -161,6 +162,11 @@ Route::prefix("api/v1")->group(function () {
                 Route::get("get-offer-by-order/{id}", [CaptainOfferController::class, "getOfferByOrder"]);
 
                 Route::post("send-offer/{id}", [CaptainOfferController::class, "sendOffer"]);
+
+                Route::get('order', [CaptainOrderController::class, "index"]);
+
+                Route::get('order/{id}', [CaptainOrderController::class, "show"]);
+
             });
 
         });

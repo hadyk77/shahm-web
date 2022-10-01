@@ -136,7 +136,7 @@ class OrderServices implements ServiceInterface
         ]);
     }
 
-    private function storeHistoryForOrder($order, $type = "change_order_status", $is_client_notified = false): void
+    public function storeHistoryForOrder($order, $type = "change_order_status", $is_client_notified = false): void
     {
         $commentAr = "";
         $commentEn = "";
