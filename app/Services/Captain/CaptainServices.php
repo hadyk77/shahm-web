@@ -3,8 +3,11 @@
 namespace App\Services\Captain;
 
 use App\Enums\CaptainEnum;
+use App\Enums\ProfileImageEnum;
+use App\Enums\UserEnum;
 use App\Models\Captain;
 use App\Models\CaptainVerificationFile;
+use App\Models\User;
 use App\Services\ServiceInterface;
 use DB;
 use Exception;
@@ -36,13 +39,34 @@ class CaptainServices implements ServiceInterface
 
             $this->checkThatUserHasOnlyOneCaptainAccount($request->user_id);
 
+            $user = User::query()->find($request->user_id);
+
+            if ($request->filled('name')) {
+                $user->update([
+                    "name" => $request->name
+                ]);
+            }
+
+            if ($request->filled('date_of_birth')) {
+                $user->update([
+                    "date_of_birth" => $request->date_of_birth
+                ]);
+            }
+            if ($request->filled('address')) {
+                $user->update([
+                    "address" => $request->address
+                ]);
+            }
+            if ($request->filled('image')) {
+                $user->addMedia($request->image)->toMediaCollection(ProfileImageEnum::PROFILE_IMAGE);
+            }
             $captain = Captain::query()->create([
                 "user_id" => $request->user_id,
                 "vehicle_type_id" => $request->vehicle_type_id,
                 "nationality_id" => $request->nationality_id,
                 "identification_number" => $request->identification_number,
                 "vehicle_manufacturing_date" => $request->vehicle_manufacturing_date,
-                "vehicle_number" => $request->vehicle_number,
+//                "vehicle_number" => $request->vehicle_number,
                 "wallet_number" => $request->wallet_number,
                 "vehicle_identification_number" => $request->vehicle_identification_number,
                 "vehicle_license_plate_number" => $request->vehicle_license_plate_number,

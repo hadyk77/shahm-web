@@ -14,7 +14,7 @@ class NewAccountRequest extends FormRequest
             "vehicle_type_id" => "required|exists:vehicle_types,id",
             "vehicle_manufacturing_date" => "required|string",
             "wallet_number" => "required|string",
-            "vehicle_number" => "required|string",
+//            "vehicle_number" => "required|string",
             "vehicle_identification_number" => "required|string",
             "vehicle_license_plate_number" => "required|string",
             "identification_number" => "required|string",
