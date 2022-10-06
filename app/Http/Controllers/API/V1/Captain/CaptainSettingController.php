@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\V1\Captain;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Captain\CaptainResource;
+use App\Http\Resources\UpgradeOptions\UpgradeOptionsResource;
+use App\Models\AccountUpgradeOption;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -43,9 +45,7 @@ class CaptainSettingController extends Controller
     {
         $this->validate($request, [
             "pickup_id" => "required|exists:governorates,id",
-            "pickup_details" => "nullable|string",
             "drop_off_id" => "required|exists:governorates,id",
-            "drop_off_details" => "nullable|string",
             "date" => "required|after_or_equal:today|date:Y-m-d",
             "time" => "required",
         ]);
@@ -55,13 +55,17 @@ class CaptainSettingController extends Controller
         $captain->update([
             "enable_between_governorate_service" => 1,
             "pickup_id" => $request->pickup_id,
-            "pickup_details" => $request->pickup_details,
             "drop_off_id" => $request->drop_off_id,
-            "drop_off_details" => $request->drop_off_details,
             "between_governorate_time" => $request->time,
             "between_governorate_date" => $request->date,
         ]);
 
         return $this::sendSuccessResponse(CaptainResource::make($captain));
+    }
+
+    public function upgradeOption()
+    {
+        $upgradeOptions = AccountUpgradeOption::query()->get();
+        return $this::sendSuccessResponse(UpgradeOptionsResource::collection($upgradeOptions));
     }
 }

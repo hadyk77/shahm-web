@@ -44,7 +44,6 @@ class VerificationOption extends BaseModel implements HasMedia
 {
     use HasFactory, InteractsWithMedia, HasTranslationTrait;
 
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(VerificationOptionEnum::ICON)->singleFile();

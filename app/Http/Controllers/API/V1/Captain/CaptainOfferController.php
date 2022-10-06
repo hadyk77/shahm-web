@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Captain;
 use App\Enums\OrderEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Offer\OfferResource;
+use App\Models\GeneralSetting;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Notifications\Order\NewOfferNotification;
@@ -65,10 +66,13 @@ class CaptainOfferController extends Controller
             "service_id" => $order->service_id,
             "order_id" => $order->id,
             "captain_id" => Auth::user()->id,
-            "price" => $request->price,
             "captain_lat" => $request->captain_lat,
             "captain_long" => $request->captain_long,
             "distance" => $distance,
+            "price" => $request->price,
+            "app_profit_from_captain" => $this->calculateAppProfit($request->price)["app_profit_from_captain"],
+            "app_profit_from_user" => $this->calculateAppProfit($request->price)["app_profit_from_user"],
+            "offer_total_cost" => $this->calculateAppProfit($request->price)["total"],
         ]);
 
         $offer->order->client->notify(new NewOfferNotification($offer));
@@ -77,6 +81,18 @@ class CaptainOfferController extends Controller
 
         return $this::sendSuccessResponse(OfferResource::make($offer));
 
+    }
+
+    private function calculateAppProfit(float $price)
+    {
+        $gs = GeneralSetting::query()->first();
+        $app_profit_from_captain = $price * $gs->captain_commission / 100;
+        $app_profit_from_user = $price * $gs->client_commission / 100;
+        return [
+            "app_profit_from_captain" => $app_profit_from_captain,
+            "app_profit_from_user" => $app_profit_from_user,
+            "total" => $price + $app_profit_from_user,
+        ];
     }
 
 }

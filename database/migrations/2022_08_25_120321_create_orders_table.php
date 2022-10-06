@@ -22,7 +22,12 @@ return new class extends Migration {
             $table->foreignId("offer_id")->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('expected_price_range_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->double("items_price")->nullable();
+
+            $table->double("app_profit_from_captain")->nullable();
+            $table->double("app_profit_from_user")->nullable();
+            $table->double("captain_profit")->nullable();
             $table->double("delivery_cost")->nullable();
+
             $table->double("tax")->default(0);
             $table->double("tax_percentage")->default(0);
             $table->double("grand_total")->nullable();

@@ -30,11 +30,12 @@ return new class extends Migration {
             // between_governorate_service
             $table->boolean("enable_between_governorate_service")->default(StatusEnum::DISABLED);
             $table->foreignId("pickup_id")->nullable()->constrained("governorates")->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string("pickup_details")->nullable();
             $table->foreignId("drop_off_id")->nullable()->constrained("governorates")->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string("drop_off_details")->nullable();
             $table->time("between_governorate_time")->nullable();
             $table->date("between_governorate_date")->nullable();
+
+
+            $table->foreignId("account_upgrade_option_id")->nullable()->constrained("account_upgrade_options")->nullOnDelete();
 
             $table->timestamps();
         });

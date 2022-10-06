@@ -16,7 +16,7 @@ class OfferResource extends JsonResource
 
             "service_id" => $this->service_id,
             "order" => [
-                "id"  => $this->order->id,
+                "id" => $this->order->id,
                 "order_code" => $this->order->order_code
             ],
             "captain" => [
@@ -34,6 +34,9 @@ class OfferResource extends JsonResource
 
             "offer_status" => $this->offer_status,
             "price" => $this->price,
+            "app_profit_from_captain" => $this->app_profit_from_captain,
+            "app_profit_from_user" => $this->app_profit_from_user,
+            "offer_total_cost" => $this->offer_total_cost,
 
             "is_between_governorate_service" => $this->is_between_governorate_service == 1,
             "governorate_from_id" => $this->governorate_from_id,

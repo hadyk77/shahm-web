@@ -27,6 +27,10 @@ return new class extends Migration {
             $table->string('offer_status')->default(OfferEnum::PENDING);
             $table->double('price');
 
+            $table->double("app_profit_from_captain")->default(0);
+            $table->double("app_profit_from_user")->default(0);
+            $table->double("offer_total_cost");
+
             $table->boolean("is_between_governorate_service")->default(StatusEnum::DISABLED);
             $table->foreignId("governorate_from_id")->nullable()->constrained("governorates")->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId("governorate_to_id")->nullable()->constrained("governorates")->cascadeOnUpdate()->cascadeOnDelete();

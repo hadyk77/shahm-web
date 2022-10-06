@@ -6,6 +6,7 @@ use App\Enums\OfferEnum;
 use App\Enums\OrderEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Offer\OfferResource;
+use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Notifications\Order\OfferAcceptedNotification;
 use App\Notifications\Order\OfferRejectedNotification;
@@ -40,10 +41,19 @@ class OfferController extends Controller
 
         }
 
+        $gs = GeneralSetting::query()->first();
+
         $order->update([
             "offer_id" => $offer->id,
             "order_status" => OrderEnum::IN_PROGRESS,
-            "captain_id" => $offer->captain_id
+            "captain_id" => $offer->captain_id,
+            "captain_profit" => $offer->offer_total_cost - $offer->app_profit_from_user - $offer->app_profit_from_captain,
+            "app_profit_from_captain" => $offer->app_profit_from_captain,
+            "app_profit_from_user" => $offer->app_profit_from_user,
+            "delivery_cost_with_user_commission" => $offer->offer_total_cost,
+            "delivery_cost_without_user_commission" => $offer->offer_total_cost - $offer->app_profit_from_user,
+            "grand_total" => (1 + ($gs->tax / 100)) * $offer->offer_total_cost,
+            "tax" => ($gs->tax / 100) * $offer->offer_total_cost
         ]);
 
         $offer->update([

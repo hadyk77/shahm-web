@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Order;
 
+use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use App\Http\Resources\ExpectedPriceRange\ExpectedPriceRangeResource;
 use Illuminate\Http\Request;
@@ -23,10 +24,14 @@ class OrderShowResource extends JsonResource
             "captain" => $this->mergeWhen($this->captain_id != null, function () {
                 return [
                     "id" => $this->captain->id,
-                    "name" => $this->captain->user->name,
+                    "name" => $this->captain->name,
                 ];
             }),
-            "delivery_cost" => $this->delivery_cost,
+            "app_profit_from_captain" => $this->app_profit_from_captain,
+            "captain_profit" => $this->captain_profit,
+            "app_profit_from_user" => $this->app_profit_from_user,
+            "delivery_cost_with_user_commission" => $this->delivery_cost_with_user_commission,
+            "delivery_cost_without_user_commission" => $this->delivery_cost_without_user_commission,
             "tax" => $this->tax,
             "grand_total" => $this->grand_total,
             "order_status" => $this->order_status,
@@ -50,6 +55,8 @@ class OrderShowResource extends JsonResource
             "payment_method" => $this->payment_method,
             "payment_status" => $this->payment_status,
 
+            "client_image" => $this->getFirstMediaUrl(OrderEnum::IMAGE),
+            "purchasing_image" => $this->getFirstMediaUrl(OrderEnum::PURCHASING_IMAGE),
 
             "created_at" => Helper::formatDate($this->created_at)
         ];

@@ -30,6 +30,8 @@ enum OrderEnum
 
     const IMAGE = "image";
 
+    const PURCHASING_IMAGE = "PURCHASING_IMAGE";
+
     public static function statues(): array
     {
         return [

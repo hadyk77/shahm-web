@@ -100,4 +100,9 @@ class Captain extends Model implements HasMedia
     {
         return $this->belongsTo(Governorate::class, "drop_off_id");
     }
+
+    public function accountUpgradeOption(): BelongsTo
+    {
+        return $this->belongsTo(AccountUpgradeOption::class);
+    }
 }

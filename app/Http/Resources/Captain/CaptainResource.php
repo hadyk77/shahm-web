@@ -33,13 +33,11 @@ class CaptainResource extends JsonResource
             "enable_order" => $this->enable_order,
             "enable_between_governorate_service" => $this->enable_between_governorate_service,
             "pickup_id" => $this->pickup_id,
-            "pickup_details" => $this->pickup_details,
             "drop_off_id" => $this->drop_off_id,
-            "drop_off_details" => $this->drop_off_details,
             "between_governorate_service_time" => $this->between_governorate_time,
             "between_governorate_service_date" => $this->between_governorate_date,
 
-            "account_type" => UpgradeOptionsResource::make(AccountUpgradeOption::query()->first())
+            "account_type" => UpgradeOptionsResource::make($this->accountUpgradeOption)
         ];
     }
 }

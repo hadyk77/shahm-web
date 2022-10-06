@@ -4,6 +4,7 @@ use App\Http\Controllers\API\V1\Captain\CaptainNewAccountController;
 use App\Http\Controllers\API\V1\Captain\CaptainOrderController;
 use App\Http\Controllers\API\V1\Captain\CaptainSettingController;
 use App\Http\Controllers\API\V1\Captain\CaptainOfferController;
+use App\Http\Controllers\API\V1\Captain\VerificationFileController;
 use App\Http\Controllers\API\V1\Coupon\CouponController;
 use App\Http\Controllers\API\V1\ExpectedPriceRange\ExpectedPriceRangeController;
 use App\Http\Controllers\API\V1\Notification\NotificationController;
@@ -168,6 +169,14 @@ Route::prefix("api/v1")->group(function () {
                 Route::get('order', [CaptainOrderController::class, "index"]);
 
                 Route::get('order/{id}', [CaptainOrderController::class, "show"]);
+
+                Route::post('update-order-details/{id}', [CaptainOrderController::class, "updateOrderDetails"]);
+
+                Route::post('update-order-status/{id}', [CaptainOrderController::class, "updateOrderStatus"]);
+
+                Route::get("upgrade-options", [CaptainSettingController::class, "upgradeOption"]);
+
+                Route::apiResource("verification-files", VerificationFileController::class)->only("index", "store");
 
             });
 
