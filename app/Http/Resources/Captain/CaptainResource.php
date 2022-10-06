@@ -3,7 +3,9 @@
 namespace App\Http\Resources\Captain;
 
 use App\Http\Resources\Nationality\NationalityResource;
+use App\Http\Resources\UpgradeOptions\UpgradeOptionsResource;
 use App\Http\Resources\VehicleType\VehicleTypeResource;
+use App\Models\AccountUpgradeOption;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -36,6 +38,8 @@ class CaptainResource extends JsonResource
             "drop_off_details" => $this->drop_off_details,
             "between_governorate_service_time" => $this->between_governorate_time,
             "between_governorate_service_date" => $this->between_governorate_date,
+
+            "account_type" => UpgradeOptionsResource::make(AccountUpgradeOption::query()->first())
         ];
     }
 }
