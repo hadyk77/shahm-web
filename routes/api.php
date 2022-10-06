@@ -30,6 +30,7 @@ use App\Http\Controllers\API\V1\Profile\MeController;
 use App\Http\Controllers\API\V1\Profile\UpdateLocationController;
 use App\Http\Controllers\API\V1\Profile\UpdateProfileController;
 use App\Http\Controllers\API\V1\Profile\VerifyPhoneController;
+use App\Http\Controllers\API\V1\Rate\RateController;
 use App\Http\Controllers\API\V1\Service\ServiceController;
 use App\Http\Controllers\API\V1\UpgradeOptions\UpgradeOptionsController;
 use App\Http\Controllers\API\V1\VehicleType\VehicleTypeController;
@@ -126,6 +127,7 @@ Route::prefix("api/v1")->group(function () {
 
             Route::post("contact", ContactController::class);
 
+            Route::apiResource("rate", RateController::class)->only("index", "store", "show");
 
             // Notifications
             Route::resource("notification", NotificationController::class)->only("index", "show", "destroy");
