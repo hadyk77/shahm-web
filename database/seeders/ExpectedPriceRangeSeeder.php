@@ -10,7 +10,7 @@ class ExpectedPriceRangeSeeder extends Seeder
     public function run()
     {
         ExpectedPriceRange::query()->create([
-            "kilometer_from" => 1,
+            "kilometer_from" => 0,
             "kilometer_to" => 2,
             "price_from" => 10,
             "price_to" => 20,

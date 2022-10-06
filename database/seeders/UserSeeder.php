@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
     {
         $user = User::query()->create([
             "name" => "عبدالرحمن المسيرى",
-            "phone" => "01201192460",
+            "phone" => "+201201192460",
             "email" => "user@user.com",
             "date_of_birth" => "1998-12-01",
             "gender" => "male",

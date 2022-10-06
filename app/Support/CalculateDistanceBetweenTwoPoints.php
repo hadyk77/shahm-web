@@ -12,7 +12,7 @@ class CalculateDistanceBetweenTwoPoints
         if (empty($distanceUnit)) {
             $distanceUnit = 'KM';
         }
-        $distanceUnit = strtolower($distanceUnit);
+
         $pointDifference = $longitudeOne - $longitudeTwo;
         $toSin = (sin(deg2rad($latitudeOne)) * sin(deg2rad($latitudeTwo))) + (cos(deg2rad($latitudeOne)) * cos(deg2rad($latitudeTwo)) * cos(deg2rad($pointDifference)));
         $toAcos = acos($toSin);

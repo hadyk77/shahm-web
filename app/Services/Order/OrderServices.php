@@ -4,6 +4,7 @@ namespace App\Services\Order;
 
 use App\Actions\NotificationActions\NotifyAdminWithNewOrderRequest;
 use App\Actions\NotificationActions\NotifyClientWithCreationOfOrderAction;
+use App\Actions\NotificationActions\NotifyNearCaptainsWithNewOrderAction;
 use App\Enums\OrderEnum;
 use App\Models\ExpectedPriceRange;
 use App\Models\GeneralSetting;
@@ -109,11 +110,13 @@ class OrderServices implements ServiceInterface
 
             $this->updateOrderCode($order);
 
-            NotifyAdminWithNewOrderRequest::run($order);
-
             $this->storeHistoryForOrder(order: $order, is_client_notified: true);
 
+            NotifyAdminWithNewOrderRequest::run($order);
+
             NotifyClientWithCreationOfOrderAction::run(Auth::user(), $order);
+
+            NotifyNearCaptainsWithNewOrderAction::run($order);
 
             return $order;
         });

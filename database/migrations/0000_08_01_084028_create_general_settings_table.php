@@ -50,6 +50,9 @@ return new class extends Migration {
             $table->double("service_price_per_kilometer")->default(10);
 
             $table->string("app_version")->default('1.0.0');
+
+            $table->double("max_radius")->default(5);
+
             $table->timestamps();
         });
     }
