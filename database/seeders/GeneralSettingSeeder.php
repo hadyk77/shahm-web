@@ -28,14 +28,14 @@ class GeneralSettingSeeder extends Seeder
             "snapchat_link" => 'https://snapchat.com',
             "tiktok_link" => 'https://tiktok.com',
 
-            "fcm_key" => "AAAAAtjXarI:APA91bG9EPze9Yfp4cZYO1nLJ-MIQ6x6wP-grp6s5BhSQMDbXTKgIyBvGIyMeh930WteB6cZcqOsj8Y2mGMzB4-IJcTZAGhtBIHC3kqZcYpBjnp_rma8BLL5yCIId-6Tv-uXQC_A5KLX",
-            "firebase_api_key" => "AIzaSyAh64uLHY0h303UgPiTEvs2j59DraFbIhQ",
-            "firebase_auth_domain" => "shahm-54b6f.firebaseapp.com",
-            "firebase_database_url" => "https://shahm-54b6f-default-rtdb.firebaseio.com/",
-            "firebase_project_id" => "shahm-54b6f",
-            "firebase_storage_bucket" => "shahm-54b6f.appspot.com",
-            "firebase_messaging_sender_id" => "12227930802",
-            "firebase_app_id" => "1:12227930802:web:d54a54be303bc8e96db7ab",
+            "fcm_key" => "AAAAs8QGDaA:APA91bELNJCcJibR7AKfo_JizU65ptU0yUuPwpHyvhUG8D8kFm0kB1fMrhxEmk6cebnT1as1Hm253P1TEu4HgvARCjphWdwir7dVY21qNltWGhZtU7UeSphq2n4QvRNyh0wbtF4eAyjl",
+            "firebase_api_key" => "AIzaSyBzYZXQKKTRIravYfe8kBfkCJAwJTp7lMs",
+            "firebase_auth_domain" => "shahm-app.firebaseapp.com",
+            "firebase_database_url" => "https://shahm-app-default-rtdb.firebaseio.com/",
+            "firebase_project_id" => "shahm-app",
+            "firebase_storage_bucket" => "shahm-app.appspot.com",
+            "firebase_messaging_sender_id" => "772087877024",
+            "firebase_app_id" => "1:772087877024:android:5d31e17fc2f80103aa28c5",
         ]);
 
         $logo = public_path("test_images/logo.png");
