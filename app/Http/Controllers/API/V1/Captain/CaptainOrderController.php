@@ -17,33 +17,25 @@ class CaptainOrderController extends Controller
 {
     public function index(Request $request)
     {
-        $orders = Order::query()->where("captain_id", Auth::id());
+        $old_orders = Order::query()->where("captain_id", Auth::id())->get();
 
-        if ($request->filled("status") && $request->status != "") {
+        $new_orders = Order::query()->whereNull("captain_id")->get();
 
-            if ($request->status == "new") {
-                $orders = $orders->whereIn("order_status", [
-                    OrderEnum::IN_PROGRESS,
-                    OrderEnum::CAPTAIN_IN_CLIENT_LOCATION,
-                    OrderEnum::CAPTAIN_RECEIVED_ORDER,
-                ]);
-            }
-
-            if ($request->status == "old") {
-                $orders = $orders->whereNotIn("order_status", [
-                    OrderEnum::IN_PROGRESS,
-                    OrderEnum::CAPTAIN_IN_CLIENT_LOCATION
-                ]);
-            }
-
-        }
-
-        return $this::sendSuccessResponse(OrderIndexResource::collection($orders->get()));
+        return $this::sendSuccessResponse([
+            "old" => OrderIndexResource::collection($old_orders),
+            "new" => OrderIndexResource::collection($new_orders),
+        ]);
     }
 
     public function show($id)
     {
-        $order = Order::query()->where("captain_id", Auth::id())->findOrFail($id);
+        $order = Order::query()
+            ->where(function ($query) {
+                $query
+                    ->where("captain_id", Auth::id())
+                    ->orWhere("captain_id", null);
+            })
+            ->findOrFail($id);
         return $this::sendSuccessResponse(OrderShowResource::make($order));
     }
 
