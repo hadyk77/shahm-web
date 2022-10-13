@@ -19,6 +19,7 @@ class OrderIndexResource extends JsonResource
                 "icon" => $this->service->icon
             ],
             "items_price" => $this->items_price,
+            "captain_profit" => $this->captain_profit,
             "app_profit_from_captain" => $this->app_profit_from_captain,
             "app_profit_from_user" => $this->app_profit_from_user,
             "delivery_cost_with_user_commission" => $this->delivery_cost_with_user_commission,

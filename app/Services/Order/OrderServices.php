@@ -6,10 +6,12 @@ use App\Actions\NotificationActions\NotifyAdminWithNewOrderRequest;
 use App\Actions\NotificationActions\NotifyClientWithCreationOfOrderAction;
 use App\Actions\NotificationActions\NotifyNearCaptainsWithNewOrderAction;
 use App\Enums\OrderEnum;
+use App\Models\Captain;
 use App\Models\ExpectedPriceRange;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\OrderHistory;
+use App\Models\User;
 use App\Services\ServiceInterface;
 use App\Support\CalculateDistanceBetweenTwoPoints;
 use Auth;
@@ -69,6 +71,16 @@ class OrderServices implements ServiceInterface
 
             $gs = GeneralSetting::query()->first();
 
+            if ($request->service_id == 3) {
+
+                $captain = User::query()->find($request->captain_id);
+
+                if (!$captain->captain->enable_order) {
+                    throw new Exception("Captain is not enabled");
+                }
+
+            }
+
             [$distance, $expectedRangeId] = $this->calculateLocationDistance(
                 lat1: $request->pickup_location_lat,
                 long1: $request->pickup_location_long,
@@ -78,6 +90,7 @@ class OrderServices implements ServiceInterface
 
             $order = Order::query()->create([
                 "service_id" => $request->service_id,
+                "between_governorate_service_id" => $request->service_id == 3 ? $request->between_governorate_service_id : null,
                 "user_id" => Auth::id(),
                 "order_items" => $request->order_items,
                 "order_type" => $request->order_type,

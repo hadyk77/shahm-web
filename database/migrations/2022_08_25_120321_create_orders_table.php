@@ -17,6 +17,7 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId("service_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId("between_governorate_service_id")->nullable()->constrained()->nullOnDelete();
             $table->foreignId("user_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("captain_id")->nullable()->constrained("users")->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("offer_id")->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
@@ -26,13 +27,15 @@ return new class extends Migration {
             $table->double("app_profit_from_captain")->nullable();
             $table->double("app_profit_from_user")->nullable();
             $table->double("captain_profit")->nullable();
-            $table->double("delivery_cost")->nullable();
-
+            $table->double("delivery_cost_with_user_commission")->nullable();
+            $table->double("delivery_cost_without_user_commission")->nullable();
             $table->double("tax")->default(0);
             $table->double("tax_percentage")->default(0);
             $table->double("grand_total")->nullable();
             $table->longText("order_items")->nullable();
             $table->string("payment_method");
+
+
             $table->string("order_code")->nullable();
             $table->string("payment_status")->default(OrderEnum::UNPAID);
             $table->string("order_status")->default(OrderEnum::WAITING_OFFERS);

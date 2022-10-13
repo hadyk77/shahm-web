@@ -14,7 +14,6 @@ use Lorisleiva\Actions\Concerns\AsAction;
 
 class NotifyNearCaptainsWithNewOrderAction
 {
-
     use AsAction;
 
     public function handle(Order $order): void
@@ -37,7 +36,8 @@ class NotifyNearCaptainsWithNewOrderAction
             ->get()
             ->pluck("id");
         foreach ($captainIds as $captainId) {
-            User::query()->find($captainId)->notify(new NewOrderNotification($order));
+            $captain = User::query()->whereRelation("captain", "captains.enable_order", 1)->find($captainId);
+            $captain?->notify(new NewOrderNotification($order));
         }
     }
 }

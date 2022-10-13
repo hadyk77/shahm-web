@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PageSeeder::class);
         $this->call(IntroImagesSeeder::class);
         $this->call(VehicleTypeSeeder::class);
-        $this->call(UserSeeder::class);
         $this->call(ExpectedPriceRangeSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

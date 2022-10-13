@@ -27,14 +27,6 @@ return new class extends Migration {
             $table->string("wallet_number")->nullable();
             $table->boolean("enable_order")->default(StatusEnum::ENABLED);
 
-            // between_governorate_service
-            $table->boolean("enable_between_governorate_service")->default(StatusEnum::DISABLED);
-            $table->foreignId("pickup_id")->nullable()->constrained("governorates")->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId("drop_off_id")->nullable()->constrained("governorates")->cascadeOnUpdate()->cascadeOnDelete();
-            $table->time("between_governorate_time")->nullable();
-            $table->date("between_governorate_date")->nullable();
-
-
             $table->foreignId("account_upgrade_option_id")->nullable()->constrained("account_upgrade_options")->nullOnDelete();
 
             $table->timestamps();

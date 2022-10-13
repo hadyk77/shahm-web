@@ -17,12 +17,20 @@ class CaptainOrderController extends Controller
 {
     public function index(Request $request)
     {
-        $old_orders = Order::query()->where("captain_id", Auth::id())->get();
+
+        $old_orders = Order::query()->where("captain_id", Auth::id());
+
+        if ($request->filled("status")) {
+            $this->validate($request, [
+                "status" => "nullable|in:" . implode(",", array_keys(OrderEnum::statues()))
+            ]);
+            $old_orders = $old_orders->where("order_status", $request->status);
+        }
 
         $new_orders = Order::query()->whereNull("captain_id")->get();
 
         return $this::sendSuccessResponse([
-            "old" => OrderIndexResource::collection($old_orders),
+            "old" => OrderIndexResource::collection($old_orders->get()),
             "new" => OrderIndexResource::collection($new_orders),
         ]);
     }

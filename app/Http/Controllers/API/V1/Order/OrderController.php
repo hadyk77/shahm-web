@@ -8,6 +8,7 @@ use App\Http\Requests\API\Order\OrderRequest;
 use App\Http\Resources\Governorate\GovernorateResource;
 use App\Http\Resources\Order\OrderIndexResource;
 use App\Http\Resources\Order\OrderShowResource;
+use App\Models\BetweenGovernorateService;
 use App\Models\Captain;
 use App\Models\Order;
 use App\Models\User;
@@ -52,25 +53,28 @@ class OrderController extends Controller
 
     public function getEnabledBetweenGovernorateService()
     {
-        $captains = User::query()
-            ->whereHas("captain", function ($query) {
-                return $query
-                    ->where("captains.enable_between_governorate_service", 1)
-                    ->whereDate("captains.between_governorate_date", ">=", Carbon::now()->format("Y-m-d"));
+        $captains = BetweenGovernorateService::query()
+            ->whereDate("between_governorate_date", ">=", Carbon::now()->format("Y-m-d"))
+            ->whereHas("captain.captain", function ($query) {
+                $query
+                    ->where("users.status", 1)
+                    ->where("users.captain_status", 1)
+                    ->where("captains.enable_order", 1);
             })
             ->get()
-            ->map(function (User $user) {
+            ->map(function (BetweenGovernorateService $betweenGovernorateService) {
                 return [
-                    "id" => $user->id,
-                    "name" => $user->name,
-                    "profile_image" => $user->profile_image,
-                    "joined_at" => $user->created_at->format('Y'),
-                    "number_of_orders" => DB::table("orders")->where("captain_id", $user->id)->where("order_status", OrderEnum::DELIVERED)->count(),
+                    "between_governorate_service" => $betweenGovernorateService->id,
+                    "captain_id" => $betweenGovernorateService->captain->id,
+                    "name" => $betweenGovernorateService->captain->name,
+                    "profile_image" => $betweenGovernorateService->captain->profile_image,
+                    "joined_at" => $betweenGovernorateService->captain->created_at->format('Y'),
+                    "number_of_orders" => DB::table("orders")->where("captain_id", $betweenGovernorateService->captain->id)->where("order_status", OrderEnum::DELIVERED)->count(),
                     "rate" => 0,
-                    "time" => $user->captain->between_governorate_time,
-                    "date" => $user->captain->between_governorate_date,
-                    "from" => GovernorateResource::make($user->captain->governorateFrom),
-                    "to" => GovernorateResource::make($user->captain->governorateTo),
+                    "time" => $betweenGovernorateService->between_governorate_time,
+                    "date" => $betweenGovernorateService->between_governorate_date,
+                    "from" => GovernorateResource::make($betweenGovernorateService->governorateFrom),
+                    "to" => GovernorateResource::make($betweenGovernorateService->governorateTo),
                 ];
             });
 

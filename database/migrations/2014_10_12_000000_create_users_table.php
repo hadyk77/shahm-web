@@ -25,8 +25,8 @@ return new class extends Migration {
             $table->string("gender")->nullable();
             $table->boolean('status')->default(StatusEnum::ENABLED);
             $table->string("address")->nullable();
-            $table->float("address_lat")->nullable();
-            $table->float("address_long")->nullable();
+            $table->double("address_lat")->nullable();
+            $table->double("address_long")->nullable();
             $table->boolean("is_captain")->default(StatusEnum::DISABLED);
             $table->string("app_version")->default("1.0.0");
             $table->string("default_lang")->default("ar");

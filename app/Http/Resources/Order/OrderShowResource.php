@@ -4,6 +4,7 @@ namespace App\Http\Resources\Order;
 
 use App\Enums\OrderEnum;
 use App\Helper\Helper;
+use App\Http\Resources\Captain\BetweenGovernorateServiceResource;
 use App\Http\Resources\ExpectedPriceRange\ExpectedPriceRangeResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,6 +21,9 @@ class OrderShowResource extends JsonResource
                 "title" => $this->service->title,
                 "icon" => $this->service->icon
             ],
+            "between_governorate_service" => $this->mergeWhen($this->service_id == 3, function () {
+                return BetweenGovernorateServiceResource::make($this->betweenGovernorateService);
+            }),
             "items_price" => $this->items_price,
             "captain" => $this->mergeWhen($this->captain_id != null, function () {
                 return [

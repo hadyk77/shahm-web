@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Captain;
 use App\Enums\OrderEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Offer\OfferResource;
+use App\Models\BetweenGovernorateService;
 use App\Models\GeneralSetting;
 use App\Models\Offer;
 use App\Models\Order;
@@ -74,6 +75,19 @@ class CaptainOfferController extends Controller
             "app_profit_from_user" => $this->calculateAppProfit($request->price)["app_profit_from_user"],
             "offer_total_cost" => $this->calculateAppProfit($request->price)["total"],
         ]);
+
+        if ($offer->order->between_governorate_service_id) {
+
+            $betweenGovernorateService = BetweenGovernorateService::query()->find($offer->order->between_governorate_service_id);
+
+            $offer?->update([
+                "is_between_governorate_service" => 1,
+                "governorate_from_id" => $betweenGovernorateService->pickup_id,
+                "governorate_to_id" => $betweenGovernorateService->drop_off_id,
+                "between_governorate_date" => $betweenGovernorateService->between_governorate_date . " " . $betweenGovernorateService->between_governorate_time,
+            ]);
+
+        }
 
         $offer->order->client->notify(new NewOfferNotification($offer));
 

@@ -13,7 +13,7 @@ class CheckCaptainMiddleware
     {
 
         if (Auth::check()) {
-
+            
             if (!Auth::user()->is_captain_phone_number_verified) {
                 return Controller::sendFailedResponse(__("Your Captain Phone is not verified"));
             }

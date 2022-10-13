@@ -116,4 +116,9 @@ class Order extends Model implements HasMedia
     {
         return $this->hasMany(Offer::class);
     }
+
+    public function betweenGovernorateService(): BelongsTo
+    {
+        return $this->belongsTo(BetweenGovernorateService::class);
+    }
 }

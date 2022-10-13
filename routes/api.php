@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\V1\Captain\BetweenGovernorateServiceController;
 use App\Http\Controllers\API\V1\Captain\CaptainNewAccountController;
 use App\Http\Controllers\API\V1\Captain\CaptainOrderController;
 use App\Http\Controllers\API\V1\Captain\CaptainSettingController;
@@ -154,11 +155,9 @@ Route::prefix("api/v1")->group(function () {
 
                 Route::get("me", MeController::class);
 
+                Route::apiResource("between-governorate-service", BetweenGovernorateServiceController::class);
+
                 Route::post("toggle-orders", [CaptainSettingController::class, 'toggleOrders']);
-
-                Route::post("toggle-between-governorate-service", [CaptainSettingController::class, 'toggleBetweenGovernorateService']);
-
-                Route::post("update-between-governorate-service", [CaptainSettingController::class, 'updateBetweenGovernorateService']);
 
                 Route::apiResource("offer", CaptainOfferController::class);
 

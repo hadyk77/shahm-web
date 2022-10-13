@@ -6,6 +6,7 @@ use App\Enums\OrderEnum;
 use App\Enums\VerificationOptionEnum;
 use App\Helper\Helper;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OrderRequest extends FormRequest
 {
@@ -13,6 +14,19 @@ class OrderRequest extends FormRequest
     {
         return [
             "service_id" => "required|exists:services,id",
+
+            "captain_id" => [
+                Rule::requiredIf($this->input('service_id') == 3),
+                Rule::exists("users", "id")
+                    ->where("status", 1)
+                    ->where("captain_status", 1)
+            ],
+
+            "between_governorate_service_id" => [
+                Rule::requiredIf($this->input('service_id') == 3),
+                Rule::exists("between_governorate_services", 'id')->where('captain_id', $this->input("captain_id"))
+            ],
+
 
             // Order Details
             "order_type" => "required|in:" . implode(",", array_keys(VerificationOptionEnum::relatedOrders())),
