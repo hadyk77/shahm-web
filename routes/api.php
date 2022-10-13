@@ -175,6 +175,8 @@ Route::prefix("api/v1")->group(function () {
 
                 Route::get("upgrade-options", [CaptainSettingController::class, "upgradeOption"]);
 
+                Route::apiResource("rate", RateController::class)->only("index", "store", "show");
+
                 Route::apiResource("verification-files", VerificationFileController::class)->only("index", "store");
 
             });

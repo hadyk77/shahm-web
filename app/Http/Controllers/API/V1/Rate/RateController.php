@@ -4,6 +4,10 @@ namespace App\Http\Controllers\API\V1\Rate;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Rate\RateRequest;
+use App\Http\Resources\Rate\RateResource;
+use App\Models\Captain;
+use App\Models\Service;
+use App\Models\User;
 use App\Services\Rate\RateServices;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,10 +24,19 @@ class RateController extends Controller
     public function index(Request $request)
     {
         $this->validate($request, [
-            "model_type" => "required|in:user,service"
+            "model_type" => "required|in:user,service,captain"
         ]);
 
-        return $this::sendSuccessResponse($this->rateServices->getUserRates($request->model_type));
+        $type = Service::class;
+
+        if ($request->model_type == "user") {
+            $type = User::class;
+        }
+        if ($request->model_type == "captain") {
+            $type = Captain::class;
+        }
+
+        return $this::sendSuccessResponse($this->rateServices->getUserRates($type));
     }
 
     public function store(RateRequest $request)
@@ -39,6 +52,7 @@ class RateController extends Controller
 
     public function show($id)
     {
-        return $this::sendSuccessResponse($this->rateServices->findUserRateById($id));
+        $rate = $this->rateServices->findUserRateById($id);
+        return $this::sendSuccessResponse(RateResource::make($rate));
     }
 }

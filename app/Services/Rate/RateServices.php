@@ -2,6 +2,7 @@
 
 namespace App\Services\Rate;
 
+use App\Http\Resources\Rate\RateResource;
 use App\Models\Captain;
 use App\Models\Rate;
 use App\Models\Service;
@@ -21,7 +22,7 @@ class RateServices implements ServiceInterface
         return Rate::query()->get();
     }
 
-    public function getUserRates($type): array|Collection
+    public function getUserRates($type)
     {
         $rates = Rate::query()->where("user_id", Auth::id());
         if ($type == Service::class) {
@@ -33,7 +34,7 @@ class RateServices implements ServiceInterface
         if ($type == Captain::class) {
             $rates = $rates->where("model_type", $type);
         }
-        return $rates->get();
+        return RateResource::collection($rates->get());
     }
 
     public function findById($id, $checkStatus = false): Model|Collection|Builder|array|null
@@ -52,10 +53,10 @@ class RateServices implements ServiceInterface
 
             $model_type = Service::class;
 
-            if ($request->type == "user") {
+            if ($request->model_type == "user") {
                 $model_type = User::class;
             }
-            if ($request->type == "captain") {
+            if ($request->model_type == "captain") {
                 $model_type = Captain::class;
             }
 
@@ -64,7 +65,7 @@ class RateServices implements ServiceInterface
                 "model_type" => $model_type,
                 "rate" => $request->rate,
                 "text" => $request->text,
-                "user_id" =>  Auth::id()
+                "user_id" => Auth::id()
             ]);
 
         });
