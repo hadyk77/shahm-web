@@ -16,8 +16,8 @@ class BetweenGovernorateServiceResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "pickup_id" => GovernorateResource::make($this->governorateFrom),
-            "drop_off_id" => GovernorateResource::make($this->governorateTo),
+            "pickup" => GovernorateResource::make($this->governorateFrom),
+            "drop_off" => GovernorateResource::make($this->governorateTo),
             "between_governorate_time" => $this->between_governorate_time,
             "between_governorate_date" => $this->between_governorate_date,
         ];
