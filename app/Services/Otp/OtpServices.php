@@ -71,6 +71,7 @@ class OtpServices
             $user->update([
                 "phone_verified_at" => Carbon::now()
             ]);
+            $user->refresh();
             $data = [
                 "phone_verified" => true,
                 "access_token" => $user->createToken("user_login_token_" . Str::random(5))->plainTextToken,
