@@ -3,6 +3,8 @@
 namespace App\Http\Resources\Order;
 
 use App\Helper\Helper;
+use App\Support\CalculateDistanceBetweenTwoPoints;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -30,6 +32,22 @@ class OrderIndexResource extends JsonResource
             "delivery_cost_without_user_commission" => $this->delivery_cost_without_user_commission,
             "grand_total" => $this->grand_total,
             "tax" => $this->tax,
+            'distance' => $this->mergeWhen(Auth::user()->is_captain, function () {
+                return [
+                    "drop_off_distance" => CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints(
+                        Auth::user()->address_lat,
+                        Auth::user()->address_long,
+                        $this->drop_off_location_lat,
+                        $this->drop_off_location_long
+                    ),
+                    "pickup_distance" => CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints(
+                        Auth::user()->address_lat,
+                        Auth::user()->address_long,
+                        $this->pickup_location_lat,
+                        $this->pickup_location_long
+                    ),
+                ];
+            }),
             "order_status" => $this->order_status,
             "order_items" => $this->order_items,
             "drop_off_location" => $this->drop_off_location,
