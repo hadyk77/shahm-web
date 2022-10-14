@@ -18,7 +18,7 @@ class CaptainRequest extends FormRequest
             "vehicle_type_id" => "required|exists:vehicle_types,id",
             "nationality_id" => "required|exists:nationalities,id",
             "vehicle_manufacturing_date" => "required",
-            "vehicle_number" => "required",
+//            "vehicle_number" => "required",
             "vehicle_identification_number" => "required",
             "vehicle_license_plate_number" => "required",
             "identification_number" => "required",

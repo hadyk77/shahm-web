@@ -54,6 +54,10 @@ class OtpServices
 
         $user = $this->getUser($request, $column_name);
 
+        $user->update([
+            "device_token" => $request->device_token
+        ]);
+
         $this->deleteOtp($request);
 
         if ($is_captain) {

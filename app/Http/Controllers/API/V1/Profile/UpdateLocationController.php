@@ -13,7 +13,7 @@ class UpdateLocationController extends Controller
     {
 
         $this->validate($request, [
-            "address" => "required|string",
+            "address" => "nullable|string",
             "address_lat" => "required|numeric|max:90|min:-90",
             "address_long" => "required|numeric|max:180|min:-180",
         ]);

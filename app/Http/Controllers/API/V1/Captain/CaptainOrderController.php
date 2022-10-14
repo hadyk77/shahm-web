@@ -15,24 +15,27 @@ use Illuminate\Http\Request;
 
 class CaptainOrderController extends Controller
 {
-    public function index(Request $request)
+
+    public function newOrder(Request $request)
+    {
+        $new_orders = Order::query()->whereNull("captain_id")->get();
+        return $this::sendSuccessResponse(OrderIndexResource::collection($new_orders));
+    }
+
+    public function myOrder(Request $request)
     {
 
-        $old_orders = Order::query()->where("captain_id", Auth::id());
+        $orders = Order::query()->where("captain_id", Auth::id());
 
         if ($request->filled("status")) {
             $this->validate($request, [
-                "status" => "nullable|in:" . implode(",", array_keys(OrderEnum::statues()))
+                "status" => "nullable|array",
+                "status.*" => "nullable|in:" . implode(",", array_keys(OrderEnum::statues()))
             ]);
-            $old_orders = $old_orders->where("order_status", $request->status);
+            $orders = $orders->whereIn("order_status", $request->status);
         }
 
-        $new_orders = Order::query()->whereNull("captain_id")->get();
-
-        return $this::sendSuccessResponse([
-            "old" => OrderIndexResource::collection($old_orders->get()),
-            "new" => OrderIndexResource::collection($new_orders),
-        ]);
+        return $this::sendSuccessResponse(OrderIndexResource::collection($orders->get()));
     }
 
     public function show($id)

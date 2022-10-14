@@ -165,7 +165,9 @@ Route::prefix("api/v1")->group(function () {
 
                 Route::post("send-offer/{id}", [CaptainOfferController::class, "sendOffer"]);
 
-                Route::get('order', [CaptainOrderController::class, "index"]);
+                Route::post('my-order', [CaptainOrderController::class, "myOrder"]);
+
+                Route::get('new-order', [CaptainOrderController::class, "newOrder"]);
 
                 Route::get('order/{id}', [CaptainOrderController::class, "show"]);
 
