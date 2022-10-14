@@ -45,7 +45,14 @@ class OrderShowResource extends JsonResource
                 "price_from" => $this->expectedPriceRange?->price_from,
                 "price_to" => $this->expectedPriceRange?->price_to,
             ],
-
+            "client" => [
+                "id" => $this->client->name,
+                "name" => $this->client->name,
+                "profile_image" => $this->client->profile_image,
+                "phone" => $this->client->phone,
+                "email" => $this->client->email,
+            ],
+            
             // Locations
             "drop_off_location" => $this->drop_off_location,
             "drop_off_description" => $this->drop_off_description,
