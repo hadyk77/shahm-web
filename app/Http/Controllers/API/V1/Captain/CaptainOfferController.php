@@ -40,8 +40,6 @@ class CaptainOfferController extends Controller
 
         $this->validate($request, [
             "price" => "required|numeric",
-            "captain_lat" => "required|numeric",
-            "captain_long" => "required|numeric",
         ]);
 
         $order = Order::query()->where("order_status", OrderEnum::WAITING_OFFERS)->find($order_id);
@@ -59,16 +57,16 @@ class CaptainOfferController extends Controller
         $distance = CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints(
             $order->pickup_location_lat,
             $order->pickup_location_long,
-            $request->captain_lat,
-            $request->captain_long,
+            Auth::user()->address_lat,
+            Auth::user()->address_long,
         );
 
         $offer = Offer::query()->create([
             "service_id" => $order->service_id,
             "order_id" => $order->id,
             "captain_id" => Auth::user()->id,
-            "captain_lat" => $request->captain_lat,
-            "captain_long" => $request->captain_long,
+            "captain_lat" => Auth::user()->address_lat,
+            "captain_long" => Auth::user()->address_long,
             "distance" => $distance,
             "price" => $request->price,
             "app_profit_from_captain" => $this->calculateAppProfit($request->price)["app_profit_from_captain"],

@@ -55,7 +55,7 @@ class OtpServices
         $user = $this->getUser($request, $column_name);
 
         $user->update([
-            "device_token" => $request->device_token
+            "device_token" => $request->filled("device_token") ? $request->device_token : $user->device_token,
         ]);
 
         $this->deleteOtp($request);
