@@ -35,7 +35,6 @@ class NotifyNearCaptainsWithNewOrderAction
             ))
             ->having('distance', '<=', $max_radius)
             ->get();
-        dd($long, $lat, $captainIds);
         foreach ($captainIds as $captainId) {
             $captain = User::query()->whereRelation("captain", "captains.enable_order", 1)->find($captainId);
             $captain?->notify(new NewOrderNotification($order));
