@@ -33,7 +33,6 @@ class NotifyNearCaptainsWithNewOrderAction
                     point(users.address_long, users.address_lat)
                 ) / 1000) as distance"
             ))
-            ->having('distance', '<=', $max_radius)
             ->get()
             ->pluck("id");
         \Log::info(json_encode([$lat, $long, $captainIds]));
