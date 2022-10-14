@@ -77,6 +77,14 @@
                     class="mt-5"
                     :model="$gs"
                 />
+                <x-input-field
+                    name="max_radius"
+                    :title="__('Max Radius')"
+                    type="number"
+                    class="mt-5"
+                    required
+                    :model="$gs"
+                />
             </x-card-body>
             <x-card-footer>
                 <x-update-btn />

@@ -34,6 +34,7 @@ class BasicInformationController extends Controller
             "maximum_indebtedness_for_captain" => $request->maximum_indebtedness_for_captain,
             "service_price_per_kilometer" => $request->service_price_per_kilometer,
             "tax" => $request->tax,
+            "max_radius" => $request->max_radius,
         ]);
 
         try {

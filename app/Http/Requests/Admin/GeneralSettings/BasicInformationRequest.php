@@ -18,6 +18,7 @@ class BasicInformationRequest extends FormRequest
             "first_phone" => "required",
             "second_phone" => "nullable",
             "tax" => "required|numeric",
+            "max_radius" => "required|numeric",
         ];
     }
 
