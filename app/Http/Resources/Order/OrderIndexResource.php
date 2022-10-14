@@ -18,6 +18,10 @@ class OrderIndexResource extends JsonResource
                 "title" => $this->service->title,
                 "icon" => $this->service->icon
             ],
+            "expected_price_range" => [
+                "price_from" => $this->expectedPriceRange?->price_from,
+                "price_to" => $this->expectedPriceRange?->price_to,
+            ],
             "items_price" => $this->items_price,
             "captain_profit" => $this->captain_profit,
             "app_profit_from_captain" => $this->app_profit_from_captain,
