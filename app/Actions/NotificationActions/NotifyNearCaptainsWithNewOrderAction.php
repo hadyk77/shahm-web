@@ -21,6 +21,7 @@ class NotifyNearCaptainsWithNewOrderAction
         $lat = $order->pickup_location_lat;
         $long = $order->pickup_location_long;
         $max_radius = GeneralSetting::query()->first()->max_radius;
+
         $captainIds = DB::table("users")
             ->where("is_captain", 1)
             ->where("is_captain_phone_number_verified", 1)
@@ -35,6 +36,7 @@ class NotifyNearCaptainsWithNewOrderAction
             ->having('distance', '<=', $max_radius)
             ->get()
             ->pluck("id");
+        \Log::info(json_encode([$lat, $long, $captainIds]));
         foreach ($captainIds as $captainId) {
             $captain = User::query()->whereRelation("captain", "captains.enable_order", 1)->find($captainId);
             $captain?->notify(new NewOrderNotification($order));
