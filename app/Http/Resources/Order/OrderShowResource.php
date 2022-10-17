@@ -29,6 +29,14 @@ class OrderShowResource extends JsonResource
                 return [
                     "id" => $this->captain->id,
                     "name" => $this->captain->name,
+                    "image" => $this->captain->profile_image,
+                    "phone" => $this->captain->phone,
+                    "address" => [
+                        "location" => $this->address,
+                        "lat" => $this->address_lat,
+                        "long" => $this->address_long,
+                    ],
+                    "captain_rate" => 0,
                 ];
             }),
             "app_profit_from_captain" => $this->app_profit_from_captain,
@@ -52,7 +60,7 @@ class OrderShowResource extends JsonResource
                 "phone" => $this->client->phone,
                 "email" => $this->client->email,
             ],
-            
+
             // Locations
             "drop_off_location" => $this->drop_off_location,
             "drop_off_description" => $this->drop_off_description,
