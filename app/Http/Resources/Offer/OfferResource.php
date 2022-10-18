@@ -6,6 +6,7 @@ use App\Enums\OrderEnum;
 use App\Models\Captain;
 use App\Models\Rate;
 use App\Models\User;
+use Auth;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,34 +18,36 @@ class OfferResource extends JsonResource
 
         $is_best_offer = false;
 
-        $minDistance = DB::table("offers")->where("order_id", $this->order?->id)->min("distance");
-        $minPrice = DB::table("offers")->where("order_id", $this->order?->id)->min("price");
-        $captainsIds = DB::table("offers")->where("order_id", $this->order?->id)->pluck('captain_id')->toArray();
-        $highestRate = DB::table("rates")
-            ->where("model_type", Captain::class)
-            ->whereIn("model_id", DB::table("captains")->whereIn('user_id', $captainsIds)->pluck('id')->toArray())
-            ->max('rate');
-
-        if ($this->distance == $minDistance && $this->price == $minPrice) {
-
-            $captainId = DB::table("rates")
+        if (!Auth::user()->is_captain) {
+            $minDistance = DB::table("offers")->where("order_id", $this->order?->id)->min("distance");
+            $minPrice = DB::table("offers")->where("order_id", $this->order?->id)->min("price");
+            $captainsIds = DB::table("offers")->where("order_id", $this->order?->id)->pluck('captain_id')->toArray();
+            $highestRate = DB::table("rates")
                 ->where("model_type", Captain::class)
-                ->where("model_id", $this->captain->captain->id)
-                ->where('rate', $highestRate)
-                ->first()?->model_id;
+                ->whereIn("model_id", DB::table("captains")->whereIn('user_id', $captainsIds)->pluck('id')->toArray())
+                ->max('rate');
 
-            $userId = Captain::query()->find($captainId)?->user_id;
+            if ($this->distance == $minDistance && $this->price == $minPrice) {
 
-            if ($this->captain_id == $userId) {
-                $is_best_offer = true;
+                $captainId = DB::table("rates")
+                    ->where("model_type", Captain::class)
+                    ->where("model_id", $this->captain->captain->id)
+                    ->where('rate', $highestRate)
+                    ->first()?->model_id;
+
+                $userId = Captain::query()->find($captainId)?->user_id;
+
+                if ($this->captain_id == $userId) {
+                    $is_best_offer = true;
+                }
             }
         }
 
         return [
             "id" => $this->id,
-
-            "is_best_offer" => $is_best_offer,
-
+            "is_best_offer" => $this->mergeWhen(Auth::user()->is_captain, function () use ($is_best_offer) {
+                return $is_best_offer;
+            }),
             "service_id" => $this->service_id,
             "order" => [
                 "id" => $this->order->id,
