@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Order;
 
+use App\Actions\NotificationActions\NotifyNearCaptainsWithNewOrderAction;
 use App\Enums\OrderEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Order\OrderRequest;
@@ -74,6 +75,31 @@ class OrderController extends Controller
     {
         $order = $this->orderServices->findClientOrderById($id);
 
+        if ($order->order_status == OrderEnum::WAITING_OFFERS) {
+            return $this::sendFailedResponse(__("Order not has any captains yet"));
+        }
+
+        try {
+            $order->update([
+                "order_status" => OrderEnum::WAITING_OFFERS,
+                "captain_id" => null,
+                "app_profit_from_captain" => null,
+                "app_profit_from_user" => null,
+                "captain_profit" => null,
+                "delivery_cost_with_user_commission" => null,
+                "delivery_cost_without_user_commission" => null,
+                "tax" => 0,
+                "tax_percentage" => 0,
+                "grand_total" => null,
+            ]);
+
+            NotifyNearCaptainsWithNewOrderAction::run($order);
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this::sendFailedResponse($exception->getMessage());
+        }
+
+        return $this::sendSuccessResponse([], __("Order Send to offers agains"));
     }
 
     public function getEnabledBetweenGovernorateService()

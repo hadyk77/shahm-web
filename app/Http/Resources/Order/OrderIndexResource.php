@@ -5,6 +5,7 @@ namespace App\Http\Resources\Order;
 use App\Helper\Helper;
 use App\Support\CalculateDistanceBetweenTwoPoints;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,6 +16,7 @@ class OrderIndexResource extends JsonResource
         return [
             "id" => $this->id,
             "order_code" => $this->order_code,
+
             "service" => [
                 "id" => $this->service->id,
                 "title" => $this->service->title,
@@ -51,6 +53,9 @@ class OrderIndexResource extends JsonResource
             "order_status" => $this->order_status,
             "order_items" => $this->order_items,
             "drop_off_location" => $this->drop_off_location,
+            "captain_make_offer_before" => $this->mergeWhen(Auth::user()->is_captain, function () {
+                return DB::table("offers")->where("captain_id", Auth::id())->where("order_id", $this->id)->exists();
+            }),
             "created_at" => Helper::formatDate($this->created_at)
         ];
     }

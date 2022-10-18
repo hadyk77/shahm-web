@@ -6,6 +6,8 @@ use App\Http\Resources\Nationality\NationalityResource;
 use App\Http\Resources\UpgradeOptions\UpgradeOptionsResource;
 use App\Http\Resources\VehicleType\VehicleTypeResource;
 use App\Models\AccountUpgradeOption;
+use App\Models\User;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,7 +30,8 @@ class CaptainResource extends JsonResource
             "is_captain_phone_number_verified" => $this->user->is_captain_phone_number_verified == 1,
             "captain_wallet" => doubleval($this->user->captain_wallet),
             "verificationFiles" => VerificationFileResource::collection($this->verificationFiles),
-            "captain_rate" => 0,
+
+            "captain_rate" => DB::table("rates")->where("model_type", User::class)->where("model_id", $this->user?->id)->average("rate") ?? 0,
 
             "enable_order" => $this->enable_order,
             "enable_between_governorate_service" => $this->enable_between_governorate_service,

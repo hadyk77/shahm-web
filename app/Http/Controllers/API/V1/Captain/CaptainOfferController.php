@@ -48,12 +48,6 @@ class CaptainOfferController extends Controller
             return $this::sendFailedResponse(__("Order is not found"));
         }
 
-        if (DB::table("offers")->where("captain_id", Auth::id())->where("order_id", $order_id)->exists()) {
-
-            return $this::sendFailedResponse(__("You already send offer"));
-
-        }
-
         $distance = CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints(
             $order->pickup_location_lat,
             $order->pickup_location_long,
@@ -61,10 +55,11 @@ class CaptainOfferController extends Controller
             Auth::user()->address_long,
         );
 
-        $offer = Offer::query()->create([
+        $offer = Offer::query()->updateOrCreate([
             "service_id" => $order->service_id,
             "order_id" => $order->id,
             "captain_id" => Auth::user()->id,
+        ], [
             "captain_lat" => Auth::user()->address_lat,
             "captain_long" => Auth::user()->address_long,
             "distance" => $distance,
