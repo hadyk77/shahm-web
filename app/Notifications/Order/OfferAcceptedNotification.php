@@ -27,6 +27,7 @@ class OfferAcceptedNotification extends Notification
             "type" => NotificationEnum::OFFER_ACCEPTED,
             "offer" => $this->offer,
             "order_code" => $this->offer->order->order_code,
+            "notification_from_id" => $this->offer->user_id,
         ];
     }
 

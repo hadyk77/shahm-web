@@ -12,6 +12,7 @@ use App\Models\BetweenGovernorateService;
 use App\Models\Captain;
 use App\Models\Order;
 use App\Models\User;
+use App\Notifications\Order\OrderCanceledNotification;
 use App\Services\Order\OrderServices;
 use Carbon\Carbon;
 use Http\Discovery\Exception;
@@ -49,6 +50,30 @@ class OrderController extends Controller
         }
 
         return $this::sendSuccessResponse([], __("Order Created Successfully"));
+    }
+
+    public function cancelOrder($id)
+    {
+        $order = $this->orderServices->findClientOrderById($id);
+        if (!in_array($order->order_status, [OrderEnum::IN_PROGRESS, OrderEnum::WAITING_OFFERS])) {
+            return $this::sendSuccessResponse([], __("Order Cannot be canceled"));
+        }
+        try {
+            $order->update([
+                "order_status" => OrderEnum::CANCELED
+            ]);
+            $order->captain->notify(new OrderCanceledNotification($order));
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            return $this::sendFailedResponse($exception->getMessage());
+        }
+        return $this::sendSuccessResponse([], __("Order Canceled Successfully"));
+    }
+
+    public function changeOrder($id)
+    {
+        $order = $this->orderServices->findClientOrderById($id);
+
     }
 
     public function getEnabledBetweenGovernorateService()

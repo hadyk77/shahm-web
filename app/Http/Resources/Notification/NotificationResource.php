@@ -5,6 +5,7 @@ namespace App\Http\Resources\Notification;
 use App\Enums\NotificationEnum;
 use App\Enums\OrderEnum;
 use App\Helper\Helper;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,7 +15,7 @@ class NotificationResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "notification_from_image" => null,
+            "notification_from_image" => self::makeImage($this->data),
             "title" => $this->title($this->data),
             "content" => $this->content($this->data),
             "is_read" => $this->read_at != null,
@@ -51,6 +52,18 @@ class NotificationResource extends JsonResource
         if ($data['type'] == NotificationEnum::ORDER_STATUS_CHANGED) {
             return __("Order With Code") . ' ' . $data['order_code'] . " " . __("changed to") . " " . OrderEnum::statues()[$data['order_status']];
         }
+        if ($data['type'] == NotificationEnum::ORDER_CANCELED) {
+            return __("Order With Code") . ' ' . $data['order_code'] . " " . __("Canceled");
+        }
         return "";
     }
+
+    private static function makeImage($data)
+    {
+        if (isset($data["notification_from_id"])) {
+            return User::query()->find($data["notification_from_id"])?->profile_image;
+        }
+        return null;
+    }
+
 }

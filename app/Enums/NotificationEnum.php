@@ -10,6 +10,7 @@ enum NotificationEnum
     const USER_CUSTOM_MESSAGE = "USER_CUSTOM_MESSAGE";
     const NEW_ORDER_REQUEST = "NEW_ORDER_REQUEST";
     const YOUR_ORDER_RECEIVED = "YOUR_ORDER_RECEIVED";
+    const ORDER_CANCELED = "ORDER_CANCELED";
     const NEW_OFFER = "NEW_OFFER";
     const OFFER_ACCEPTED = "OFFER_ACCEPTED";
     const OFFER_REJECTED = "OFFER_REJECTED";
@@ -27,6 +28,7 @@ enum NotificationEnum
             self::OFFER_ACCEPTED => __("Your offer has been accepted"),
             self::OFFER_REJECTED => __("Your offer has been rejected"),
             self::ORDER_STATUS_CHANGED => __("Your order status has been changed"),
+            self::ORDER_CANCELED => __("order has been canceled"),
         ];
     }
 

@@ -3,6 +3,8 @@
 namespace App\Http\Resources\User;
 
 use App\Http\Resources\Captain\CaptainResource;
+use App\Models\User;
+use DB;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
@@ -34,7 +36,7 @@ class UserResource extends JsonResource
             "status" => $this->status,
             "captain_status" => $this->captain_status,
             "is_phone_verified" => !is_null($this->phone_verified_at),
-            "user_rate" => 0,
+            "user_rate" => DB::table("rates")->where("model_type", User::class)->where("model_id", $this->id)->average("rate") ?? 0,
             'captain' => $this->is_captain ? CaptainResource::make($this->captain) : null,
         ];
     }

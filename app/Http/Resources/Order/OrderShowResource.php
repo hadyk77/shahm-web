@@ -6,6 +6,8 @@ use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use App\Http\Resources\Captain\BetweenGovernorateServiceResource;
 use App\Http\Resources\ExpectedPriceRange\ExpectedPriceRangeResource;
+use App\Models\User;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -36,7 +38,7 @@ class OrderShowResource extends JsonResource
                         "lat" => $this->address_lat,
                         "long" => $this->address_long,
                     ],
-                    "captain_rate" => 0,
+                    "captain_rate" => DB::table("rates")->where("model_type", User::class)->where("model_id", $this->captain->id)->average("rate") ?? 0,
                 ];
             }),
             "app_profit_from_captain" => $this->app_profit_from_captain,
@@ -59,7 +61,7 @@ class OrderShowResource extends JsonResource
                 "profile_image" => $this->client->profile_image,
                 "phone" => $this->client->phone,
                 "email" => $this->client->email,
-                "user_rate" => 0,
+                "user_rate" => DB::table("rates")->where("model_type", User::class)->where("model_id", $this->id)->average("rate") ?? 0,
             ],
 
             // Locations

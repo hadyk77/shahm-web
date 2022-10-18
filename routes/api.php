@@ -117,6 +117,10 @@ Route::prefix("api/v1")->group(function () {
 
             Route::apiResource("order", OrderController::class);
 
+            Route::post("cancel-order/{order}", [OrderController::class, "cancelOrder"]);
+
+            Route::post("change-order/{order}", [OrderController::class, "changeOrder"]);
+
             Route::get('offers/{order_id}', [OfferController::class, "index"]);
 
             Route::post('accept/order/{order_id}/offer/{offer_id}', [OfferController::class, "acceptOffer"]);

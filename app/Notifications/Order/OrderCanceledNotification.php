@@ -7,7 +7,7 @@ use App\Models\Order;
 use Illuminate\Notifications\Notification;
 use Kutia\Larafirebase\Messages\FirebaseMessage;
 
-class OrderStatusNotification extends Notification
+class OrderCanceledNotification extends Notification
 {
     private Order $order;
 
@@ -18,16 +18,16 @@ class OrderStatusNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['database', 'firebase'];
+        return ['firebase', 'database'];
     }
 
-    public function toDatabase($notifiable): array
+    public function toArray($notifiable): array
     {
         return [
-            "type" => NotificationEnum::ORDER_STATUS_CHANGED,
+            "type" => NotificationEnum::ORDER_CANCELED,
+            "order" => $this->order,
             "order_code" => $this->order->order_code,
-            "order_status" => $this->order->order_status,
-            "notification_from_id" => $this->order->captain_id,
+            "notification_from_id" => $this->order->user_id,
         ];
     }
 
@@ -36,7 +36,7 @@ class OrderStatusNotification extends Notification
         if (!is_null($notifiable->device_token)) {
             return (new FirebaseMessage)
                 ->withTitle(__("Hey,") . " " . $notifiable->name)
-                ->withBody(NotificationEnum::notificationTypes()[NotificationEnum::NEW_ORDER_REQUEST])
+                ->withBody(NotificationEnum::notificationTypes()[NotificationEnum::ORDER_CANCELED] . " [ " . $this->order->order_code . " ]")
                 ->asMessage($notifiable->device_token);
         }
     }

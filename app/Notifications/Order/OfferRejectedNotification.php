@@ -27,6 +27,7 @@ class OfferRejectedNotification extends Notification
             "type" => NotificationEnum::OFFER_REJECTED,
             "offer" => $this->offer,
             "order_code" => $this->offer->order->order_code,
+            "notification_from_id" => $this->offer->user_id,
         ];
     }
 

@@ -30,7 +30,6 @@ class NewOrderNotification extends Notification
     public function toFirebase($notifiable)
     {
         if (!is_null($notifiable->device_token)) {
-            Log::info("Notification of new order sent to [" . $notifiable->name . "]");
             return (new FirebaseMessage)
                 ->withTitle(__("Hey,") . " " . $notifiable->name)
                 ->withBody(NotificationEnum::notificationTypes()[NotificationEnum::NEW_ORDER_REQUEST])
