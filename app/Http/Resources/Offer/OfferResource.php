@@ -45,7 +45,7 @@ class OfferResource extends JsonResource
 
         return [
             "id" => $this->id,
-            "is_best_offer" => $this->mergeWhen(Auth::user()->is_captain, function () use ($is_best_offer) {
+            "is_best_offer" => $this->mergeWhen(!Auth::user()->is_captain, function () use ($is_best_offer) {
                 return $is_best_offer;
             }),
             "service_id" => $this->service_id,
