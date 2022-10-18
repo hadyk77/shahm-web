@@ -54,11 +54,12 @@ class OrderShowResource extends JsonResource
                 "price_to" => $this->expectedPriceRange?->price_to,
             ],
             "client" => [
-                "id" => $this->client->name,
+                "id" => $this->client->id,
                 "name" => $this->client->name,
                 "profile_image" => $this->client->profile_image,
                 "phone" => $this->client->phone,
                 "email" => $this->client->email,
+                "user_rate" => 0,
             ],
 
             // Locations
