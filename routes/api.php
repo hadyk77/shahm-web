@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Chat\ChatController;
 use App\Http\Controllers\API\V1\Captain\BetweenGovernorateServiceController;
 use App\Http\Controllers\API\V1\Captain\CaptainNewAccountController;
 use App\Http\Controllers\API\V1\Captain\CaptainOrderController;
@@ -116,6 +117,14 @@ Route::prefix("api/v1")->group(function () {
             });
 
             Route::apiResource("order", OrderController::class);
+
+            Route::prefix("chat/{order}")->group(function () {
+
+                Route::get("index", [ChatController::class, "index"]);
+
+                Route::post("send", [ChatController::class, "send"]);
+
+            });
 
             Route::post("cancel-order/{order}", [OrderController::class, "cancelOrder"]);
 
