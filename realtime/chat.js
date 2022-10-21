@@ -65,6 +65,7 @@ io.on('connection', (socket) => {
                 "Authorization": `Bearer ${token}`
             }
         }).then(response => {
+            console.log(response.data);
             socket.to(chat_uuid).emit("newOrderChatMessage", response.data)
         }).catch(error => {
             console.log(error);
