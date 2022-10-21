@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Channels\DatabaseChannel;
 use App\Enums\GuardEnum;
 use App\Models\Admin;
+use App\Models\ChatMessage;
 use App\Models\GeneralSetting;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Config;

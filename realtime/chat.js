@@ -50,6 +50,27 @@ io.on('connection', (socket) => {
         logger.info(data);
     });
 
+    socket.on("joinOrderChatRoom", ({chat_uuid}) => {
+        logger.info("joinOrderChatRoom => Chat UUID => " + chat_uuid);
+        socket.join(chat_uuid);
+    });
+
+    socket.on("sendOrderChatMessage", async ({order_id, token, chat_uuid, message_id}) => {
+        logger.info("sendOrderChatMessage => Chat UUID => " + chat_uuid);
+        logger.info("sendOrderChatMessage => Order Id => " + order_id);
+        logger.info("sendOrderChatMessage => Message Id => " + message_id);
+        logger.info("sendOrderChatMessage => TOKEN => " + token);
+        await axios.get(`${process.env.BASE_URL}/chat/${order_id}/message/${message_id}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(response => {
+            socket.to(chat_uuid).emit("newOrderChatMessage", response.data)
+        }).catch(error => {
+            console.log(error);
+        });
+    });
+
 });
 
 const PORT = process.env.PORT || 3001;

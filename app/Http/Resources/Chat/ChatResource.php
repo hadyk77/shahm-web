@@ -17,10 +17,22 @@ class ChatResource extends JsonResource
         return [
             "id" => $this->id,
             "uuid" => $this->uuid,
-            "client_id" => $this->client_id,
-            "captain_id" => $this->captain_id,
-            "order_id" => $this->order_id,
-            "service_id" => $this->service_id,
+            "client" => [
+                "id" => $this->client->id,
+                "name" => $this->client->name,
+            ],
+            "captain" => [
+                "id" => $this->captain->id,
+                "name" => $this->captain->name,
+            ],
+            "order" => [
+                "id" => $this->order->id,
+                "code" => $this->order->order_code,
+            ],
+            "service" => [
+                "id" => $this->service->id,
+                "title" => $this->service->title,
+            ],
             "created_at" => Helper::formatDate($this->created_at),
         ];
     }

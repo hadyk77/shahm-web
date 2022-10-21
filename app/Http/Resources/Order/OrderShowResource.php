@@ -5,6 +5,7 @@ namespace App\Http\Resources\Order;
 use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use App\Http\Resources\Captain\BetweenGovernorateServiceResource;
+use App\Http\Resources\Chat\ChatResource;
 use App\Http\Resources\ExpectedPriceRange\ExpectedPriceRangeResource;
 use App\Models\User;
 use DB;
@@ -79,6 +80,8 @@ class OrderShowResource extends JsonResource
 
             "client_image" => $this->getFirstMediaUrl(OrderEnum::IMAGE),
             "purchasing_image" => $this->getFirstMediaUrl(OrderEnum::PURCHASING_IMAGE),
+
+            "chat" => ChatResource::make($this->chat),
 
             "created_at" => Helper::formatDate($this->created_at)
         ];

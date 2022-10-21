@@ -10,12 +10,18 @@ use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Notifications\Order\OfferAcceptedNotification;
 use App\Notifications\Order\OfferRejectedNotification;
+use App\Services\Chat\ChatServices;
 use App\Services\Order\OrderServices;
 use Auth;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
 {
+
+    public function __construct(private readonly ChatServices $chatServices)
+    {
+    }
+
     public function index($order_id)
     {
         $order = Order::query()->where("user_id", Auth::id())->findOrFail($order_id);
@@ -28,6 +34,12 @@ class OfferController extends Controller
         $order = Order::query()->where("user_id", Auth::id())->findOrFail($order_id);
 
         $offer = $order->offers()->findOrFail($offer_id);
+
+        if ($offer->offer_status == OfferEnum::ACCEPTED) {
+
+            return $this::sendFailedResponse(__("Order is already accepted by another captain"));
+
+        }
 
         if ($order->order_status == OrderEnum::IN_PROGRESS) {
 
@@ -67,6 +79,8 @@ class OfferController extends Controller
         $offer->captain->notify(new OfferAcceptedNotification($offer));
 
         (new OrderServices())->storeHistoryForOrder($order);
+
+        $this->chatServices->startChat($order);
 
         return $this::sendSuccessResponse([], __("Offer Accepted"));
     }

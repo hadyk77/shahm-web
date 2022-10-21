@@ -2,6 +2,7 @@
 
 namespace App\Actions\NotificationActions;
 
+use App\Enums\OrderEnum;
 use App\Models\Captain;
 use App\Models\GeneralSetting;
 use App\Models\Order;
@@ -37,7 +38,13 @@ class NotifyNearCaptainsWithNewOrderAction
             ->get()
             ->pluck("id");
         foreach ($captainIds as $captainId) {
-            $captain = User::query()->whereRelation("captain", "captains.enable_order", 1)->find($captainId);
+            $captain = User::query()->whereHas("captain", function ($query) use ($order) {
+                    $query->where("captains.enable_order", 1)->whereHas("verificationFiles", function ($query2) use ($order) {
+                        $query2->where("status", 1)->whereNotIn("verification_option_id", [1, 2])->whereHas("option", function ($query3) use ($order) {
+                            $query3->where("verification_options.related_orders", $order->order_type);
+                        });
+                    });
+                })->find($captainId);
             $captain?->notify(new NewOrderNotification($order));
         }
     }

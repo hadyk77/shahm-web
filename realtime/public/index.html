@@ -11,12 +11,29 @@
 <h1>SOCKET IO SERVER</h1>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
 <script>
-    const socket = io.connect("https://socket.shahm.co/");
+    const socket = io.connect("http://socket.shahm.co");
+
+    let chat_uuid = "9e0ac4bb-d7a9-421f-adb3-7cebdd78531e";
+    let order_id = 2;
+    let message_id = 21;
+    let token = "3|bYsF4sexdcjuDbJIBNx2LlEKPNsaWhCChZM7lyR8bfYz5Z3Dod7kSYfuwrsghOsUvbQXTBwfILFKwrUu1dJoTypgi1ks9r4ycw3yRDV4Kwzh8tUcdJRn6gO7L0zAdnPt2f6aP8EOeOQ7fAsz4FBAWX";
 
     socket.on('connect', function () {
         socket.on("message", (data) => {
             console.log(data);
         });
+        socket.emit("joinOrderChatRoom", {
+            chat_uuid: "9e0ac4bb-d7a9-421f-adb3-7cebdd78531e"
+        });
+        socket.emit("sendOrderChatMessage", {
+            order_id: order_id,
+            token: token,
+            chat_uuid: chat_uuid,
+            message_id: message_id
+        });
+        socket.on("newOrderChatMessage", (data) => {
+            console.log(data);
+        })
     });
 
 </script>
