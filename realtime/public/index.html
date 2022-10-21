@@ -23,7 +23,7 @@
             console.log(data);
         });
         socket.emit("joinOrderChatRoom", {
-            chat_uuid: "9e0ac4bb-d7a9-421f-adb3-7cebdd78531e"
+            chat_uuid: chat_uuid
         });
         socket.emit("sendOrderChatMessage", {
             order_id: order_id,
