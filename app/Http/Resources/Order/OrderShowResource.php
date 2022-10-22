@@ -35,9 +35,9 @@ class OrderShowResource extends JsonResource
                     "image" => $this->captain->profile_image,
                     "phone" => $this->captain->phone,
                     "address" => [
-                        "location" => $this->address,
-                        "lat" => $this->address_lat,
-                        "long" => $this->address_long,
+                        "location" => $this->captain->address,
+                        "lat" => $this->captain->address_lat,
+                        "long" => $this->captain->address_long,
                     ],
                     "captain_rate" => DB::table("rates")->where("model_type", User::class)->where("model_id", $this->captain->id)->average("rate") ?? 0,
                 ];
