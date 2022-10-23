@@ -63,7 +63,7 @@ class OrderController extends Controller
             $order->update([
                 "order_status" => OrderEnum::CANCELED
             ]);
-            $order->captain->notify(new OrderCanceledNotification($order));
+            $order->captain?->notify(new OrderCanceledNotification($order));
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             return $this::sendFailedResponse($exception->getMessage());
