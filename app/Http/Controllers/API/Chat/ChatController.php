@@ -30,12 +30,12 @@ class ChatController extends Controller
             $order = Order::query()->where("user_id", Auth::id())->findOrFail($order_id);
             $sender_id = Auth::id();
             $receiver_id = $order->captain_id;
-            $this->chatServices->sendMessage($request, $order_id, $sender_id, $receiver_id);
+            $message  = $this->chatServices->sendMessage($request, $order_id, $sender_id, $receiver_id);
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             return $this::sendFailedResponse($exception->getMessage());
         }
-        return $this::sendSuccessResponse();
+        return $this::sendSuccessResponse(ChatMessagesResource::make($message));
     }
 
     public function show($order_id, $message_id)
