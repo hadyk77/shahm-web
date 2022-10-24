@@ -39,7 +39,6 @@ const io = socket(server, {
     allowEIO3: true
 });
 
-
 io.on('connection', (socket) => {
 
     logger.info(`Socket with id = ${socket.id}`);
@@ -77,7 +76,7 @@ io.on('connection', (socket) => {
 const PORT = process.env.PORT || 3001;
 
 server.listen(PORT, function () {
-    console.log("SOCKET RUN ON http://localhost:3001/")
+    console.log("SOCKET RUN ON http://localhost:3001")
 });
 
 app.use(express.static(__dirname + '/public'));

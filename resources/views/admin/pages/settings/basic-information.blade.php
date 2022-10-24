@@ -26,6 +26,12 @@
                     :model="$gs"
                     col="12"
                 />
+                <x-summernote-field
+                    name="warning_message"
+                    :title="__('Warning Chat Message')"
+                    :model="$gs"
+                    col="12"
+                />
                 <x-input-field
                     name="first_email"
                     :title="__('First Email')"

@@ -18,7 +18,10 @@ class CaptainOrderController extends Controller
 
     public function newOrder(Request $request)
     {
-        $new_orders = Order::query()->whereNull("captain_id")->get();
+        $new_orders = Order::query()
+            ->whereNull("captain_id")
+            ->where("order_status", "!=", OrderEnum::CANCELED)
+            ->get();
         return $this::sendSuccessResponse(OrderIndexResource::collection($new_orders));
     }
 

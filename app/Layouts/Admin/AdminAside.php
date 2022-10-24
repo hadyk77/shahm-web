@@ -227,6 +227,11 @@ class AdminAside
                         "canShow" => true,
                     ],
                     [
+                        "name" => __("Cancel Reason"),
+                        "route" => route('admin.cancel-reason.index'),
+                        "canShow" => true,
+                    ],
+                    [
                         "name" => __("Expected Price Ranges"),
                         "route" => route('admin.expected-price-range.index'),
                         "canShow" => true,

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Chat\ChatController;
+use App\Http\Controllers\API\V1\CancelReason\CancelReasonController;
 use App\Http\Controllers\API\V1\Coupon\CouponController;
 use App\Http\Controllers\API\V1\ExpectedPriceRange\ExpectedPriceRangeController;
 use App\Http\Controllers\API\V1\Notification\NotificationController;
@@ -45,6 +46,8 @@ Route::prefix("api/v1")->group(function () {
     Route::apiResource("country", CountryController::class)->only("index", "show");
 
     Route::apiResource("governorate", GovernorateController::class)->only("index", "show");
+
+    Route::apiResource("cancel-reason", CancelReasonController::class)->only("index", "show");
 
     Route::apiResource("vehicle-type", VehicleTypeController::class)->only("index", "show");
 

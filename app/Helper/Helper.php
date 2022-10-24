@@ -10,6 +10,7 @@ use App\Models\Statistics;
 use Auth;
 use Browser;
 use Gate;
+use Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Image;
+use LaravelLocalization;
 use Stevebauman\Location\Facades\Location;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use Str;
@@ -224,5 +226,22 @@ class Helper
         return $word ?? "";
     }
 
-
+    public static function getLocationDetailsFromGoogleMapApi($fromLat, $fromLng, $toLat, $toLng): array
+    {
+        $googleMapApi = config("services.google_map.api");
+        $url = "https://maps.googleapis.com/maps/api/distancematrix/json?language=" . LaravelLocalization::getCurrentLocale() . "&destinations=$fromLat,$fromLng&origins=$toLat,$toLng&key=$googleMapApi";
+        $response = Http::get($url);
+        if ($response->status() == 200 && isset($response["rows"]) && $response["status"] == "OK") {
+            $response = $response->json();
+            return [
+                "distanceText" => $response["rows"][0]["elements"][0]["distance"]["text"],
+                "durationText" => $response["rows"][0]["elements"][0]["duration"]["text"],
+            ];
+        } else {
+            return [
+                "distanceText" => 0,
+                "durationText" => 0,
+            ];
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
 use App\Enums\GuardEnum;
 use App\Http\Controllers\Admin\Banner\BannerController;
+use App\Http\Controllers\Admin\CancelReason\CancelReasonController;
 use App\Http\Controllers\Admin\Captain\CaptainController;
 use App\Http\Controllers\Admin\Captain\VerificationFilesController;
 use App\Http\Controllers\Admin\Contact\ContactController;
@@ -118,6 +119,8 @@ Route::middleware("auth:" . GuardEnum::ADMIN)->group(function () {
         Route::resource("vehicle-type", VehicleTypeController::class)->except('show');
 
         Route::resource("nationality", NationalityController::class)->except('show');
+
+        Route::resource("cancel-reason", CancelReasonController::class)->except('show');
 
         Route::post("update-status", StatusController::class)->name("status.update");
 

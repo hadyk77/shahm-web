@@ -53,18 +53,22 @@ class OrderController extends Controller
         return $this::sendSuccessResponse([], __("Order Created Successfully"));
     }
 
-    public function cancelOrder($id)
+    public function cancelOrder(Request $request, $id)
     {
+        $this->validate($request, [
+            "reason" => "nullable|string"
+        ]);
         $order = $this->orderServices->findClientOrderById($id);
         if (!in_array($order->order_status, [OrderEnum::IN_PROGRESS, OrderEnum::WAITING_OFFERS])) {
             return $this::sendSuccessResponse([], __("Order Cannot be canceled"));
         }
         try {
             $order->update([
-                "order_status" => OrderEnum::CANCELED
+                "order_status" => OrderEnum::CANCELED,
+                "cancel_reason" => $request->reason,
             ]);
             $order->captain?->notify(new OrderCanceledNotification($order));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this::sendFailedResponse($exception->getMessage());
         }

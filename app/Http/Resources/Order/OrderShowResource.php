@@ -50,6 +50,7 @@ class OrderShowResource extends JsonResource
             "tax" => $this->tax,
             "grand_total" => $this->grand_total,
             "order_status" => $this->order_status,
+            "cancel_reason" => $this->cancel_reason,
             "order_items" => $this->order_items,
             "distance" => $this->distance,
             "expected_price_range" => [
