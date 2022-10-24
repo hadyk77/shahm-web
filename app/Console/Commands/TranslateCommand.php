@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Helper\Helper;
+use Artisan;
 use File;
 use Illuminate\Console\Command;
 
@@ -29,6 +30,7 @@ class TranslateCommand extends Command
      */
     public function handle()
     {
+        Artisan::call("translation:sync-missing-translation-keys");
         $enWords = json_decode(file_get_contents(base_path("lang/ar.json")), true);
         $arWords = [];
         foreach ($enWords as $key => $value) {
