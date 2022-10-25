@@ -8,6 +8,7 @@ use App\Http\Requests\API\Chat\ChatMessageRequest;
 use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\Order;
+use App\Notifications\Chat\ChatMessageNotification;
 use Auth;
 use DB;
 use Str;
@@ -54,6 +55,11 @@ class ChatServices
                     $message->addMedia($audios)->toMediaCollection(ChatEnum::CHAT_AUDIOS);
                 }
             }
+
+            $title = __("Message From") . " " . $message->sender->name;
+            $body = $request->message_text ?? __("New Message");
+
+            $message->receiver?->notify(new ChatMessageNotification($title, $body, $chat->order_id));
 
             return $message;
         });
