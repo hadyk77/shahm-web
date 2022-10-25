@@ -31,7 +31,7 @@ class ChatMessageRequest extends FormRequest
             ],
             "audios.*" => [
                 Rule::requiredIf($this->input("type") == "audios"),
-                "mimetypes:audio/x-mp3,audio/mp4,audio/x-mp2,application/ogg,audio/mpeg,audio/mp4,audio/mpeg,audio/x-wav,audio/mpeg",
+                "mimetypes:audio/x-mp3,audio/mp4,audio/x-mp2,application/ogg,audio/mpeg,audio/mp4,audio/mpeg,audio/x-wav,audio/mpeg,audio/aac",
             ],
             "location.lat" => [
                 Rule::requiredIf($this->input("type") == "location"),
