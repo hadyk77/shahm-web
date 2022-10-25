@@ -38,7 +38,8 @@ class ChatMessagesResource extends JsonResource
             "links" => $this->links,
             "images" => Helper::getModelMultiMediaUrls($this, ChatEnum::CHAT_IMAGES),
             "audios" => Helper::getModelMultiMediaUrls($this, ChatEnum::CHAT_AUDIOS),
-            "created_at" => Helper::formatDate($this->created_at)
+            "is_seen" => $this->is_seen,
+            "created_at" => Helper::formatDate($this->created_at),
         ];
     }
 }
