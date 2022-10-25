@@ -61,8 +61,13 @@ class ChatServices
 
     private static function chatDetails($order_id): array
     {
-        $order = Order::query()->where("user_id", Auth::id())->findOrFail($order_id);
-        $chat = Chat::query()->where("client_id", Auth::id())->where("order_id", $order_id)->firstOrFail();
+        if (Auth::user()->is_captain) {
+            $order = Order::query()->where("captain_id", Auth::id())->findOrFail($order_id);
+            $chat = Chat::query()->where("captain_id", Auth::id())->where("order_id", $order_id)->firstOrFail();
+        } else {
+            $order = Order::query()->where("user_id", Auth::id())->findOrFail($order_id);
+            $chat = Chat::query()->where("client_id", Auth::id())->where("order_id", $order_id)->firstOrFail();
+        }
         return [
             "order" => $order,
             "chat" => $chat
