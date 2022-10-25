@@ -30,10 +30,10 @@ class ChatController extends Controller
             if (Auth::user()->is_captain) {
                 $order = Order::query()->where("captain_id", Auth::id())->findOrFail($order_id);
                 $sender_id = $order->captain_id;
-                $receiver_id = Auth::id();
+                $receiver_id = $order->user_id;
             } else {
                 $order = Order::query()->where("user_id", Auth::id())->findOrFail($order_id);
-                $sender_id = Auth::id();
+                $sender_id = $order->user_id;
                 $receiver_id = $order->captain_id;
             }
             $message = $this->chatServices->sendMessage($request, $order_id, $sender_id, $receiver_id);
