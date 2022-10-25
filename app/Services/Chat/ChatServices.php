@@ -7,6 +7,7 @@ use App\Helper\Helper;
 use App\Http\Requests\API\Chat\ChatMessageRequest;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Notifications\Chat\ChatMessageNotification;
 use Auth;
@@ -125,5 +126,17 @@ class ChatServices
             "message_text" => $helloMessage,
             "type" => 'text',
         ]);
+
+        $gs = GeneralSetting::query()->first();
+
+        if ($gs->warning_message) {
+            ChatMessage::query()->create([
+                "chat_id" => $chat->id,
+                "sender_id" => $chat->captain_id,
+                "receiver_id" => $chat->client_id,
+                "message_text" => $gs->warning_message,
+                "type" => 'text',
+            ]);
+        }
     }
 }
