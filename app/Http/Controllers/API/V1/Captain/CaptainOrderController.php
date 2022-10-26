@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers\API\V1\Captain;
 
+use App\Actions\NotificationActions\NotifyNearCaptainsWithNewOrderAction;
 use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Order\OrderIndexResource;
 use App\Http\Resources\Order\OrderShowResource;
 use App\Models\CaptainVerificationFile;
+use App\Models\ExpectedPriceRange;
 use App\Models\GeneralSetting;
 use App\Models\Order;
+use App\Notifications\Order\CaptainWithdrawalFromOrderNotification;
 use App\Notifications\Order\OrderStatusNotification;
+use App\Services\Order\OrderServices;
 use Auth;
+use Exception;
+use http\Client\Curl\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CaptainOrderController extends Controller
 {
@@ -114,4 +121,74 @@ class CaptainOrderController extends Controller
 
         return $this::sendSuccessResponse([], __("Order Updated"));
     }
+
+    public function withdrawalFromOrder($order_id)
+    {
+        $order = Order::query()->where("captain_id", Auth::id())->findOrFail($order_id);
+
+        if ($order->order_status == OrderEnum::DELIVERED) {
+            return $this::sendFailedResponse(__("Order is already delivered"));
+        }
+
+        if ($order->order_status == OrderEnum::CANCELED) {
+            return $this::sendFailedResponse(__("Order is already canceled"));
+        }
+
+        if ($order->order_status == OrderEnum::WITHDRAWAL_FROM_CAPTAIN) {
+            return $this::sendFailedResponse(__("Order is already withdrawal from captain"));
+        }
+
+        if ($order->order_status == OrderEnum::WITHDRAWAL_FROM_CLIENT) {
+            return $this::sendFailedResponse(__("Order is already withdrawal from client"));
+        }
+
+        $order->update([
+            "order_status" => OrderEnum::WITHDRAWAL_FROM_CAPTAIN,
+        ]);
+
+        $order->refresh();
+
+        if ($order->service_id != 3) {
+
+            $newOrder = DB::transaction(function () use ($order) {
+
+                $newOrder = Order::query()->create([
+                    "service_id" => $order->service_id,
+                    "user_id" => $order->user_id,
+                    "order_items" => $order->order_items,
+                    "order_type" => $order->order_type,
+                    "order_status" => OrderEnum::WAITING_OFFERS,
+                    "payment_method" => $order->payment_method,
+                    "drop_off_location" => $order->drop_off_location,
+                    "drop_off_description" => $order->drop_off_description,
+                    "drop_off_location_lat" => $order->drop_off_location_lat,
+                    "drop_off_location_long" => $order->drop_off_location_long,
+                    "pickup_location" => $order->pickup_location,
+                    "pickup_description" => $order->pickup_description,
+                    "pickup_location_lat" => $order->pickup_location_lat,
+                    "pickup_location_long" => $order->pickup_location_long,
+                    "distance" => $order->distance,
+                    "expected_price_range_id" => $order->expected_price_range_id,
+                    "tax" => $order->tax,
+                    "tax_percentage" => $order->tax_percentage,
+                    "discount_code" => $order->discount_code,
+                ]);
+
+                $newOrder->update([
+                    "order_code" => "0000" . $newOrder->id,
+                ]);
+
+                NotifyNearCaptainsWithNewOrderAction::run($order, Auth::id());
+
+                (new OrderServices())->storeHistoryForOrder($order);
+
+                return $newOrder;
+            });
+        }
+
+        return $this::sendSuccessResponse([], __("Captain withdrawal successfully"));
+
+    }
+
+
 }

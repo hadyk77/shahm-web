@@ -135,12 +135,9 @@ class OrderServices implements ServiceInterface
 
             NotifyNearCaptainsWithNewOrderAction::run($order);
 
-
             if ($request->service_id == 3) {
-
                 $chatServices = new ChatServices();
                 $chatServices->createBetweenGovernorateChat($order);
-
             }
 
             return $order;

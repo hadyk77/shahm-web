@@ -46,7 +46,6 @@ class ChatMessageNotification extends Notification
         ];
     }
 
-
     public function toFirebase($notifiable)
     {
         if (!is_null($notifiable->device_token)) {

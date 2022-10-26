@@ -14,6 +14,10 @@ enum OrderEnum
 
     const CAPTAIN_IN_CLIENT_LOCATION = "captain_in_client_location";
 
+    const WITHDRAWAL_FROM_CAPTAIN = "withdrawal_from_captain";
+
+    const WITHDRAWAL_FROM_CLIENT = "withdrawal_from_client";
+
     const DELIVERED = "delivered";
 
     const CANCELED = "canceled";
@@ -40,7 +44,9 @@ enum OrderEnum
             self::CAPTAIN_RECEIVED_ORDER => __("Captain received order"),
             self::CAPTAIN_IN_CLIENT_LOCATION => __("Captain in your location"),
             self::DELIVERED => __("Delivered"),
-            self::CANCELED => __("Canceled")
+            self::CANCELED => __("Canceled"),
+            self::WITHDRAWAL_FROM_CAPTAIN => __("Withdrawal from captain"),
+            self::WITHDRAWAL_FROM_CLIENT => __("Withdrawal from client"),
         ];
     }
 

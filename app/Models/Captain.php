@@ -55,6 +55,17 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|Captain whereIsCaptainPhoneNumberVerified($value)
  * @method static Builder|Captain whereNationalityId($value)
  * @method static Builder|Captain whereWallerNumber($value)
+ * @property string|null $wallet_number
+ * @property int $enable_order
+ * @property int|null $account_upgrade_option_id
+ * @property-read \App\Models\AccountUpgradeOption|null $accountUpgradeOption
+ * @property-read \App\Models\Nationality $nationality
+ * @property-read \App\Models\VehicleType|null $vehicleType
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CaptainVerificationFile[] $verificationFiles
+ * @property-read int|null $verification_files_count
+ * @method static Builder|Captain whereAccountUpgradeOptionId($value)
+ * @method static Builder|Captain whereEnableOrder($value)
+ * @method static Builder|Captain whereWalletNumber($value)
  */
 class Captain extends Model implements HasMedia
 {

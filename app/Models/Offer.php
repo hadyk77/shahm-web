@@ -31,6 +31,31 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Offer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Offer whereUserId($value)
  * @mixin \Eloquent
+ * @property int $order_id
+ * @property float|null $captain_lat
+ * @property float|null $captain_long
+ * @property float|null $distance
+ * @property float $app_profit_from_captain
+ * @property float $app_profit_from_user
+ * @property float $offer_total_cost
+ * @property int $is_between_governorate_service
+ * @property int|null $governorate_from_id
+ * @property int|null $governorate_to_id
+ * @property string|null $between_governorate_date
+ * @property-read \App\Models\User $captain
+ * @property-read \App\Models\Order $order
+ * @property-read \App\Models\Service $service
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereAppProfitFromCaptain($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereAppProfitFromUser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereBetweenGovernorateDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereCaptainLat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereCaptainLong($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereDistance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereGovernorateFromId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereGovernorateToId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereIsBetweenGovernorateService($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereOfferTotalCost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Offer whereOrderId($value)
  */
 class Offer extends Model
 {

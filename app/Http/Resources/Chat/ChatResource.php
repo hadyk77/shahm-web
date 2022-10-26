@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Chat;
 
+use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -33,6 +34,7 @@ class ChatResource extends JsonResource
                 "id" => $this->service->id,
                 "title" => $this->service->title,
             ],
+            "chat_is_disabled" => in_array($this->order->order_status, [OrderEnum::CANCELED, OrderEnum::DELIVERED]),
             "created_at" => Helper::formatDate($this->created_at),
         ];
     }

@@ -155,7 +155,7 @@ class ChatServices
         }
     }
 
-    public function sendOfferMessage(Offer $offer): void
+    public function sendOfferMessage(Offer $offer): ChatMessage
     {
         $chat = $offer->order->chat;
 
@@ -167,22 +167,24 @@ class ChatServices
         );
 
         $message = ChatMessage::query()->create([
-            "chat_id" => $offer->id,
+            "chat_id" => $chat->id,
             "sender_id" => $offer->captain_id,
-            "receiver_id" => $offer->user_id,
+            "receiver_id" => $offer->order->user_id,
             "message_text" => null,
             "type" => 'text',
             "need_style" => true,
             "style_type" => ChatEnum::OFFER_FROM_CAPTAIN_STYLE,
-            "delivery_cost" => $offer->delivery_cost_with_user_commission,
+            "delivery_cost" => $offer->offer_total_cost,
             "delivery_duration" => $googleDistanceDetails["durationValue"],
             "delivery_distance" => $googleDistanceDetails["distanceValue"],
         ]);
 
         $title = __("Message From") . " " . $message->sender->name;
-        $body = __("Offer for order") . " " . $message->order->order_code;
+        $body = __("Offer for order") . " " . $chat->order->order_code;
 
         $message->receiver?->notify(new ChatMessageNotification($title, $body, $chat->order_id));
+
+        return $message;
 
     }
 

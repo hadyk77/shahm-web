@@ -87,6 +87,10 @@ use Spatie\Translatable\HasTranslations;
  * @method static Builder|GeneralSetting whereMaximumIndebtednessForCaptain($value)
  * @method static Builder|GeneralSetting whereServicePricePerKilometer($value)
  * @method static Builder|GeneralSetting whereTax($value)
+ * @property string|null $warning_message
+ * @property float $max_radius
+ * @method static Builder|GeneralSetting whereMaxRadius($value)
+ * @method static Builder|GeneralSetting whereWarningMessage($value)
  */
 class GeneralSetting extends Model implements HasMedia
 {

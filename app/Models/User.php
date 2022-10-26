@@ -90,6 +90,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $captain_phone_number
+ * @property int $is_captain_phone_number_verified
+ * @property int $captain_status
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $captainOrders
+ * @property-read int|null $captain_orders_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $userOrders
+ * @property-read int|null $user_orders_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCaptainPhoneNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCaptainStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsCaptainPhoneNumberVerified($value)
  */
 class User extends Authenticatable implements HasMedia
 {

@@ -76,6 +76,33 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $between_governorate_service_id
+ * @property int|null $expected_price_range_id
+ * @property float|null $app_profit_from_captain
+ * @property float|null $app_profit_from_user
+ * @property float|null $captain_profit
+ * @property float|null $delivery_cost_with_user_commission
+ * @property float|null $delivery_cost_without_user_commission
+ * @property string|null $drop_off_description
+ * @property string|null $pickup_description
+ * @property float|null $distance
+ * @property string|null $cancel_reason
+ * @property-read \App\Models\BetweenGovernorateService|null $betweenGovernorateService
+ * @property-read \App\Models\Chat|null $chat
+ * @property-read \App\Models\ExpectedPriceRange|null $expectedPriceRange
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Offer[] $offers
+ * @property-read int|null $offers_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereAppProfitFromCaptain($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereAppProfitFromUser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereBetweenGovernorateServiceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereCancelReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereCaptainProfit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDeliveryCostWithUserCommission($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDeliveryCostWithoutUserCommission($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDistance($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDropOffDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereExpectedPriceRangeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePickupDescription($value)
  */
 class Order extends Model implements HasMedia
 {

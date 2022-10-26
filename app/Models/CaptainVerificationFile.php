@@ -38,6 +38,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static Builder|CaptainVerificationFile whereUserId($value)
  * @method static Builder|CaptainVerificationFile whereVerificationOptionId($value)
  * @mixin Eloquent
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read int|null $media_count
  */
 class CaptainVerificationFile extends Model implements HasMedia
 {

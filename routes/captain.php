@@ -45,6 +45,8 @@ Route::prefix("captain")->middleware("api.check.captain.phone")->group(function 
 
     Route::get("upgrade-options", [CaptainSettingController::class, "upgradeOption"]);
 
+    Route::post("withdrawal-from-order/{order}", [CaptainOrderController::class, "withdrawalFromOrder"]);
+
     Route::apiResource("rate", RateController::class)->only("index", "store", "show");
 
     Route::apiResource("verification-files", VerificationFileController::class)->only("index", "store");

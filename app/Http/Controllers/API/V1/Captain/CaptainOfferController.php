@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1\Captain;
 use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Chat\ChatMessagesResource;
 use App\Http\Resources\Offer\OfferResource;
 use App\Models\BetweenGovernorateService;
 use App\Models\ChatMessage;
@@ -78,6 +79,8 @@ class CaptainOfferController extends Controller
             "offer_total_cost" => $this->calculateAppProfit($request->price)["total"],
         ]);
 
+        $message = null;
+
         if ($offer->order->between_governorate_service_id) {
 
             $betweenGovernorateService = BetweenGovernorateService::query()->find($offer->order->between_governorate_service_id);
@@ -92,7 +95,7 @@ class CaptainOfferController extends Controller
 
             if ($offer->order->chat()->count()) {
                 $chatService = new ChatServices();
-                $chatService->sendOfferMessage($offer);
+                $message = $chatService->sendOfferMessage($offer);
             }
 
         }
@@ -101,8 +104,14 @@ class CaptainOfferController extends Controller
 
         $offer->refresh();
 
-        return $this::sendSuccessResponse(OfferResource::make($offer));
+        if ($message) {
+            return $this::sendSuccessResponse([
+                "offer" => OfferResource::make($offer),
+                "message" => ChatMessagesResource::make($message)
+            ]);
+        }
 
+        return $this::sendSuccessResponse(OfferResource::make($offer));
     }
 
     private function calculateAppProfit(float $price)

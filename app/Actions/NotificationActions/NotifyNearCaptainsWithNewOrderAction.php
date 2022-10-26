@@ -2,16 +2,11 @@
 
 namespace App\Actions\NotificationActions;
 
-use App\Enums\OrderEnum;
 use App\Helper\Helper;
-use App\Models\Captain;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\User;
-use App\Notifications\Order\NewOfferNotification;
 use App\Notifications\Order\NewOrderNotification;
-use App\Support\CalculateDistanceBetweenTwoPoints;
-use DB;
 use Log;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -19,7 +14,7 @@ class NotifyNearCaptainsWithNewOrderAction
 {
     use AsAction;
 
-    public function handle(Order $order): void
+    public function handle(Order $order, $excludeCaptainId = null): void
     {
         $max_radius = (float)GeneralSetting::query()->first()->max_radius;
         $captains = User::query()
@@ -27,6 +22,9 @@ class NotifyNearCaptainsWithNewOrderAction
             ->where("is_captain_phone_number_verified", 1)
             ->where("captain_status", 1)
             ->where("status", 1)
+            ->when($excludeCaptainId != null, function ($query) use ($excludeCaptainId) {
+                $query->where("users.id", "!=", $excludeCaptainId);
+            })
             ->whereHas("captain", function ($query) use ($order) {
                 $query->where("captains.enable_order", 1)->whereHas("verificationFiles", function ($query2) use ($order) {
                     $query2
