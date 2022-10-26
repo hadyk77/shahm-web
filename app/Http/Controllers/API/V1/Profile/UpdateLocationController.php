@@ -24,7 +24,10 @@ class UpdateLocationController extends Controller
             "address_long" => $request->address_long,
         ]);
 
-        return $this::sendSuccessResponse([], __("Location Updated Successfully"));
+        return $this::sendSuccessResponse([
+            "address_lat" => $request->address_lat,
+            "address_long" => $request->address_long,
+        ], __("Location Updated Successfully"));
 
     }
 

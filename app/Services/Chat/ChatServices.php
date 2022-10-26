@@ -8,6 +8,7 @@ use App\Http\Requests\API\Chat\ChatMessageRequest;
 use App\Models\Chat;
 use App\Models\ChatMessage;
 use App\Models\GeneralSetting;
+use App\Models\Offer;
 use App\Models\Order;
 use App\Notifications\Chat\ChatMessageNotification;
 use Auth;
@@ -42,6 +43,8 @@ class ChatServices
                 "message_text" => $request->type == "text" ? $request->message_text : null,
                 "lat" => $request->type == "location" ? $request->input("location.lat") : null,
                 "long" => $request->type == "location" ? $request->input("location.long") : null,
+                "need_style" => $request->type == "location",
+                "style_type" => $request->type == "location" ? ChatEnum::SHARE_LOCATION_STYLE : null,
                 "links" => $request->links,
             ]);
 
@@ -91,6 +94,7 @@ class ChatServices
             "service_id" => $order->service_id,
         ]);
 
+        // First Message
         ChatMessage::query()->create([
             "chat_id" => $chat->id,
             "sender_id" => $chat->client_id,
@@ -99,24 +103,32 @@ class ChatServices
             "type" => 'text',
         ]);
 
-        $orderDeliveryDetails = " تكلفة التوصيل : " . Helper::price($order->delivery_cost);
-        $orderDeliveryDetails .= " \n\n ";
-        $orderDeliveryDetails .= "التوصيل خلال : ساعة واحدة";
-        $orderDeliveryDetails .= " \n\n ";
-        $orderDeliveryDetails .= $order->distance . " يبعد : ";
 
+        // Second Message
+        $googleDistanceDetails = Helper::getLocationDetailsFromGoogleMapApi(
+            fromLat: $chat->captain->address_lat,
+            fromLng: $chat->captain->address_long,
+            toLat: $chat->order->pickup_location_lat,
+            toLng: $chat->order->pickup_location_long,
+        );
         ChatMessage::query()->create([
             "chat_id" => $chat->id,
             "sender_id" => $chat->captain_id,
             "receiver_id" => $chat->client_id,
-            "message_text" => $orderDeliveryDetails,
             "type" => 'text',
+            "need_style" => true,
+            "style_type" => ChatEnum::DISTANCE_DURATION_COST_STYLE,
+            "delivery_cost" => $order->delivery_cost_with_user_commission,
+            "delivery_duration" => $googleDistanceDetails["durationValue"],
+            "delivery_distance" => $googleDistanceDetails["distanceValue"],
         ]);
 
-        $helloMessage = " أهلا معك ";
+
+        // Third Message
+        $helloMessage = "أهلا معك ";
         $helloMessage .= " \n ";
         $helloMessage .= $order->captain->name;
-        $helloMessage .= " \n\n ";
+        $helloMessage .= " \n ";
         $helloMessage .= "يسعدني ان أخدمك اليوم. أرجو منك التأكيد";
 
         ChatMessage::query()->create([
@@ -127,16 +139,61 @@ class ChatServices
             "type" => 'text',
         ]);
 
-        $gs = GeneralSetting::query()->first();
 
+        // Fourth message
+        $gs = GeneralSetting::query()->first();
         if ($gs->warning_message) {
             ChatMessage::query()->create([
                 "chat_id" => $chat->id,
                 "sender_id" => $chat->captain_id,
                 "receiver_id" => $chat->client_id,
                 "message_text" => $gs->warning_message,
+                "need_style" => true,
+                "style_type" => ChatEnum::ADMIN_WARNING_MESSAGE_STYLE,
                 "type" => 'text',
             ]);
         }
+    }
+
+    public function sendOfferMessage(Offer $offer): void
+    {
+        $chat = $offer->order->chat;
+
+        $googleDistanceDetails = Helper::getLocationDetailsFromGoogleMapApi(
+            fromLat: $chat->captain->address_lat,
+            fromLng: $chat->captain->address_long,
+            toLat: $chat->order->pickup_location_lat,
+            toLng: $chat->order->pickup_location_long,
+        );
+
+        $message = ChatMessage::query()->create([
+            "chat_id" => $offer->id,
+            "sender_id" => $offer->captain_id,
+            "receiver_id" => $offer->user_id,
+            "message_text" => null,
+            "type" => 'text',
+            "need_style" => true,
+            "style_type" => ChatEnum::OFFER_FROM_CAPTAIN_STYLE,
+            "delivery_cost" => $offer->delivery_cost_with_user_commission,
+            "delivery_duration" => $googleDistanceDetails["durationValue"],
+            "delivery_distance" => $googleDistanceDetails["distanceValue"],
+        ]);
+
+        $title = __("Message From") . " " . $message->sender->name;
+        $body = __("Offer for order") . " " . $message->order->order_code;
+
+        $message->receiver?->notify(new ChatMessageNotification($title, $body, $chat->order_id));
+
+    }
+
+    public function createBetweenGovernorateChat(Order $order): void
+    {
+        Chat::query()->create([
+            "uuid" => Str::uuid()->toString(),
+            "order_id" => $order->id,
+            "client_id" => $order->user_id,
+            "captain_id" => $order->captain_id,
+            "service_id" => $order->service_id,
+        ]);
     }
 }

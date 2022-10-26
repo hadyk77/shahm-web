@@ -125,6 +125,8 @@ Route::prefix("api/v1")->group(function () {
 
             });
 
+            Route::post("make-messages-seen/chat/{chat_uuid}/order/{order_id}", [ChatController::class, "makeAllReceiverMessagesRead"]);
+
             Route::post("cancel-order/{order}", [OrderController::class, "cancelOrder"]);
 
             Route::post("change-order/{order}", [OrderController::class, "changeOrder"]);

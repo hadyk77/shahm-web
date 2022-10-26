@@ -64,11 +64,50 @@ io.on('connection', (socket) => {
                 "Authorization": `Bearer ${token}`
             }
         }).then(response => {
-            console.log(response.data);
+            console.log(response.data)
             socket.to(chat_uuid).emit("newOrderChatMessage", response.data)
         }).catch(error => {
-            console.log(error);
+            console.log(error.response.data);
         });
+    });
+
+    socket.on("makeMessagesSeen", async ({token, order_id, chat_uuid}) => {
+        logger.info("makeMessagesSeen => Chat UUID => " + chat_uuid);
+        logger.info("makeMessagesSeen => Order Id => " + order_id);
+        logger.info("makeMessagesSeen => TOKEN => " + token);
+
+        await axios.post(`${process.env.BASE_URL}/make-messages-seen/chat/${chat_uuid}/order/${order_id}`, {}, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(response => {
+            console.log(response.data);
+            socket.to(chat_uuid).emit("readMessages", response.data)
+        }).catch(error => {
+            console.log(error.response.data);
+        });
+
+    });
+
+
+    socket.on("joinOrderTracking", ({order_id}) => {
+        logger.info("joinOrderTracking => ORDER ID => " + order_id);
+        socket.join("TRACKING_" + order_id);
+    })
+
+    socket.on("captainLocationUpdated", async ({order_id, address_lat, address_long, captain_token}) => {
+        logger.info("captainLocationUpdated => ORDER ID => " + order_id);
+        logger.info("captainLocationUpdated => ADDRESS LAT => " + address_lat);
+        logger.info("captainLocationUpdated => ADDRESS LONG => " + address_long);
+        logger.info("captainLocationUpdated => CAPTAIN TOKEN => " + captain_token);
+        await axios.post(`${process.env.BASE_URL}/profile/update-location`, {address_lat, address_long}, {
+            headers: {"Authorization": `Bearer ${captain_token}`}
+        }).then(response => {
+            console.log(response.data);
+            socket.to("TRACKING_" + order_id).emit("captainCurrentLocation", response.data)
+        }).catch(error => {
+            console.log(error.response.data);
+        })
     });
 
 });

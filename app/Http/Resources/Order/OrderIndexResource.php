@@ -36,18 +36,18 @@ class OrderIndexResource extends JsonResource
             "tax" => $this->tax,
             'distance' => $this->mergeWhen(Auth::user()->is_captain, function () {
                 return [
-                    "drop_off_distance" => CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints(
+                    "drop_off_distance" => Helper::getLocationDetailsFromGoogleMapApi(
                         Auth::user()->address_lat,
                         Auth::user()->address_long,
                         $this->drop_off_location_lat,
                         $this->drop_off_location_long
-                    ),
-                    "pickup_distance" => CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints(
+                    )["distanceValue"],
+                    "pickup_distance" => Helper::getLocationDetailsFromGoogleMapApi(
                         Auth::user()->address_lat,
                         Auth::user()->address_long,
                         $this->pickup_location_lat,
                         $this->pickup_location_long
-                    ),
+                    )["distanceValue"],
                 ];
             }),
             "order_status" => $this->order_status,

@@ -11,29 +11,52 @@
 <h1>SOCKET IO SERVER</h1>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
 <script>
-    const socket = io.connect("https://socket.shahm.co");
+    const socket = io.connect("http://localhost:3001");
 
-    let chat_uuid = "6f685b3f-434e-4bdd-8c6f-946676ef41c5";
-    let order_id = 10;
-    let message_id = 22;
-    let token = "227|BVTklFfGIRM8OeCsryK3crpy14flYU4WTnbZXqxzkPvz4khW8sFlrBNTj6kdniSWSFmrK8VVasY2mCeAfGG2n39ngU0Ck4oeEyZXe5S4oNYGlDhwXOne8vJHDlIsVH7TThHZmUH79kqKcgba6CflZT";
+    // let chat_uuid = "6f685b3f-434e-4bdd-8c6f-946676ef41c5";
+    // let order_id = 10;
+    // let message_id = 22;
+    // let token = "227|BVTklFfGIRM8OeCsryK3crpy14flYU4WTnbZXqxzkPvz4khW8sFlrBNTj6kdniSWSFmrK8VVasY2mCeAfGG2n39ngU0Ck4oeEyZXe5S4oNYGlDhwXOne8vJHDlIsVH7TThHZmUH79kqKcgba6CflZT";
+
+
+    // let tracking_captain_token = "2|aEs3V7O4nvVFIsMq0wNHHRmxWJMMsUiMEKtrEzKoUZxtL2X1UDQLGgb1KKvHeeD7gkYSFMTfHZYqxskc42qlx1irF6CkBllaFWClXzAQFrNRvbrtcMuepWN3hrN32ocYV6ARyzxiN7XKdOPGbdBX0q";
+    // let tracking_address_lat = 5;
+    // let tracking_address_long = 30;
+    // let tracking_order_id = 1;
+
 
     socket.on('connect', function () {
         socket.on("message", (data) => {
             console.log(data);
         });
-        socket.emit("joinOrderChatRoom", {
-            chat_uuid: chat_uuid
-        });
-        socket.emit("sendOrderChatMessage", {
-            order_id: order_id,
-            token: token,
-            chat_uuid: chat_uuid,
-            message_id: message_id
-        });
-        socket.on("newOrderChatMessage", (data) => {
-            console.log(data);
-        })
+        // socket.emit("joinOrderChatRoom", {
+        //     chat_uuid: chat_uuid
+        // });
+        // socket.emit("sendOrderChatMessage", {
+        //     order_id: order_id,
+        //     token: token,
+        //     chat_uuid: chat_uuid,
+        //     message_id: message_id
+        // });
+        // socket.on("newOrderChatMessage", (data) => {
+        //     console.log(data);
+        // })
+
+        // socket.emit("joinOrderTracking", {
+        //     order_id: tracking_order_id
+        // });
+        //
+        // socket.emit("captainLocationUpdated", {
+        //     order_id: tracking_order_id,
+        //     address_lat: tracking_address_lat,
+        //     address_long: tracking_address_long,
+        //     captain_token: tracking_captain_token
+        // });
+        //
+        // socket.on("captainCurrentLocation", (data) => {
+        //     console.log(data);
+        // });
+
     });
 
 </script>

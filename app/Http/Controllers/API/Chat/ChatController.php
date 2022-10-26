@@ -9,6 +9,7 @@ use App\Models\Chat;
 use App\Models\Order;
 use App\Services\Chat\ChatServices;
 use Auth;
+use Exception;
 use Log;
 
 class ChatController extends Controller
@@ -37,7 +38,7 @@ class ChatController extends Controller
                 $receiver_id = $order->captain_id;
             }
             $message = $this->chatServices->sendMessage($request, $order_id, $sender_id, $receiver_id);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return $this::sendFailedResponse($exception->getMessage());
         }
@@ -48,4 +49,38 @@ class ChatController extends Controller
     {
         return $this::sendSuccessResponse(ChatMessagesResource::make($this->chatServices->singleMessage($order_id, $message_id)));
     }
+
+    public function makeAllReceiverMessagesRead($chat_uuid, $order_id)
+    {
+        $messagesMarkedAsRead = [];
+        if (Auth::user()->is_captain) {
+            $chat = Chat::query()->where([
+                ["captain_id", Auth::id()],
+                ["order_id", $order_id],
+                ["uuid", $chat_uuid],
+            ])->first();
+        } else {
+            $chat = Chat::query()->where([
+                ["client_id", Auth::id()],
+                ["order_id", $order_id],
+                ["uuid", $chat_uuid],
+            ])->first();
+        }
+        $messages = $chat?->messages()->where("seen", false)->get();
+        foreach ($messages as $message) {
+            if ($message->receiver_id == Auth::id()) {
+                $message->update([
+                    "is_seen" => true,
+                ]);
+            }
+            if ($message->sender_id == Auth::id()) {
+                $message->update([
+                    "is_seen" => true,
+                ]);
+            }
+            $messagesMarkedAsRead[] = $message->id;
+        }
+        return $this::sendSuccessResponse($messagesMarkedAsRead);
+    }
+
 }

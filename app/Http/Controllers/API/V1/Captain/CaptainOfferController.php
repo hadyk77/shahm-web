@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\API\V1\Captain;
 
 use App\Enums\OrderEnum;
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Offer\OfferResource;
 use App\Models\BetweenGovernorateService;
+use App\Models\ChatMessage;
 use App\Models\GeneralSetting;
 use App\Models\Offer;
 use App\Models\Order;
 use App\Notifications\Order\NewOfferNotification;
+use App\Services\Chat\ChatServices;
 use App\Support\CalculateDistanceBetweenTwoPoints;
 use Auth;
 use DB;
@@ -42,13 +45,19 @@ class CaptainOfferController extends Controller
             "price" => "required|numeric",
         ]);
 
-        $order = Order::query()->where("order_status", OrderEnum::WAITING_OFFERS)->find($order_id);
+        $delivery_types = Helper::getCaptainDeliveryTypes();
+        $order = Order::query()
+            ->when(!in_array("all", $delivery_types), function ($query) use ($delivery_types) {
+                $query->whereIn("order_type", $delivery_types);
+            })
+            ->where("order_status", OrderEnum::WAITING_OFFERS)
+            ->find($order_id);
 
         if (!$order) {
             return $this::sendFailedResponse(__("Order is not found"));
         }
 
-        $distance = CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints(
+        $distance = Helper::getLocationDetailsFromGoogleMapApi(
             $order->pickup_location_lat,
             $order->pickup_location_long,
             Auth::user()->address_lat,
@@ -62,7 +71,7 @@ class CaptainOfferController extends Controller
         ], [
             "captain_lat" => Auth::user()->address_lat,
             "captain_long" => Auth::user()->address_long,
-            "distance" => $distance,
+            "distance" => $distance["distanceValue"],
             "price" => $request->price,
             "app_profit_from_captain" => $this->calculateAppProfit($request->price)["app_profit_from_captain"],
             "app_profit_from_user" => $this->calculateAppProfit($request->price)["app_profit_from_user"],
@@ -79,6 +88,12 @@ class CaptainOfferController extends Controller
                 "governorate_to_id" => $betweenGovernorateService->drop_off_id,
                 "between_governorate_date" => $betweenGovernorateService->between_governorate_date . " " . $betweenGovernorateService->between_governorate_time,
             ]);
+
+
+            if ($offer->order->chat()->count()) {
+                $chatService = new ChatServices();
+                $chatService->sendOfferMessage($offer);
+            }
 
         }
 

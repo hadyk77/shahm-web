@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderEnum;
 use App\Enums\ProfileImageEnum;
 use App\Traits\HasProfileImageTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -127,5 +128,26 @@ class User extends Authenticatable implements HasMedia
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function captainOrders()
+    {
+        return $this->hasMany(Order::class, "captain_id");
+    }
+
+    public function userOrders()
+    {
+        return $this->hasMany(Order::class, "user_id");
+    }
+
+    public function hasNoOrder(): bool
+    {
+        return $this
+                ->captainOrders()
+                ->whereIn("order_status", [
+                    OrderEnum::IN_PROGRESS,
+                    OrderEnum::CAPTAIN_RECEIVED_ORDER,
+                    OrderEnum::CAPTAIN_IN_CLIENT_LOCATION
+                ])->count() == 0;
     }
 }

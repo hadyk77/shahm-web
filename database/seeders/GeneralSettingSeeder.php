@@ -36,6 +36,7 @@ class GeneralSettingSeeder extends Seeder
             "firebase_storage_bucket" => "shahm-app.appspot.com",
             "firebase_messaging_sender_id" => "772087877024",
             "firebase_app_id" => "1:772087877024:android:5d31e17fc2f80103aa28c5",
+            "warning_message" => "سلامة وصحة المعلومات المزودة اثناء طلب أي خدمة؛ وفي الحالات التي يقتضي فيها إتاحة هذه المعلومات، يكون المستخدم هو المسؤول الوحيد عن أية خسائر قد تنشأ عن بيان أي معلومات خاطئة أو بيانات غير كافية (على سبيل المثال، نسيان كلمة المرور)؛ وفي هذه الحالات، قد يتم إغلاق حسابه/حسابها.",
         ]);
 
         $logo = public_path("test_images/logo.png");

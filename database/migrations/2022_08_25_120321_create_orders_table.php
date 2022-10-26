@@ -54,6 +54,10 @@ return new class extends Migration {
             $table->double("distance")->nullable();
             $table->string("discount_code")->nullable();
             $table->string("discount_amount")->nullable();
+
+
+            $table->string("cancel_reason")->nullable();
+
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

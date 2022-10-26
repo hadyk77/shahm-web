@@ -22,6 +22,12 @@ return new class extends Migration
             $table->string("type")->default("text");
             $table->double("lat")->nullable();
             $table->double("long")->nullable();
+            $table->double("delivery_cost")->nullable();
+            $table->double("delivery_duration")->nullable();
+            $table->double("delivery_distance")->nullable();
+            $table->boolean("is_seen")->default(false);
+            $table->boolean("need_style")->default(false);
+            $table->string("style_type")->nullable();
             $table->json("links")->nullable();
             $table->timestamps();
         });

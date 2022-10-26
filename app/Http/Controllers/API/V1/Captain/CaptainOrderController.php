@@ -7,6 +7,7 @@ use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Order\OrderIndexResource;
 use App\Http\Resources\Order\OrderShowResource;
+use App\Models\CaptainVerificationFile;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Notifications\Order\OrderStatusNotification;
@@ -18,10 +19,15 @@ class CaptainOrderController extends Controller
 
     public function newOrder(Request $request)
     {
+        $delivery_types = Helper::getCaptainDeliveryTypes();
         $new_orders = Order::query()
             ->whereNull("captain_id")
+            ->when(!in_array("all", $delivery_types), function ($query) use ($delivery_types) {
+                $query->whereIn("order_type", $delivery_types);
+            })
             ->where("order_status", "!=", OrderEnum::CANCELED)
             ->get();
+
         return $this::sendSuccessResponse(OrderIndexResource::collection($new_orders));
     }
 

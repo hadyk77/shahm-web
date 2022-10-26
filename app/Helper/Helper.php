@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App\Models\CaptainVerificationFile;
 use App\Models\Domain;
 use App\Models\GeneralSetting;
 use App\Models\Media;
@@ -9,6 +10,7 @@ use App\Models\Product;
 use App\Models\Statistics;
 use Auth;
 use Browser;
+use Exception;
 use Gate;
 use Http;
 use Illuminate\Http\Request;
@@ -111,7 +113,7 @@ class Helper
             $image->save($saved_path);
             $image->destroy();
             return $saved_path;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             Log::error($exception->getMessage());
         }
     }
@@ -233,15 +235,43 @@ class Helper
         $response = Http::get($url);
         if ($response->status() == 200 && isset($response["rows"]) && $response["status"] == "OK") {
             $response = $response->json();
+
+            if ($response["rows"][0]["elements"][0]["status"] == "ZERO_RESULTS") {
+                return [
+                    "distanceText" => 0,
+                    "distanceValue" => 0,
+                    "durationText" => 0,
+                    "durationValue" => 0,
+                ];
+            }
+
             return [
                 "distanceText" => $response["rows"][0]["elements"][0]["distance"]["text"],
+                "distanceValue" => $response["rows"][0]["elements"][0]["distance"]["value"] / 1000,
                 "durationText" => $response["rows"][0]["elements"][0]["duration"]["text"],
+                "durationValue" => $response["rows"][0]["elements"][0]["duration"]["value"] / 60,
             ];
         } else {
             return [
                 "distanceText" => 0,
+                "distanceValue" => 0,
                 "durationText" => 0,
+                "durationValue" => 0,
             ];
         }
+    }
+
+    public static function getCaptainDeliveryTypes(): array
+    {
+        return Auth::user()
+            ->captain
+            ->verificationFiles()
+            ->whereNotIn("id", [1, 2])
+            ->where("status", 1)
+            ->get()
+            ->map(function (CaptainVerificationFile $captainVerificationFile) {
+                return $captainVerificationFile->option->related_orders;
+            })
+            ->toArray();
     }
 }

@@ -6,12 +6,14 @@ use App\Actions\NotificationActions\NotifyAdminWithNewOrderRequest;
 use App\Actions\NotificationActions\NotifyClientWithCreationOfOrderAction;
 use App\Actions\NotificationActions\NotifyNearCaptainsWithNewOrderAction;
 use App\Enums\OrderEnum;
+use App\Helper\Helper;
 use App\Models\Captain;
 use App\Models\ExpectedPriceRange;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\OrderHistory;
 use App\Models\User;
+use App\Services\Chat\ChatServices;
 use App\Services\ServiceInterface;
 use App\Support\CalculateDistanceBetweenTwoPoints;
 use Auth;
@@ -108,6 +110,8 @@ class OrderServices implements ServiceInterface
                 "distance" => $distance,
                 "expected_price_range_id" => $expectedRangeId,
 
+                "captain_id" => $request->service_id == 3 ? $request->captain_id : null,
+
                 "tax" => 0,
                 "tax_percentage" => $gs->tax,
                 "discount_code" => $request->discount_code,
@@ -130,6 +134,14 @@ class OrderServices implements ServiceInterface
             NotifyClientWithCreationOfOrderAction::run(Auth::user(), $order);
 
             NotifyNearCaptainsWithNewOrderAction::run($order);
+
+
+            if ($request->service_id == 3) {
+
+                $chatServices = new ChatServices();
+                $chatServices->createBetweenGovernorateChat($order);
+
+            }
 
             return $order;
         });
@@ -190,7 +202,7 @@ class OrderServices implements ServiceInterface
 
     private function calculateLocationDistance($lat1, $long1, $lat2, $long2): array
     {
-        $distance = CalculateDistanceBetweenTwoPoints::calculateDistanceBetweenTwoPoints($lat1, $long1, $lat2, $long2);
+        $distance = Helper::getLocationDetailsFromGoogleMapApi($lat1, $long1, $lat2, $long2)["distanceValue"];
 
         $maximumExpectedDistance = ExpectedPriceRange::query()->max("kilometer_to");
 
