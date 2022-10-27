@@ -189,6 +189,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
         App\Providers\ComponentProvider::class,
+        Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -214,7 +215,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class
     ])->toArray(),
 
 ];

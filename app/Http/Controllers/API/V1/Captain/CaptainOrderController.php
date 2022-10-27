@@ -6,6 +6,7 @@ use App\Actions\NotificationActions\NotifyNearCaptainsWithNewOrderAction;
 use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Chat\ChatMessagesResource;
 use App\Http\Resources\Order\OrderIndexResource;
 use App\Http\Resources\Order\OrderShowResource;
 use App\Models\CaptainVerificationFile;
@@ -14,6 +15,7 @@ use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Notifications\Order\CaptainWithdrawalFromOrderNotification;
 use App\Notifications\Order\OrderStatusNotification;
+use App\Services\Chat\ChatServices;
 use App\Services\Order\OrderServices;
 use Auth;
 use Exception;
@@ -116,10 +118,20 @@ class CaptainOrderController extends Controller
         ]);
 
         if ($request->hasFile("purchasing_image")) {
-            $order->addMedia($request->file('purchasing_image'))->toMediaCollection(OrderEnum::PURCHASING_IMAGE);
+            $order->addMedia($request->file('purchasing_image'))->preservingOriginal()->toMediaCollection(OrderEnum::PURCHASING_IMAGE);
         }
 
-        return $this::sendSuccessResponse([], __("Order Updated"));
+        $order->chat->update([
+            'is_captain_send_invoice' => 1,
+        ]);
+
+        $chatServices = new ChatServices();
+        $messages = $chatServices->sendExportInvoiceMessage($order, $request);
+
+
+        return $this::sendSuccessResponse([
+            "messages" => ChatMessagesResource::collection($messages),
+        ], __("Order Updated"));
     }
 
     public function withdrawalFromOrder($order_id)
@@ -150,7 +162,7 @@ class CaptainOrderController extends Controller
 
         if ($order->service_id != 3) {
 
-            $newOrder = DB::transaction(function () use ($order) {
+            DB::transaction(function () use ($order) {
 
                 $newOrder = Order::query()->create([
                     "service_id" => $order->service_id,

@@ -3,6 +3,7 @@
 namespace App\Services\Chat;
 
 use App\Enums\ChatEnum;
+use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use App\Http\Requests\API\Chat\ChatMessageRequest;
 use App\Models\Chat;
@@ -13,6 +14,8 @@ use App\Models\Order;
 use App\Notifications\Chat\ChatMessageNotification;
 use Auth;
 use DB;
+use http\Message;
+use Illuminate\Support\Collection;
 use Str;
 
 class ChatServices
@@ -197,5 +200,46 @@ class ChatServices
             "captain_id" => $order->captain_id,
             "service_id" => $order->service_id,
         ]);
+    }
+
+    public function sendExportInvoiceMessage(Order $order, $request)
+    {
+        $messages = new Collection();
+
+        if ($request->hasFile("purchasing_image")) {
+            $purchasingImageMessage = ChatMessage::query()->create([
+                "chat_id" => $order->chat->id,
+                "sender_id" => $order->captain_id ,
+                "receiver_id" => $order->user_id,
+                "type" => 'images',
+            ]);
+            $purchasingImageMessage->addMedia($request->purchasing_image)->toMediaCollection(ChatEnum::CHAT_IMAGES);
+            $messages->push($purchasingImageMessage);
+        }
+
+        $message = ChatMessage::query()->create([
+            "chat_id" => $order->chat->id,
+            "sender_id" => $order->captain_id ,
+            "receiver_id" => $order->user_id,
+            "message_text" => "تم إصدار فاتورة التوصيل قم بتحميلها",
+            "type" => 'text',
+            "need_style" => true,
+            "style_type" => ChatEnum::EXPORT_INVOICE_STYLE,
+            "links" => [
+                [
+                    "method" => "get",
+                    "route" => "/download-invoice/" . $order->id,
+                ],
+            ]
+        ]);
+
+        $messages->push($message);
+
+        $title = __("Message From") . " " . $message->sender->name;
+        $body = __("The delivery invoice has been issued. Download it");
+
+        $message->receiver?->notify(new ChatMessageNotification($title, $body, $order->id));
+
+        return $messages;
     }
 }

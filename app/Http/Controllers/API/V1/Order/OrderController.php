@@ -10,9 +10,8 @@ use App\Http\Resources\Governorate\GovernorateResource;
 use App\Http\Resources\Order\OrderIndexResource;
 use App\Http\Resources\Order\OrderShowResource;
 use App\Models\BetweenGovernorateService;
-use App\Models\Captain;
+use App\Models\GeneralSetting;
 use App\Models\Order;
-use App\Models\User;
 use App\Notifications\Order\OrderCanceledNotification;
 use App\Services\Order\OrderServices;
 use Carbon\Carbon;
@@ -20,6 +19,9 @@ use Http\Discovery\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Log;
+use PDF;
+use Spatie\TemporaryDirectory\TemporaryDirectory;
+use Str;
 use Throwable;
 
 class OrderController extends Controller
@@ -134,5 +136,89 @@ class OrderController extends Controller
             });
 
         return $this::sendSuccessResponse($captains);
+    }
+
+    public function changePaymentMethod(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            "payment_method" => "required|in:" . implode(",", array_keys(OrderEnum::enabledPaymentMethods())),
+        ]);
+
+        $order = $this->orderServices->findClientOrderById($id);
+
+        if ($order->payment_status == OrderEnum::PAID) {
+
+            return $this::sendSuccessResponse([], __('Order is already paid'));
+
+        }
+
+        $order->update([
+            "payment_method" => $request->payment_method,
+        ]);
+
+        return $this::sendSuccessResponse([], __("Payment Changed"));
+    }
+
+    public function payOrder($id)
+    {
+        $order = $this->orderServices->findClientOrderById($id);
+
+        if ($order->payment_status == OrderEnum::PAID) {
+
+            return $this::sendSuccessResponse([], __('Order is already paid'));
+
+        }
+
+        if ($order->order_status != OrderEnum::DELIVERED) {
+
+            return $this::sendSuccessResponse([], __('Order is not delivered yet'));
+
+        }
+
+        if ($order->chat->is_captain_send_invoice == 0) {
+
+            return $this::sendSuccessResponse([], __('Captain does\'t send export invoice message'));
+
+        }
+
+        $order->update([
+            "payment_status" => OrderEnum::PAID,
+        ]);
+
+        $order->chat->update([
+            "is_client_pay_invoice" => 1,
+        ]);
+
+        $this->orderServices->sendTransactionToCaptain($order);
+
+        return $this::sendSuccessResponse([], __("Order Paid successfully"));
+
+    }
+
+    public function downloadInvoice($id)
+    {
+//        $order = $this->orderServices->findClientOrderById($id);
+
+        $pdf = PDF::loadView('order_invoice', [
+            'order' => Order::query()->firstOrFail(),
+            "gs" => GeneralSetting::query()->firstOrFail(),
+        ]);
+
+        $dirName = Str::random(200);
+
+        $fileName = Str::uuid() . '.pdf';
+
+        $temporaryDirectory = (new TemporaryDirectory())
+            ->name($dirName)
+            ->location(storage_path('app/public/invoices'))
+            ->create()
+            ->path($fileName);
+
+        $pdf->save($temporaryDirectory);
+
+        return $this::sendSuccessResponse([
+            'link' => url('storage/invoices/' . $dirName . '/' . $fileName)
+        ], __("Invoice download Link"));
     }
 }

@@ -35,6 +35,8 @@ class ChatResource extends JsonResource
                 "title" => $this->service->title,
             ],
             "chat_is_disabled" => in_array($this->order->order_status, [OrderEnum::CANCELED, OrderEnum::DELIVERED]),
+            "is_captain_send_invoice" => $this->is_captain_send_invoice == 1,
+            "is_client_pay_invoice" => $this->is_client_pay_invoice == 1,
             "created_at" => Helper::formatDate($this->created_at),
         ];
     }

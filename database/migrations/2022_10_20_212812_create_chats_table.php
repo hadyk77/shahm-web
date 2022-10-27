@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignId("captain_id")->constrained("users")->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId("order_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId("service_id")->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->boolean("is_captain_send_invoice")->default(false);
+            $table->boolean("is_client_pay_invoice")->default(false);
             $table->timestamps();
         });
     }

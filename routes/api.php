@@ -115,6 +115,12 @@ Route::prefix("api/v1")->group(function () {
 
             Route::apiResource("order", OrderController::class);
 
+            Route::post("change-payment-method/{order}", [OrderController::class, "changePaymentMethod"]);
+
+            Route::post("pay-order/{order}", [OrderController::class, "payOrder"]);
+
+            Route::get("download-invoice/{order}", [OrderController::class, "downloadInvoice"]);
+
             Route::prefix("chat/{order}")->group(function () {
 
                 Route::get("index", [ChatController::class, "index"]);

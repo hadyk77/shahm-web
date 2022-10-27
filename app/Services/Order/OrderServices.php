@@ -214,4 +214,8 @@ class OrderServices implements ServiceInterface
 
         return [$distance, $expectedRangeId];
     }
+
+    public function sendTransactionToCaptain(Order $order)
+    {
+    }
 }
