@@ -6,7 +6,7 @@
     <title>{{$order->order_code}}</title>
     <style>
         body{
-            font-family: 'DejaVuSerif', sans-serif !important;
+            font-family: 'Droid', sans-serif !important;
         }
         .container {
             width: 1200px;
@@ -30,15 +30,10 @@
 <body class="container">
 <header class="clearfix">
     <div class="left">
-        @production
-            <img src="{{$gs->logo}}" alt="LOGO">
-        @else
-            <img src="https://shahm.co/storage/f6d3256e36479585dbb217b56d145e8f/logo.png" alt="LOGO">
-        @endproduction
+        <img src="{{$gs->logo}}" alt="LOGO">
     </div>
     <div class="right">
-        <h2 style=" font-family: 'XBRiyaz', sans-serif; font-size:25px;">{{__("Invoice")}}</h2>
-        <h2  style="font-family: 'Dosis', sans-serif">Invoice</h2>
+        <h2 style="font-size:25px;">{{__("Invoice")}}</h2>
         <h2>{{$order->order_code}}</h2>
     </div>
 </header>
@@ -70,10 +65,10 @@
     <table>
         <thead>
         <tr>
-            <th class="service" style="background: #839C81; font-size: 20px;">{{__('Service Title')}}</th>
-            <th class="service" style="background: #839C81; font-size: 20px;">{{__('Service Date')}}</th>
-            <th class="service" style="background: #839C81; font-size: 20px;">{{__('people')}}</th>
-            <th class="service" style="background: #839C81; font-size: 20px;">{{__('Service Price')}}</th>
+            <th class="service" style="background: #839C81; font-size: 18px;">{{__('Service Title')}}</th>
+            <th class="service" style="background: #839C81; font-size: 18px;">{{__('Order Items')}}</th>
+            <th class="service" style="background: #839C81; font-size: 18px;">{{__('Delivery Cost')}}</th>
+            <th class="service" style="background: #839C81; font-size: 18px;">{{__('Tax')}}</th>
         </tr>
         </thead>
         <tbody>
@@ -82,13 +77,13 @@
                 <h4>{{$order->service->title}}</h4>
             </td>
             <td class="text-center">
-                <h4>{{\Carbon\Carbon::parse($order->created_at)->format('Y-m-d')}}</h4>
+                <h4>{{\App\Helper\Helper::price($order->items_price)}}</h4>
             </td>
             <td>
-                <h4>{{$order->people_number}}</h4>
+                <h4>{{\App\Helper\Helper::price($order->delivery_cost_without_user_commission)}}</h4>
             </td>
             <td>
-                <h4>{{\App\Helper\Helper::price($order->total_price)}}</h4>
+                <h4>{{\App\Helper\Helper::price($order->tax)}}</h4>
             </td>
         </tr>
         </tbody>
@@ -96,7 +91,7 @@
 </main>
 <div class="left" style="text-align: right">
     <h2>{{__('Grand Total')}}</h2>
-    <h2 style="color: #839C81">{{\App\Helper\Helper::price($order->total_price)}}</h2>
+    <h2 style="color: #839C81">{{\App\Helper\Helper::price($order->grand_total + $order->items_price)}}</h2>
 </div>
 <div class="right"></div>
 </body>

@@ -198,10 +198,10 @@ class OrderController extends Controller
 
     public function downloadInvoice($id)
     {
-//        $order = $this->orderServices->findClientOrderById($id);
+        $order = $this->orderServices->findClientOrderById($id);
 
         $pdf = PDF::loadView('order_invoice', [
-            'order' => Order::query()->firstOrFail(),
+            'order' => $order,
             "gs" => GeneralSetting::query()->firstOrFail(),
         ]);
 

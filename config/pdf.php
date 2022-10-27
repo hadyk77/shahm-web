@@ -30,11 +30,11 @@ return [
     'pdfaauto' => false,
     'use_active_forms' => false,
 
-    'custom_font_dir' => base_path('resources/pdf'),
+    'custom_font_dir' => base_path('public/fonts'),
     'custom_font_data' => [
-        'Dosis' => [
-            'R' => 'Dosis-VariableFont_wght.ttf',
-            'B' => 'Dosis-Bold.ttf',
+        'DIN' => [
+            'R' => 'DIN-Light.ttf',
+            'B' => 'DIN-Medium.ttf',
         ]
     ]
 ];
