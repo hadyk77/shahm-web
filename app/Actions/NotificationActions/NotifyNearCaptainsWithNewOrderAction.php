@@ -36,6 +36,7 @@ class NotifyNearCaptainsWithNewOrderAction
                 });
             })
             ->get();
+        dd($captains);
         foreach ($captains as $captain) {
             $distance = Helper::getLocationDetailsFromGoogleMapApi($captain->address_lat, $captain->address_long, $order->pickup_location_lat, $order->pickup_location_long)["distanceValue"];
             if ($distance <= $max_radius) {

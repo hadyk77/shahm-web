@@ -140,12 +140,12 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Transaction::class);
     }
 
-    public function captainOrders()
+    public function captainOrders(): HasMany
     {
         return $this->hasMany(Order::class, "captain_id");
     }
 
-    public function userOrders()
+    public function userOrders(): HasMany
     {
         return $this->hasMany(Order::class, "user_id");
     }
