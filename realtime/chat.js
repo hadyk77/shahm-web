@@ -90,13 +90,13 @@ io.on('connection', (socket) => {
     });
 
 
-    socket.on("joinOrderTracking", ({order_id}) => {
-        logger.info("joinOrderTracking => ORDER ID => " + order_id);
-        socket.join("TRACKING_" + order_id);
+    socket.on("joinTracking", ({captain_id}) => {
+        logger.info("joinTracking => CAPTAIN ID => " + captain_id);
+        socket.join("TRACKING_" + captain_id);
     })
 
-    socket.on("captainLocationUpdated", async ({order_id, address_lat, address_long, captain_token}) => {
-        logger.info("captainLocationUpdated => ORDER ID => " + order_id);
+    socket.on("captainLocationUpdated", async ({captain_id, address_lat, address_long, captain_token}) => {
+        logger.info("captainLocationUpdated => CAPTAIN ID => " + captain_id);
         logger.info("captainLocationUpdated => ADDRESS LAT => " + address_lat);
         logger.info("captainLocationUpdated => ADDRESS LONG => " + address_long);
         logger.info("captainLocationUpdated => CAPTAIN TOKEN => " + captain_token);
@@ -104,7 +104,7 @@ io.on('connection', (socket) => {
             headers: {"Authorization": `Bearer ${captain_token}`}
         }).then(response => {
             console.log(response.data);
-            socket.to("TRACKING_" + order_id).emit("captainCurrentLocation", response.data)
+            socket.to("TRACKING_" + captain_id).emit("captainCurrentLocation", response.data)
         }).catch(error => {
             console.log(error.response.data);
         })
