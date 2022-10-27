@@ -14,6 +14,7 @@ use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Notifications\Order\OrderCanceledNotification;
 use App\Services\Order\OrderServices;
+use Auth;
 use Carbon\Carbon;
 use Http\Discovery\Exception;
 use Illuminate\Http\Request;
@@ -198,7 +199,11 @@ class OrderController extends Controller
 
     public function downloadInvoice($id)
     {
-        $order = $this->orderServices->findClientOrderById($id);
+        if (Auth::user()->is_captain) {
+            $order = Order::query()->where("captain_id", Auth::id())->findOrFail($id);
+        } else{
+            $order = Order::query()->where("user_id", Auth::id())->findOrFail($id);
+        }
 
         $pdf = PDF::loadView('order_invoice', [
             'order' => $order,
