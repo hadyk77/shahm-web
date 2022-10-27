@@ -79,6 +79,9 @@ class OrderShowResource extends JsonResource
             "payment_method" => $this->payment_method,
             "payment_status" => $this->payment_status,
 
+            "discount_code" => $this->discount_code,
+            "discount_amount" => $this->discount_amount,
+
             "client_image" => $this->getFirstMediaUrl(OrderEnum::IMAGE),
             "purchasing_image" => $this->getFirstMediaUrl(OrderEnum::PURCHASING_IMAGE),
 
