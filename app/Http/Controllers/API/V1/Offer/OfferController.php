@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Offer;
 
+use App\Enums\DiscountEnum;
 use App\Enums\OfferEnum;
 use App\Enums\OrderEnum;
 use App\Http\Controllers\Controller;
@@ -61,9 +62,14 @@ class OfferController extends Controller
         if ($order->discount_code) {
             $discountServices = new DiscountServices();
             $discount = $discountServices->checkIfCouponIsVerified($order->discount_code);
-//            if ($discount){
-//                if ($discount->type == )
-//            }
+            if ($discount){
+                if ($discount->type == DiscountEnum::AMOUNT) {
+                    $discountAmount = $discount->amount;
+                }
+                if ($discount->type == DiscountEnum::PERCENTAGE) {
+                    $discountAmount = $offer->offer_total_cost * ( $discount->percentage / 100 );
+                }
+            }
         }
 
         $order->update([
