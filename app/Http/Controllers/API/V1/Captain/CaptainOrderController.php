@@ -30,7 +30,9 @@ class CaptainOrderController extends Controller
     {
         $delivery_types = Helper::getCaptainDeliveryTypes();
         $new_orders = Order::query()
-            ->whereNull("captain_id")
+            ->where(function ($query) use ($request) {
+                $query->where("captain_id", null)->orWhere("service_id", 3);
+            })
             ->when(!in_array("all", $delivery_types), function ($query) use ($delivery_types) {
                 $query->whereIn("order_type", $delivery_types);
             })

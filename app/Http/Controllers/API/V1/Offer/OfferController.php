@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Notifications\Order\OfferAcceptedNotification;
 use App\Notifications\Order\OfferRejectedNotification;
 use App\Services\Chat\ChatServices;
+use App\Services\Discount\DiscountServices;
 use App\Services\Order\OrderServices;
 use Auth;
 use Illuminate\Http\Request;
@@ -55,6 +56,16 @@ class OfferController extends Controller
 
         $gs = GeneralSetting::query()->first();
 
+        $discountAmount = 0;
+
+        if ($order->discount_code) {
+            $discountServices = new DiscountServices();
+            $discount = $discountServices->checkIfCouponIsVerified($order->discount_code);
+//            if ($discount){
+//                if ($discount->type == )
+//            }
+        }
+
         $order->update([
             "offer_id" => $offer->id,
             "order_status" => OrderEnum::IN_PROGRESS,
@@ -65,7 +76,8 @@ class OfferController extends Controller
             "delivery_cost_with_user_commission" => $offer->offer_total_cost,
             "delivery_cost_without_user_commission" => $offer->offer_total_cost - $offer->app_profit_from_user,
             "grand_total" => (1 + ($gs->tax / 100)) * $offer->offer_total_cost,
-            "tax" => ($gs->tax / 100) * $offer->offer_total_cost
+            "tax" => ($gs->tax / 100) * $offer->offer_total_cost,
+            'discount_amount' => $discountAmount
         ]);
 
         $offer->update([
