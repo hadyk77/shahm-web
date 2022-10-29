@@ -3,6 +3,8 @@
 namespace App\Http\Resources\Order;
 
 use App\Helper\Helper;
+use App\Models\Captain;
+use App\Models\User;
 use App\Support\CalculateDistanceBetweenTwoPoints;
 use Auth;
 use DB;
@@ -34,6 +36,18 @@ class OrderIndexResource extends JsonResource
             "delivery_cost_without_user_commission" => $this->delivery_cost_without_user_commission,
             "grand_total" => $this->grand_total,
             "tax" => $this->tax,
+            "captain" => $this->mergeWhen($this->captain_id != null, function () {
+                return [
+                    "id" => $this->captain->id,
+                    "captain_id" => $this->captain?->captain?->id,
+                    "name" => $this->captain->name,
+                    "image" => $this->captain->profile_image,
+                    "captain_rate" => DB::table("rates")
+                            ->where("model_type", Captain::class)
+                            ->where("model_id", $this->captain?->captain?->id)
+                            ->where("order_id", $this->id)->first()->rate,
+                ];
+            }),
             'distance' => $this->mergeWhen(Auth::user()->is_captain, function () {
                 return [
                     "drop_off_distance" => Helper::getLocationDetailsFromGoogleMapApi(

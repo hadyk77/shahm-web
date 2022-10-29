@@ -17,6 +17,9 @@ class RateRequest extends FormRequest
                 Rule::when($this->get("model_type") == "user", "exists:users,id"),
                 Rule::when($this->get("model_type") == "captain", "exists:captains,id")
             ],
+            "order_id" => [
+                Rule::when(in_array($this->get("model_type"), ["service", "captain"]), "exists:orders,id"),
+            ],
             "rate" => "required|max:5",
             "text" => "nullable|string"
         ];

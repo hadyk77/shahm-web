@@ -56,6 +56,7 @@ class RateServices implements ServiceInterface
             if ($request->model_type == "user") {
                 $model_type = User::class;
             }
+
             if ($request->model_type == "captain") {
                 $model_type = Captain::class;
             }
@@ -63,6 +64,7 @@ class RateServices implements ServiceInterface
             return Rate::query()->create([
                 "model_id" => $request->model_id,
                 "model_type" => $model_type,
+                "order_id" => in_array($model_type, ["captain", "service"]) ? $request->order_id : null,
                 "rate" => $request->rate,
                 "text" => $request->text,
                 "user_id" => Auth::id()
