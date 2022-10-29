@@ -171,12 +171,6 @@ class OrderController extends Controller
 
         }
 
-        if ($order->order_status != OrderEnum::DELIVERED) {
-
-            return $this::sendSuccessResponse([], __('Order is not delivered yet'));
-
-        }
-
         if ($order->chat->is_captain_send_invoice == 0) {
 
             return $this::sendSuccessResponse([], __('Captain does\'t send export invoice message'));
