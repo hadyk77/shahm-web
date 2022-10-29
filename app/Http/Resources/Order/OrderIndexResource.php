@@ -37,15 +37,17 @@ class OrderIndexResource extends JsonResource
             "grand_total" => $this->grand_total,
             "tax" => $this->tax,
             "captain" => $this->mergeWhen($this->captain_id != null, function () {
+                $rate = DB::table("rates")
+                    ->where("model_type", Captain::class)
+                    ->where("model_id", $this->captain?->captain?->id)
+                    ->where("order_id", $this->id)->first() ;
                 return [
                     "id" => $this->captain->id,
                     "captain_id" => $this->captain?->captain?->id,
                     "name" => $this->captain->name,
                     "image" => $this->captain->profile_image,
-                    "captain_rate" => DB::table("rates")
-                            ->where("model_type", Captain::class)
-                            ->where("model_id", $this->captain?->captain?->id)
-                            ->where("order_id", $this->id)->first()?->rate ?? 0,
+                    "captain_rate" => $rate?->rate ?? 0,
+                    "rate_text" => $rate?->text ?? "",
                 ];
             }),
             'distance' => $this->mergeWhen(Auth::user()->is_captain, function () {
