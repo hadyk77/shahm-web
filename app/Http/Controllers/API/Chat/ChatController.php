@@ -66,7 +66,7 @@ class ChatController extends Controller
                 ["uuid", $chat_uuid],
             ])->first();
         }
-        $messages = $chat?->messages()->where("seen", false)->get();
+        $messages = $chat?->messages()->where("is_seen", false)->get();
         foreach ($messages as $message) {
             if ($message->receiver_id == Auth::id()) {
                 $message->update([
