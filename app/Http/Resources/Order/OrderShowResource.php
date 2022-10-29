@@ -32,6 +32,8 @@ class OrderShowResource extends JsonResource
                 return [
                     "id" => $this->captain->id,
                     "captain_id" => $this->captain?->captain?->id,
+                    "joined_at" => $this->captain?->captain?->created_at->format("Y"),
+                    "number_of_orders" => DB::table("orders")->where("captain_id", $this->captain_id)->where("order_status", OrderEnum::DELIVERED)->count(),
                     "name" => $this->captain->name,
                     "image" => $this->captain->profile_image,
                     "phone" => $this->captain->phone,

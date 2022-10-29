@@ -61,10 +61,12 @@ class RateServices implements ServiceInterface
                 $model_type = Captain::class;
             }
 
+
+
             return Rate::query()->create([
                 "model_id" => $request->model_id,
                 "model_type" => $model_type,
-                "order_id" => in_array($model_type, ["captain", "service"]) ? $request->order_id : null,
+                "order_id" => in_array($request->model_type, ["captain", "service"]) ? $request->order_id : null,
                 "rate" => $request->rate,
                 "text" => $request->text,
                 "user_id" => Auth::id()

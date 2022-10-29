@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Transaction\TransactionController;
 use App\Http\Controllers\API\V1\Captain\BetweenGovernorateServiceController;
 use App\Http\Controllers\API\V1\Captain\CaptainNewAccountController;
 use App\Http\Controllers\API\V1\Captain\CaptainOfferController;
@@ -50,5 +51,7 @@ Route::prefix("captain")->middleware("api.check.captain.phone")->group(function 
     Route::apiResource("rate", RateController::class)->only("index", "store", "show");
 
     Route::apiResource("verification-files", VerificationFileController::class)->only("index", "store");
+
+    Route::apiResource("transaction", TransactionController::class)->only('index', "show");
 
 });
