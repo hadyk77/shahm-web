@@ -31,6 +31,7 @@ class OrderShowResource extends JsonResource
             "captain" => $this->mergeWhen($this->captain_id != null, function () {
                 return [
                     "id" => $this->captain->id,
+                    "captain_id" => $this->captain?->captain?->id,
                     "name" => $this->captain->name,
                     "image" => $this->captain->profile_image,
                     "phone" => $this->captain->phone,
@@ -39,7 +40,10 @@ class OrderShowResource extends JsonResource
                         "lat" => $this->captain->address_lat,
                         "long" => $this->captain->address_long,
                     ],
-                    "captain_rate" => DB::table("rates")->where("model_type", User::class)->where("model_id", $this->captain->id)->average("rate") ?? 0,
+                    "captain_rate" => DB::table("rates")
+                            ->where("model_type", User::class)
+                            ->where("model_id", $this->captain?->captain?->id)
+                            ->average("rate") ?? 0,
                 ];
             }),
             "app_profit_from_captain" => $this->app_profit_from_captain,
