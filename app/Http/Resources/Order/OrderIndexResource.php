@@ -36,7 +36,7 @@ class OrderIndexResource extends JsonResource
             "delivery_cost_without_user_commission" => $this->delivery_cost_without_user_commission,
             "grand_total" => $this->grand_total,
             "tax" => $this->tax,
-            "captain" => $this->mergeWhen(!Auth::user()->is_captain, function () {
+            "captain" => $this->mergeWhen(!Auth::user()->is_captain && $this->captain_id != null, function () {
                 $rate = DB::table("rates")
                     ->where("model_type", Captain::class)
                     ->where("model_id", $this->captain?->captain?->id)
