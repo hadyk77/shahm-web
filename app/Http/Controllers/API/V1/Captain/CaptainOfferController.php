@@ -93,6 +93,7 @@ class CaptainOfferController extends Controller
             ]);
 
 
+
             if ($offer->order->chat()->count()) {
                 $chatService = new ChatServices();
                 $message = $chatService->sendOfferMessage($offer);

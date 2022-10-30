@@ -41,6 +41,7 @@ class ChatMessagesResource extends JsonResource
             "is_seen" => $this->is_seen,
             "need_style" => $this->need_style == 1,
             "style_type" => $this->style_type,
+            "offer_id" => $this->offer_id,
             "delivery_cost" => $this->delivery_cost,
             "delivery_duration" => $this->delivery_duration,
             "delivery_distance" => $this->delivery_distance,

@@ -178,6 +178,7 @@ class ChatServices
             "need_style" => true,
             "style_type" => ChatEnum::OFFER_FROM_CAPTAIN_STYLE,
             "delivery_cost" => $offer->offer_total_cost,
+            "offer_id" => $offer->id,
             "delivery_duration" => $googleDistanceDetails["durationValue"],
             "delivery_distance" => $googleDistanceDetails["distanceValue"],
         ]);
