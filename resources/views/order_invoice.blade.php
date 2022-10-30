@@ -69,6 +69,7 @@
             <th class="service" style="background: #839C81; font-size: 18px;">{{__('Order Items')}}</th>
             <th class="service" style="background: #839C81; font-size: 18px;">{{__('Delivery Cost')}}</th>
             <th class="service" style="background: #839C81; font-size: 18px;">{{__('Tax')}}</th>
+            <th class="service" style="background: #839C81; font-size: 18px;">{{__('Discount')}}</th>
         </tr>
         </thead>
         <tbody>
@@ -85,13 +86,16 @@
             <td>
                 <h4>{{\App\Helper\Helper::price($order->tax)}}</h4>
             </td>
+            <td>
+                <h4>{{\App\Helper\Helper::price($order->discount_amount)}}</h4>
+            </td>
         </tr>
         </tbody>
     </table>
 </main>
 <div class="left" style="text-align: right">
     <h2>{{__('Grand Total')}}</h2>
-    <h2 style="color: #839C81">{{\App\Helper\Helper::price($order->grand_total + $order->items_price)}}</h2>
+    <h2 style="color: #839C81">{{\App\Helper\Helper::price($order->grand_total + $order->items_price - $order->discount_amount)}}</h2>
 </div>
 <div class="right"></div>
 </body>
