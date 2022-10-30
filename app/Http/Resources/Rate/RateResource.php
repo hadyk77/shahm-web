@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Rate;
 
+use App\Helper\Helper;
 use App\Models\Captain;
 use App\Models\Service;
 use App\Models\User;
@@ -41,6 +42,7 @@ class RateResource extends JsonResource
             "ratable_type" => $ratable,
             "rate" => $this->rate,
             "text" => $this->text,
+            "created_at" => Helper::formatDate($this->created_at)
         ];
     }
 }
