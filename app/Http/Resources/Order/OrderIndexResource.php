@@ -54,6 +54,7 @@ class OrderIndexResource extends JsonResource
                 return [
                     "id" => $this->client->id,
                     "name" => $this->client->name,
+                    "email" => $this->client->email,
                     "image" => $this->client->profile_image,
                     "user_rate" => DB::table("rates")->where("model_id", $this->client->id)->average("rate") ?? 0,
                 ];
