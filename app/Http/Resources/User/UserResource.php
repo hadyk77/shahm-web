@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Enums\OrderEnum;
 use App\Http\Resources\Captain\CaptainResource;
 use App\Models\User;
 use DB;
@@ -37,6 +38,10 @@ class UserResource extends JsonResource
             "captain_status" => $this->captain_status,
             "is_phone_verified" => !is_null($this->phone_verified_at),
             "user_rate" => DB::table("rates")->where("model_type", User::class)->where("model_id", $this->id)->average("rate") ?? 0,
+            "captain_profit" => 0,
+            "captain_grand_total" => DB::table("orders")
+                ->where("order_status", OrderEnum::DELIVERED)
+                ->sum("grand_total") ?? 0,
             'captain' => $this->is_captain ? CaptainResource::make($this->captain) : null,
         ];
     }
