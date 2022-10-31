@@ -51,11 +51,18 @@ class OrderIndexResource extends JsonResource
                 ];
             }),
             "client" => $this->mergeWhen(Auth::user()->is_captain, function () {
+                $rate = DB::table("rates")
+                    ->where("model_type", User::class)
+                    ->where("model_id", $this->user_id)
+                    ->where("user_id", Auth::id())
+                    ->where("order_id", $this->id)->first();
                 return [
                     "id" => $this->client->id,
                     "name" => $this->client->name,
-                    "email" => $this->client->email,
                     "image" => $this->client->profile_image,
+                    "captain_rate" => $rate?->rate ?? 0,
+                    "rate_text" => $rate?->text ?? "",
+                    "email" => $this->client->email,
                     "user_rate" => DB::table("rates")->where("model_id", $this->client->id)->average("rate") ?? 0,
                 ];
             }),
