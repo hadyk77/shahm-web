@@ -49,11 +49,14 @@ class ChatMessageNotification extends Notification
     public function toFirebase($notifiable)
     {
         if (!is_null($notifiable->device_token)) {
+            $order = Order::query()->find($this->order_id);
             return (new Larafirebase())->fromRaw([
                 'registration_ids' => [$notifiable->device_token],
                 'data' => [
                     'payload' => [
                         "order_id" => $this->order_id,
+                        "captain_id" => $order->captain_id,
+                        "client_id" => $order->user_id,
                     ]
                 ],
                 'priority' => 'high',
