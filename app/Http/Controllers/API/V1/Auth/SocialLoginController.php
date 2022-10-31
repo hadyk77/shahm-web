@@ -37,8 +37,8 @@ class SocialLoginController extends Controller
     public function validateLogin(Request $request)
     {
         $this->validate($request, [
-            "social_login_type" => "required|in:google",
-            "social_login_id" => 'required|numeric',
+            "social_login_type" => "required|in:google,apple",
+            "social_login_id" => 'required|string',
             "email" => "required|email",
             "name" => "required|string"
         ]);
