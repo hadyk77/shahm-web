@@ -30,13 +30,11 @@ class CaptainOrderController extends Controller
     {
         $delivery_types = Helper::getCaptainDeliveryTypes();
         $new_orders = Order::query()
-            ->where(function ($query) use ($request) {
-                $query->orWhere("captain_id", null)->orWhere("service_id", 3);
-            })
             ->when(!in_array("all", $delivery_types), function ($query) use ($delivery_types) {
                 $query->whereIn("order_type", $delivery_types);
             })
             ->where("order_status", "!=", OrderEnum::CANCELED)
+            ->where("order_status", OrderEnum::WAITING_OFFERS)
             ->get();
 
         return $this::sendSuccessResponse(OrderIndexResource::collection($new_orders));
