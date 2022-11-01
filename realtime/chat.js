@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
             }
         }).then(response => {
             console.log(response.data)
-            socket.to(chat_uuid).emit("newOrderChatMessage", response.data)
+            socket.to(chat_uuid).emit(`newOrderChatMessage.${order_id}`, response.data)
         }).catch(error => {
             console.log(error.response.data);
         });
