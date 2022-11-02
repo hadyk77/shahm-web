@@ -35,7 +35,7 @@ class UserCustomNotification extends Notification
     public function toFirebase($notifiable)
     {
         if (!is_null($notifiable->device_token)) {
-            Log::info("message send to [$notifiable->name]");
+            Log::info("message send to [$notifiable->name] with token [$notifiable->device_token]");
             return (new FirebaseMessage)
                 ->withTitle($this->title)
                 ->withBody($this->body)
