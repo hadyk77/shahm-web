@@ -39,6 +39,7 @@ class CaptainOrderController extends Controller
             ->get()
             ->filter(function (Order $order) use ($max_radius) {
                 $distance = Helper::getLocationDetailsFromGoogleMapApi(Auth::user()->address_lat, Auth::user()->address_long, $order->pickup_location_lat, $order->pickup_location_long)["distanceValue"];
+                \Log::info($distance);
                 if ($distance <= $max_radius) {
                     return true;
                 }
