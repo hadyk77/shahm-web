@@ -41,7 +41,6 @@ class NotifyNearCaptainsWithNewOrderAction
             if ($distance <= $max_radius) {
                 if ($captain->hasNoOrder()) {
                     $captain->notify(new NewOrderNotification($order));
-                    Log::info("Captain with name [" . $captain->name . "] notified with order with code " . $order->order_code);
                 }
             }
         }
