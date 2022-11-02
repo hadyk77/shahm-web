@@ -37,6 +37,12 @@ class NewOrderNotification extends Notification
                 'priority' => 'high',
                 'notification' => [
                     'title' => __("Hey,") . " " . $notifiable->name,
+                    "data" => [
+                        "payload" => [
+                            "order_id" => $this->order->id,
+                            "client_id" => $this->order->client->id
+                        ]
+                    ],
                     'body' => NotificationEnum::notificationTypes()[NotificationEnum::NEW_ORDER_REQUEST],
                     "sound" => "default",
                 ],
