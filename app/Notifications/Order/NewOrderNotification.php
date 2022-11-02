@@ -35,14 +35,14 @@ class NewOrderNotification extends Notification
             return (new Larafirebase())->fromRaw([
                 'registration_ids' => [$notifiable->device_token],
                 'priority' => 'high',
+                "data" => [
+                    "payload" => [
+                        "order_id" => $this->order->id,
+                        "client_id" => $this->order->client->id
+                    ]
+                ],
                 'notification' => [
                     'title' => __("Hey,") . " " . $notifiable->name,
-                    "data" => [
-                        "payload" => [
-                            "order_id" => $this->order->id,
-                            "client_id" => $this->order->client->id
-                        ]
-                    ],
                     'body' => NotificationEnum::notificationTypes()[NotificationEnum::NEW_ORDER_REQUEST],
                     "sound" => "default",
                 ],
