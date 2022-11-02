@@ -22,6 +22,7 @@ use Auth;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class CaptainOrderController extends Controller
 {
@@ -39,8 +40,8 @@ class CaptainOrderController extends Controller
             ->get()
             ->filter(function (Order $order) use ($max_radius) {
                 $distance = Helper::getLocationDetailsFromGoogleMapApi(Auth::user()->address_lat, Auth::user()->address_long, $order->pickup_location_lat, $order->pickup_location_long)["distanceValue"];
-                \Log::info($distance);
-                if ($distance <= $max_radius) {
+                Log::info($distance);
+                if ($distance <= $max_radius && $distance != 0) {
                     return true;
                 }
             });
