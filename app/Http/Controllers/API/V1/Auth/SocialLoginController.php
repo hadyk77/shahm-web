@@ -58,6 +58,7 @@ class SocialLoginController extends Controller
 
         return User::query()->create([
             "name" => $request->name,
+            "device_token" => $request->device_token,
             "email" => $request->email,
             "social_login_type" => $request->social_login_type,
             "social_login_id" => $request->social_login_id,
