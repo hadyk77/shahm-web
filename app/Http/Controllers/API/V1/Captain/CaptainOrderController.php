@@ -14,12 +14,12 @@ use App\Models\ExpectedPriceRange;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Notifications\Order\CaptainWithdrawalFromOrderNotification;
+use App\Notifications\Order\NewOrderNotification;
 use App\Notifications\Order\OrderStatusNotification;
 use App\Services\Chat\ChatServices;
 use App\Services\Order\OrderServices;
 use Auth;
 use Exception;
-use http\Client\Curl\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -29,13 +29,20 @@ class CaptainOrderController extends Controller
     public function newOrder(Request $request)
     {
         $delivery_types = Helper::getCaptainDeliveryTypes();
+        $max_radius = (float)GeneralSetting::query()->first()->max_radius;
         $new_orders = Order::query()
             ->when(!in_array("all", $delivery_types), function ($query) use ($delivery_types) {
                 $query->whereIn("order_type", $delivery_types);
             })
             ->where("order_status", "!=", OrderEnum::CANCELED)
             ->where("order_status", OrderEnum::WAITING_OFFERS)
-            ->get();
+            ->get()
+            ->filter(function (Order $order) use ($max_radius) {
+                $distance = Helper::getLocationDetailsFromGoogleMapApi(Auth::user()->address_lat, Auth::user()->address_long, $order->pickup_location_lat, $order->pickup_location_long)["distanceValue"];
+                if ($distance <= $max_radius) {
+                    return true;
+                }
+            });
 
         return $this::sendSuccessResponse(OrderIndexResource::collection($new_orders));
     }

@@ -233,6 +233,7 @@ class Helper
         $googleMapApi = config("services.google_map.api");
         $url = "https://maps.googleapis.com/maps/api/distancematrix/json?language=" . LaravelLocalization::getCurrentLocale() . "&destinations=$fromLat,$fromLng&origins=$toLat,$toLng&key=$googleMapApi";
         $response = Http::get($url);
+        Log::info(json_encode($response));
         if ($response->status() == 200 && isset($response["rows"]) && $response["status"] == "OK") {
             $response = $response->json();
 
