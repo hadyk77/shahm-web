@@ -194,13 +194,76 @@ class ChatServices
 
     public function createBetweenGovernorateChat(Order $order): void
     {
-        Chat::query()->create([
+        $chat = Chat::query()->create([
             "uuid" => Str::uuid()->toString(),
             "order_id" => $order->id,
             "client_id" => $order->user_id,
             "captain_id" => $order->captain_id,
             "service_id" => $order->service_id,
         ]);
+
+
+
+        // First Message
+        ChatMessage::query()->create([
+            "chat_id" => $chat->id,
+            "sender_id" => $chat->client_id,
+            "receiver_id" => $chat->captain_id,
+            "message_text" => Str::replace(",", " \n ", $order->order_items),
+            "type" => 'text',
+        ]);
+
+
+        // Second Message
+        $googleDistanceDetails = Helper::getLocationDetailsFromGoogleMapApi(
+            fromLat: $chat->captain->address_lat,
+            fromLng: $chat->captain->address_long,
+            toLat: $chat->order->pickup_location_lat,
+            toLng: $chat->order->pickup_location_long,
+        );
+        ChatMessage::query()->create([
+            "chat_id" => $chat->id,
+            "sender_id" => $chat->captain_id,
+            "receiver_id" => $chat->client_id,
+            "type" => 'text',
+            "need_style" => true,
+            "style_type" => ChatEnum::DISTANCE_DURATION_COST_STYLE,
+            "delivery_cost" => $order->delivery_cost_with_user_commission,
+            "delivery_duration" => $googleDistanceDetails["durationValue"],
+            "delivery_distance" => $googleDistanceDetails["distanceValue"],
+        ]);
+
+
+        // Third Message
+        $helloMessage = "أهلا معك ";
+        $helloMessage .= " \n ";
+        $helloMessage .= $order->captain->name;
+        $helloMessage .= " \n ";
+        $helloMessage .= "يسعدني ان أخدمك اليوم. أرجو منك التأكيد";
+
+        ChatMessage::query()->create([
+            "chat_id" => $chat->id,
+            "sender_id" => $chat->captain_id,
+            "receiver_id" => $chat->client_id,
+            "message_text" => $helloMessage,
+            "type" => 'text',
+        ]);
+
+
+        // Fourth message
+        $gs = GeneralSetting::query()->first();
+        if ($gs->warning_message) {
+            ChatMessage::query()->create([
+                "chat_id" => $chat->id,
+                "sender_id" => $chat->captain_id,
+                "receiver_id" => $chat->client_id,
+                "message_text" => $gs->warning_message,
+                "need_style" => true,
+                "style_type" => ChatEnum::ADMIN_WARNING_MESSAGE_STYLE,
+                "type" => 'text',
+            ]);
+        }
+
     }
 
     public function sendExportInvoiceMessage(Order $order, $request)
