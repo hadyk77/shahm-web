@@ -5,6 +5,7 @@ namespace App\Notifications\User;
 use App\Enums\NotificationEnum;
 use Illuminate\Notifications\Notification;
 use Kutia\Larafirebase\Messages\FirebaseMessage;
+use Log;
 
 class UserCustomNotification extends Notification
 {
@@ -34,6 +35,7 @@ class UserCustomNotification extends Notification
     public function toFirebase($notifiable)
     {
         if (!is_null($notifiable->device_token)) {
+            Log::info("message send to [$notifiable->name]");
             return (new FirebaseMessage)
                 ->withTitle($this->title)
                 ->withBody($this->body)
