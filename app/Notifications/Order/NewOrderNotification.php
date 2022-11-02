@@ -6,6 +6,7 @@ use App\Enums\NotificationEnum;
 use App\Models\Order;
 use Illuminate\Notifications\Notification;
 use Kutia\Larafirebase\Messages\FirebaseMessage;
+use Kutia\Larafirebase\Services\Larafirebase;
 use Log;
 
 class NewOrderNotification extends Notification
@@ -31,10 +32,15 @@ class NewOrderNotification extends Notification
     {
         if (!is_null($notifiable->device_token)) {
             Log::info("Captain with name [" . $notifiable->name . "] notified with order with code " . $this->order->order_code);
-            return (new FirebaseMessage)
-                ->withTitle(__("Hey,") . " " . $notifiable->name)
-                ->withBody(NotificationEnum::notificationTypes()[NotificationEnum::NEW_ORDER_REQUEST])
-                ->asMessage($notifiable->device_token);
+            return (new Larafirebase())->fromRaw([
+                'registration_ids' => [$notifiable->device_token],
+                'priority' => 'high',
+                'notification' => [
+                    'title' => __("Hey,") . " " . $notifiable->name,
+                    'body' => NotificationEnum::notificationTypes()[NotificationEnum::NEW_ORDER_REQUEST],
+                    "sound" => "default",
+                ],
+            ])->send();
         }
     }
 }
