@@ -42,9 +42,9 @@ class CaptainOrderController extends Controller
                 $distance = Helper::getLocationDetailsFromGoogleMapApi(Auth::user()->address_lat, Auth::user()->address_long, $order->pickup_location_lat, $order->pickup_location_long)["distanceValue"];
                 Log::info($distance);
                 if ($distance <= $max_radius && $distance != 0) {
-                    return false;
+                    return true;
                 }
-                return true;
+                return false;
             });
 
         return $this::sendSuccessResponse(OrderIndexResource::collection($new_orders));
