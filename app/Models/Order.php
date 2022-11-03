@@ -147,7 +147,7 @@ class Order extends Model implements HasMedia
 
     public function betweenGovernorateService(): BelongsTo
     {
-        return $this->belongsTo(Service::class, "service_id");
+        return $this->belongsTo(BetweenGovernorateService::class, "between_governorate_service_id");
     }
 
     public function chat(): HasOne
