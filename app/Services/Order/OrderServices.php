@@ -204,13 +204,13 @@ class OrderServices implements ServiceInterface
         $maximumExpectedDistance = ExpectedPriceRange::query()->max("kilometer_to");
 
         if ($distance > $maximumExpectedDistance) {
-            throw new Exception(__("Can't deliver for this distance"));
+            $expectedRangeId = ExpectedPriceRange::query()->where("kilometer_to", $maximumExpectedDistance)->first()?->id;
+        } else {
+            $expectedRangeId = ExpectedPriceRange::query()
+                ->where("kilometer_from", "<=", $distance)
+                ->where("kilometer_to", ">=", $distance)
+                ->first()?->id;
         }
-
-        $expectedRangeId = ExpectedPriceRange::query()
-            ->where("kilometer_from", "<=", $distance)
-            ->where("kilometer_to", ">=", $distance)
-            ->first()?->id;
 
         return [$distance, $expectedRangeId];
     }
