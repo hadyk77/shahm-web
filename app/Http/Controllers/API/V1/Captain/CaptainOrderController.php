@@ -68,13 +68,11 @@ class CaptainOrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::query()
-            ->where(function ($query) {
-                $query
-                    ->where("captain_id", Auth::id())
-                    ->orWhere("captain_id", null);
-            })
-            ->findOrFail($id);
+        $order = Order::query()->findOrFail($id);
+        if ($order->captain_id != null) {
+            $order = Order::query()->where("captain_id", Auth::id())->findOrFail($id);
+        }
+
         return $this::sendSuccessResponse(OrderShowResource::make($order));
     }
 
