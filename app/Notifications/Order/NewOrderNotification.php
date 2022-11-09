@@ -25,20 +25,21 @@ class NewOrderNotification extends Notification
         return [
             "type" => NotificationEnum::NEW_ORDER_REQUEST,
             "order" => $this->order,
+            "order_id" => $this->order->id,
+            "client_id" => $this->order->user_id,
         ];
     }
 
     public function toFirebase($notifiable)
     {
         if (!is_null($notifiable->device_token)) {
-            Log::info("Captain with name [" . $notifiable->name . "] notified with order with code " . $this->order->order_code);
             return (new Larafirebase())->fromRaw([
                 'registration_ids' => [$notifiable->device_token],
                 'priority' => 'high',
                 "data" => [
                     "payload" => [
                         "order_id" => $this->order->id,
-                        "client_id" => $this->order->client->id
+                        "client_id" => $this->order->user_id
                     ]
                 ],
                 'notification' => [

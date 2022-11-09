@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1\Captain;
 
+use App\Enums\OfferEnum;
 use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use App\Http\Controllers\Controller;
@@ -47,6 +48,7 @@ class CaptainOfferController extends Controller
         ]);
 
         $delivery_types = Helper::getCaptainDeliveryTypes();
+
         $order = Order::query()
             ->when(!in_array("all", $delivery_types), function ($query) use ($delivery_types) {
                 $query->whereIn("order_type", $delivery_types);
@@ -58,6 +60,25 @@ class CaptainOfferController extends Controller
             return $this::sendFailedResponse(__("Order is not found"));
         }
 
+
+        if (DB::table("offers")->where("captain_id", Auth::id())->where("order_id", $order->id)->exists()) {
+
+            $oldOfferStatuses = DB::table("offers")
+                ->where("captain_id", Auth::id())
+                ->where("order_id", $order->id)
+                ->pluck("offer_status")
+                ->toArray();
+
+            if (in_array(OfferEnum::PENDING, $oldOfferStatuses)) {
+                return $this::sendFailedResponse(__("You have pending offer for this order"));
+            }
+
+            if (in_array(OfferEnum::ACCEPTED, $oldOfferStatuses)) {
+                return $this::sendFailedResponse(__("Your offer is already accepted"));
+            }
+
+        }
+
         $distance = Helper::getLocationDetailsFromGoogleMapApi(
             $order->pickup_location_lat,
             $order->pickup_location_long,
@@ -65,11 +86,10 @@ class CaptainOfferController extends Controller
             Auth::user()->address_long,
         );
 
-        $offer = Offer::query()->updateOrCreate([
+        $offer = Offer::query()->create([
             "service_id" => $order->service_id,
             "order_id" => $order->id,
             "captain_id" => Auth::user()->id,
-        ], [
             "captain_lat" => Auth::user()->address_lat,
             "captain_long" => Auth::user()->address_long,
             "distance" => $distance["distanceValue"],
@@ -91,7 +111,6 @@ class CaptainOfferController extends Controller
                 "governorate_to_id" => $betweenGovernorateService->drop_off_id,
                 "between_governorate_date" => $betweenGovernorateService->between_governorate_date . " " . $betweenGovernorateService->between_governorate_time,
             ]);
-
 
 
             if ($offer->order->chat()->count()) {

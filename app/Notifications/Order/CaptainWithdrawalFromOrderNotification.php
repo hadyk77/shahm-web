@@ -28,6 +28,7 @@ class CaptainWithdrawalFromOrderNotification extends Notification
                 'data' => [
                     'payload' => [
                         "order_id" => $this->order->id,
+                        "client_id" => $this->order->user_id,
                     ]
                 ],
                 'priority' => 'high',

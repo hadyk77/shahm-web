@@ -37,10 +37,14 @@ class CaptainOrderController extends Controller
             })
             ->where("order_status", "!=", OrderEnum::CANCELED)
             ->where("order_status", OrderEnum::WAITING_OFFERS)
+            ->where(function ($query) {
+                return $query
+                    ->where("captain_id", null)
+                    ->orWhere("captain_id", Auth::id());
+            })
             ->get()
             ->filter(function (Order $order) use ($max_radius) {
                 $distance = Helper::getLocationDetailsFromGoogleMapApi(Auth::user()->address_lat, Auth::user()->address_long, $order->pickup_location_lat, $order->pickup_location_long)["distanceValue"];
-                Log::info($distance);
                 if ($distance <= $max_radius && $distance != 0) {
                     return true;
                 }

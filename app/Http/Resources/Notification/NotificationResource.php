@@ -20,6 +20,8 @@ class NotificationResource extends JsonResource
             "content" => $this->content($this->data),
             "is_read" => $this->read_at != null,
             "read_at" => $this->read_at?->format('Y-m-d H:i:s'),
+            "order_id" => $this->data["order_id"] ?? null,
+            "client_id" => $this->data["client_id"] ?? null,
             "read_at_for_humans" => $this->read_at?->diffForHumans(),
             "created_at" => Helper::formatDate($this->created_at),
             "created_at_for_humans" => $this->created_at->diffForHumans(),

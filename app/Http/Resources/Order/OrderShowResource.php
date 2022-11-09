@@ -8,6 +8,7 @@ use App\Http\Resources\Captain\BetweenGovernorateServiceResource;
 use App\Http\Resources\Chat\ChatResource;
 use App\Http\Resources\ExpectedPriceRange\ExpectedPriceRangeResource;
 use App\Models\User;
+use Auth;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -92,6 +93,10 @@ class OrderShowResource extends JsonResource
             "purchasing_image" => $this->getFirstMediaUrl(OrderEnum::PURCHASING_IMAGE),
 
             "chat" => ChatResource::make($this->chat),
+
+            "captain_make_offer_before" => $this->mergeWhen(Auth::user()->is_captain, function () {
+                return DB::table("offers")->where("captain_id", Auth::id())->where("order_id", $this->id)->exists();
+            }),
 
             "created_at" => Helper::formatDate($this->created_at)
         ];
