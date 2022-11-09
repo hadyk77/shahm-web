@@ -95,19 +95,23 @@ Route::prefix("api/v1")->group(function () {
 
         });
 
+        Route::prefix("profile")->group(function () {
+
+            Route::get("me", MeController::class);
+
+            Route::post("update-location", UpdateLocationController::class);
+
+            Route::post('update-profile', [UpdateProfileController::class, "updateBasicInformation"]);
+
+            Route::post("update-lang", [UpdateProfileController::class, "updateLang"]);
+
+            Route::post("update-notification", [UpdateProfileController::class, "updateNotification"]);
+
+        });
+
         Route::middleware("api.check.phone")->group(function () {
 
             Route::prefix("profile")->group(function () {
-
-                Route::get("me", MeController::class);
-
-                Route::post("update-location", UpdateLocationController::class);
-
-                Route::post('update-profile', [UpdateProfileController::class, "updateBasicInformation"]);
-
-                Route::post("update-lang", [UpdateProfileController::class, "updateLang"]);
-
-                Route::post("update-notification", [UpdateProfileController::class, "updateNotification"]);
 
                 Route::delete("delete-account", DeleteAccountController::class);
 

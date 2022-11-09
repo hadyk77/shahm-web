@@ -19,6 +19,7 @@ class CaptainResource extends JsonResource
             "id" => $this->id,
             "vehicle_type" => VehicleTypeResource::make($this->vehicleType),
             "nationality" => NationalityResource::make($this->nationality),
+            "governorate" => NationalityResource::make($this->governorate),
             "vehicle_manufacturing_date" => $this->vehicle_manufacturing_date,
             "vehicle_number" => $this->vehicle_number,
             "vehicle_identification_number" => $this->vehicle_identification_number,

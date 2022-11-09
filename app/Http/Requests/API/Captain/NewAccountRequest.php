@@ -10,7 +10,8 @@ class NewAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nationality_id" => 'required|exists:nationalities,id',
+            "nationality_id" => 'nullable|exists:nationalities,id',
+            "governorate_id" => 'nullable|exists:governorates,id',
             "vehicle_type_id" => "required|exists:vehicle_types,id",
             "vehicle_manufacturing_date" => "required|string",
             "wallet_number" => "required|string",

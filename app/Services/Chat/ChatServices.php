@@ -156,6 +156,33 @@ class ChatServices
                 "type" => 'text',
             ]);
         }
+
+
+        if ($order->pickup_location_long && $order->pickup_location_long){
+            ChatMessage::query()->create([
+                "chat_id" => $chat->id,
+                "sender_id" => $chat->captain_id,
+                "receiver_id" => $chat->client_id,
+                "lat" => $order->pickup_location_lat,
+                "long" => $order->pickup_location_long,
+                "need_style" => true,
+                "style_type" => ChatEnum::ORDER_PICK_LOCATION_STYLE,
+                "type" => 'location',
+            ]);
+        }
+
+        if ($order->drop_off_location_lat && $order->drop_off_location_long){
+            ChatMessage::query()->create([
+                "chat_id" => $chat->id,
+                "sender_id" => $chat->captain_id,
+                "receiver_id" => $chat->client_id,
+                "lat" => $order->drop_off_location_lat,
+                "long" => $order->drop_off_location_long,
+                "need_style" => true,
+                "style_type" => ChatEnum::ORDER_DROP_OFF_LOCATION_STYLE,
+                "type" => 'location',
+            ]);
+        }
     }
 
     public function sendOfferMessage(Offer $offer): ChatMessage
@@ -261,6 +288,32 @@ class ChatServices
                 "need_style" => true,
                 "style_type" => ChatEnum::ADMIN_WARNING_MESSAGE_STYLE,
                 "type" => 'text',
+            ]);
+        }
+
+        if ($order->pickup_location_long && $order->pickup_location_long){
+            ChatMessage::query()->create([
+                "chat_id" => $chat->id,
+                "sender_id" => $chat->captain_id,
+                "receiver_id" => $chat->client_id,
+                "lat" => $order->pickup_location_lat,
+                "long" => $order->pickup_location_long,
+                "need_style" => true,
+                "style_type" => ChatEnum::ORDER_PICK_LOCATION_STYLE,
+                "type" => 'location',
+            ]);
+        }
+
+        if ($order->drop_off_location_lat && $order->drop_off_location_long){
+            ChatMessage::query()->create([
+                "chat_id" => $chat->id,
+                "sender_id" => $chat->captain_id,
+                "receiver_id" => $chat->client_id,
+                "lat" => $order->drop_off_location_lat,
+                "long" => $order->drop_off_location_long,
+                "need_style" => true,
+                "style_type" => ChatEnum::ORDER_DROP_OFF_LOCATION_STYLE,
+                "type" => 'location',
             ]);
         }
 

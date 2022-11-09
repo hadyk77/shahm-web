@@ -97,6 +97,11 @@ class Captain extends Model implements HasMedia
         return $this->belongsTo(Nationality::class);
     }
 
+    public function governorate(): BelongsTo
+    {
+        return $this->belongsTo(Governorate::class);
+    }
+
     public function verificationFiles(): HasMany
     {
         return $this->hasMany(CaptainVerificationFile::class);

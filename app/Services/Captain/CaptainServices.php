@@ -68,6 +68,7 @@ class CaptainServices implements ServiceInterface
                 "user_id" => $request->user_id,
                 "vehicle_type_id" => $request->vehicle_type_id,
                 "nationality_id" => $request->nationality_id,
+                "governorate_id" => $request->governorate_id,
                 "identification_number" => $request->identification_number,
                 "vehicle_manufacturing_date" => $request->vehicle_manufacturing_date,
                 "account_upgrade_option_id" => AccountUpgradeOption::query()->first()->id,

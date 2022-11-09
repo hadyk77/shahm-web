@@ -9,7 +9,7 @@
         "barryvdh/laravel-debugbar": "^3.7",
         "barryvdh/laravel-ide-helper": "^2.12",
         "carlos-meneses/laravel-mpdf": "^2.1",
-        "doctrine/dbal": "^3.3",
+        "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "joedixon/laravel-translation": "*",

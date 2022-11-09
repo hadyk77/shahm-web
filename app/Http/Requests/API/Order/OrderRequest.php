@@ -38,16 +38,27 @@ class OrderRequest extends FormRequest
             "drop_off_location_lat" => "required|numeric",
             "drop_off_location_long" => "required|numeric",
             "pickup_location" => "required|string",
+
+
             "pickup_location_description" => "nullable|string",
             "pickup_location_lat" => "required|numeric",
             "pickup_location_long" => "required|numeric",
+
+//            "pickup_location_lat" => [
+//                Rule::requiredIf($this->input('service_id') != 2),
+//                "numeric"
+//            ],
+//            "pickup_location_long" => [
+//                Rule::requiredIf($this->input('service_id') != 2),
+//                "numeric"
+//            ],
 
             // Payment Details
             "payment_method" => "required|in:" . implode(",", array_keys(OrderEnum::enabledPaymentMethods())),
 
             "coupon_code" => "nullable|exists:discounts,code",
 
-            "image" => Helper::imageRules(true)
+            "image.*" => Helper::imageRules(true)
         ];
     }
 

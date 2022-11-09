@@ -117,9 +117,11 @@ class OrderServices implements ServiceInterface
                 "discount_code" => $request->discount_code,
             ]);
 
-            if ($request->hasFile('image')) {
+            if ($request->has('image') && count($request->image ?? []) > 0) {
 
-                $order->addMedia($request->image)->toMediaCollection(OrderEnum::IMAGE);
+                foreach ($request->image as $image) {
+                    $order->addMedia($image)->toMediaCollection(OrderEnum::IMAGE);
+                }
 
             }
 

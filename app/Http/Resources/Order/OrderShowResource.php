@@ -89,7 +89,7 @@ class OrderShowResource extends JsonResource
             "discount_code" => $this->discount_code,
             "discount_amount" => $this->discount_amount,
 
-            "client_image" => $this->getFirstMediaUrl(OrderEnum::IMAGE),
+            "client_image" => Helper::getModelMultiMediaUrls($this, OrderEnum::IMAGE),
             "purchasing_image" => $this->getFirstMediaUrl(OrderEnum::PURCHASING_IMAGE),
 
             "chat" => ChatResource::make($this->chat),

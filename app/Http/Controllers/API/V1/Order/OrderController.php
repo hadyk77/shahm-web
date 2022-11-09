@@ -113,6 +113,7 @@ class OrderController extends Controller
     {
         $captains = BetweenGovernorateService::query()
             ->whereDate("between_governorate_date", ">=", Carbon::now()->format("Y-m-d"))
+            ->where("between_governorate_time", ">=", Carbon::now()->format("H:i:s"))
             ->whereHas("captain.captain", function ($query) {
                 $query
                     ->where("users.status", 1)
