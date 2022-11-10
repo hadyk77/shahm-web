@@ -49,12 +49,16 @@ class SocialLoginController extends Controller
     private function getUser(Request $request): User|null
     {
         $user = User::query()->where([
-            "social_login_type" => $request->social_login_type,
-            "social_login_id" => $request->social_login_id,
             "email" => $request->email,
         ])->first();
 
         if (!is_null($user)) {
+
+            $user->update([
+                "social_login_type" => $request->social_login_type,
+                "social_login_id" => $request->social_login_id,
+            ]);
+
             return $user;
         }
 
