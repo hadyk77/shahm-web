@@ -26,7 +26,7 @@ class SocialLoginController extends Controller
 
         } catch (Exception $exception) {
 
-            return $this::sendFailedResponse($exception);
+            return $this::sendFailedResponse($exception->getMessage());
 
         }
 
