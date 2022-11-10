@@ -102,7 +102,7 @@ class OrderIndexResource extends JsonResource
                     return true;
                 }
 
-                return DB::table("offers")->where("")->where("captain_id", Auth::id())->where("order_id", $this->id)->exists();
+                return  false;
             }),
             "created_at" => Helper::formatDate($this->created_at)
         ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Order;
 
+use App\Enums\OfferEnum;
 use App\Enums\OrderEnum;
 use App\Helper\Helper;
 use App\Http\Resources\Captain\BetweenGovernorateServiceResource;
@@ -95,7 +96,21 @@ class OrderShowResource extends JsonResource
             "chat" => ChatResource::make($this->chat),
 
             "captain_make_offer_before" => $this->mergeWhen(Auth::user()->is_captain, function () {
-                return DB::table("offers")->where("captain_id", Auth::id())->where("order_id", $this->id)->exists();
+                $oldOfferStatuses = DB::table("offers")
+                    ->where("captain_id", Auth::id())
+                    ->where("order_id", $this->id)
+                    ->pluck("offer_status")
+                    ->toArray();
+
+                if (in_array(OfferEnum::PENDING, $oldOfferStatuses)) {
+                    return true;
+                }
+
+                if (in_array(OfferEnum::ACCEPTED, $oldOfferStatuses)) {
+                    return true;
+                }
+
+                return  false;
             }),
 
             "created_at" => Helper::formatDate($this->created_at)
