@@ -26,7 +26,7 @@ class SocialLoginController extends Controller
 
         } catch (Exception $exception) {
 
-            return $this::sendFailedResponse(__("Email is already token"));
+            return $this::sendFailedResponse($exception);
 
         }
 
