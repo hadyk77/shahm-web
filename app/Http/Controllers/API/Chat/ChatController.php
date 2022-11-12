@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Chat;
 
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Chat\ChatMessageRequest;
 use App\Http\Resources\Chat\ChatMessagesResource;
@@ -28,7 +29,8 @@ class ChatController extends Controller
     public function send(ChatMessageRequest $request, $order_id)
     {
         try {
-            if (Auth::user()->is_captain) {
+            $order = Order::query()->findOrFail($order_id);
+            if (Helper::isCaptain($order)) {
                 $order = Order::query()->where("captain_id", Auth::id())->findOrFail($order_id);
                 $sender_id = $order->captain_id;
                 $receiver_id = $order->user_id;
@@ -53,7 +55,8 @@ class ChatController extends Controller
     public function makeAllReceiverMessagesRead($chat_uuid, $order_id)
     {
         $messagesMarkedAsRead = [];
-        if (Auth::user()->is_captain) {
+        $order = Order::query()->find($order_id);
+        if (Helper::isCaptain($order)) {
             $chat = Chat::query()->where([
                 ["captain_id", Auth::id()],
                 ["order_id", $order_id],

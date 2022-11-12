@@ -37,7 +37,7 @@ class OrderIndexResource extends JsonResource
             "delivery_cost_without_user_commission" => $this->delivery_cost_without_user_commission,
             "grand_total" => $this->grand_total,
             "tax" => $this->tax,
-            "captain" => $this->mergeWhen(!Auth::user()->is_captain && $this->captain_id != null, function () {
+            "captain" => $this->mergeWhen(!Helper::isCaptain($this) && $this->captain_id != null, function () {
                 $rate = DB::table("rates")
                     ->where("model_type", Captain::class)
                     ->where("model_id", $this->captain?->captain?->id)
@@ -51,7 +51,7 @@ class OrderIndexResource extends JsonResource
                     "rate_text" => $rate?->text ?? "",
                 ];
             }),
-            "client" => $this->mergeWhen(Auth::user()->is_captain, function () {
+            "client" => $this->mergeWhen(Helper::isCaptain($this), function () {
                 $rate = DB::table("rates")
                     ->where("model_type", User::class)
                     ->where("model_id", $this->user_id)
@@ -67,7 +67,7 @@ class OrderIndexResource extends JsonResource
                     "user_rate" => DB::table("rates")->where("model_id", $this->client->id)->average("rate") ?? 0,
                 ];
             }),
-            'distance' => $this->mergeWhen(Auth::user()->is_captain, function () {
+            'distance' => $this->mergeWhen(Helper::isCaptain($this), function () {
                 return [
                     "drop_off_distance" => Helper::getLocationDetailsFromGoogleMapApi(
                         Auth::user()->address_lat,
@@ -86,7 +86,7 @@ class OrderIndexResource extends JsonResource
             "order_status" => $this->order_status,
             "order_items" => $this->order_items,
             "drop_off_location" => $this->drop_off_location,
-            "captain_make_offer_before" => $this->mergeWhen(Auth::user()->is_captain, function () {
+            "captain_make_offer_before" => $this->mergeWhen(Helper::isCaptain($this), function () {
 
                 $oldOfferStatuses = DB::table("offers")
                     ->where("captain_id", Auth::id())

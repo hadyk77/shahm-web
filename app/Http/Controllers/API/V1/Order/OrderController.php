@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Order;
 
 use App\Actions\NotificationActions\NotifyNearCaptainsWithNewOrderAction;
 use App\Enums\OrderEnum;
+use App\Helper\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Order\OrderRequest;
 use App\Http\Resources\Governorate\GovernorateResource;
@@ -194,7 +195,8 @@ class OrderController extends Controller
 
     public function downloadInvoice($id)
     {
-        if (Auth::user()->is_captain) {
+        $order = Order::query()->find($id);
+        if (Helper::isCaptain($order)) {
             $order = Order::query()->where("captain_id", Auth::id())->findOrFail($id);
         } else{
             $order = Order::query()->where("user_id", Auth::id())->findOrFail($id);

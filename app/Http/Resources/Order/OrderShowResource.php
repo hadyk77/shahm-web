@@ -95,7 +95,7 @@ class OrderShowResource extends JsonResource
 
             "chat" => ChatResource::make($this->chat),
 
-            "captain_make_offer_before" => $this->mergeWhen(Auth::user()->is_captain, function () {
+            "captain_make_offer_before" => $this->mergeWhen(Helper::isCaptain($this), function () {
                 $oldOfferStatuses = DB::table("offers")
                     ->where("captain_id", Auth::id())
                     ->where("order_id", $this->id)

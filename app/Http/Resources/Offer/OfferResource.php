@@ -3,7 +3,9 @@
 namespace App\Http\Resources\Offer;
 
 use App\Enums\OrderEnum;
+use App\Helper\Helper;
 use App\Models\Captain;
+use App\Models\Order;
 use App\Models\Rate;
 use App\Models\User;
 use Auth;
@@ -17,9 +19,9 @@ class OfferResource extends JsonResource
     {
 
         $is_best_offer = false;
-
+        $order = Order::query()->find($this->order->id);
         if (DB::table("offers")->where("order_id", $this->order?->id)->count() > 1) {
-            if (!Auth::user()->is_captain) {
+            if (!Helper::isCaptain($order)) {
                 $minDistance = DB::table("offers")->where("order_id", $this->order?->id)->min("distance");
                 $minPrice = DB::table("offers")->where("order_id", $this->order?->id)->min("price");
                 $captainsIds = DB::table("offers")->where("order_id", $this->order?->id)->pluck('captain_id')->toArray();
@@ -42,13 +44,13 @@ class OfferResource extends JsonResource
                     }
                 }
             }
-        } else{
+        } else {
             $is_best_offer = true;
         }
 
         return [
             "id" => $this->id,
-            "is_best_offer" => $this->mergeWhen(!Auth::user()->is_captain, function () use ($is_best_offer) {
+            "is_best_offer" => $this->mergeWhen(!Helper::isCaptain($order), function () use ($is_best_offer) {
                 return $is_best_offer;
             }),
             "service_id" => $this->service_id,

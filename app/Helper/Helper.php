@@ -284,4 +284,10 @@ class Helper
             })
             ->toArray();
     }
+
+    public static function isCaptain($order): bool
+    {
+        return (int)$order->captain_id == Auth::id();
+    }
+
 }
