@@ -566,5 +566,11 @@
     "Client Email": "البريد الإلكتروني للعميل",
     "Order Date": "تاريخ الطلب",
     "Service Title": "عنوان الخدمة",
-    "Order Items": "محتويات الطلب"
+    "Order Items": "محتويات الطلب",
+    "You have pending offer for this order": "لديك عرض معلق لهذا الطلب",
+    "Your offer is already accepted": "تم قبول عرضك بالفعل",
+    "Delivery Distance": "مسافة التسليم",
+    "KM": "كم",
+    "Delivery Duration": "مدة التسليم",
+    "MIN": "دقيقة"
 }

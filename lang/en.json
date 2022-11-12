@@ -566,5 +566,11 @@
     "Client Email": "",
     "Order Date": "",
     "Service Title": "",
-    "Order Items": ""
+    "Order Items": "",
+    "You have pending offer for this order": "",
+    "Your offer is already accepted": "",
+    "Delivery Distance": "",
+    "KM": "",
+    "Delivery Duration": "",
+    "MIN": ""
 }
