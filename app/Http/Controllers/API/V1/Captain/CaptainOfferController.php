@@ -79,12 +79,21 @@ class CaptainOfferController extends Controller
 
         }
 
-        $distance = Helper::getLocationDetailsFromGoogleMapApi(
-            $order->pickup_location_lat,
-            $order->pickup_location_long,
-            Auth::user()->address_lat,
-            Auth::user()->address_long,
-        );
+        if ($order->service_id == 2) {
+            $distance = Helper::getLocationDetailsFromGoogleMapApi(
+                $order->drop_off_location_lat,
+                $order->drop_off_location_long,
+                Auth::user()->address_lat,
+                Auth::user()->address_long,
+            );
+        } else{
+            $distance = Helper::getLocationDetailsFromGoogleMapApi(
+                $order->pickup_location_lat,
+                $order->pickup_location_long,
+                Auth::user()->address_lat,
+                Auth::user()->address_long,
+            );
+        }
 
         $offer = Offer::query()->create([
             "service_id" => $order->service_id,

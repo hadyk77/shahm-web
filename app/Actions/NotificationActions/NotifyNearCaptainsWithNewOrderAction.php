@@ -37,7 +37,11 @@ class NotifyNearCaptainsWithNewOrderAction
             })
             ->get();
         foreach ($captains as $captain) {
-            $distance = Helper::getLocationDetailsFromGoogleMapApi($captain->address_lat, $captain->address_long, $order->pickup_location_lat, $order->pickup_location_long)["distanceValue"];
+            if ($order->service_id == 2 ){
+                $distance = Helper::getLocationDetailsFromGoogleMapApi($captain->address_lat, $captain->address_long, $order->drop_off_location_lat, $order->drop_off_location_long)["distanceValue"];
+            } else{
+                $distance = Helper::getLocationDetailsFromGoogleMapApi($captain->address_lat, $captain->address_long, $order->pickup_location_lat, $order->pickup_location_long)["distanceValue"];
+            }
             if ($distance <= $max_radius) {
                 if ($captain->hasNoOrder()) {
                     $captain->notify(new NewOrderNotification($order));

@@ -83,13 +83,16 @@ class OrderServices implements ServiceInterface
 
             }
 
-            [$distance, $expectedRangeId] = $this->calculateLocationDistance(
-                lat1: $request->pickup_location_lat,
-                long1: $request->pickup_location_long,
-                lat2: $request->drop_off_location_lat,
-                long2: $request->drop_off_location_long,
-            );
-
+            if ($request->service_id == 2) {
+                [$distance, $expectedRangeId] = [0, null];
+            } else {
+                [$distance, $expectedRangeId] = $this->calculateLocationDistance(
+                    lat1: $request->pickup_location_lat,
+                    long1: $request->pickup_location_long,
+                    lat2: $request->drop_off_location_lat,
+                    long2: $request->drop_off_location_long,
+                );
+            }
             $order = Order::query()->create([
                 "service_id" => $request->service_id,
                 "between_governorate_service_id" => $request->service_id == 3 ? $request->between_governorate_service_id : null,

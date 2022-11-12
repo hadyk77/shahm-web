@@ -108,12 +108,21 @@ class ChatServices
 
 
         // Second Message
-        $googleDistanceDetails = Helper::getLocationDetailsFromGoogleMapApi(
-            fromLat: $chat->captain->address_lat,
-            fromLng: $chat->captain->address_long,
-            toLat: $chat->order->pickup_location_lat,
-            toLng: $chat->order->pickup_location_long,
-        );
+        if ($order->service_id == 2) {
+            $googleDistanceDetails = Helper::getLocationDetailsFromGoogleMapApi(
+                fromLat: $chat->captain->address_lat,
+                fromLng: $chat->captain->address_long,
+                toLat: $chat->order->drop_off_location_lat,
+                toLng: $chat->order->drop_off_location_long,
+            );
+        } else {
+            $googleDistanceDetails = Helper::getLocationDetailsFromGoogleMapApi(
+                fromLat: $chat->captain->address_lat,
+                fromLng: $chat->captain->address_long,
+                toLat: $chat->order->pickup_location_lat,
+                toLng: $chat->order->pickup_location_long,
+            );
+        }
         ChatMessage::query()->create([
             "chat_id" => $chat->id,
             "sender_id" => $chat->captain_id,
@@ -158,7 +167,7 @@ class ChatServices
         }
 
 
-        if ($order->pickup_location_long && $order->pickup_location_long){
+        if ($order->pickup_location_long && $order->pickup_location_long) {
             ChatMessage::query()->create([
                 "chat_id" => $chat->id,
                 "sender_id" => $chat->captain_id,
@@ -171,7 +180,7 @@ class ChatServices
             ]);
         }
 
-        if ($order->drop_off_location_lat && $order->drop_off_location_long){
+        if ($order->drop_off_location_lat && $order->drop_off_location_long) {
             ChatMessage::query()->create([
                 "chat_id" => $chat->id,
                 "sender_id" => $chat->captain_id,
@@ -228,7 +237,6 @@ class ChatServices
             "captain_id" => $order->captain_id,
             "service_id" => $order->service_id,
         ]);
-
 
 
         // First Message
@@ -291,7 +299,7 @@ class ChatServices
             ]);
         }
 
-        if ($order->pickup_location_long && $order->pickup_location_long){
+        if ($order->pickup_location_long && $order->pickup_location_long) {
             ChatMessage::query()->create([
                 "chat_id" => $chat->id,
                 "sender_id" => $chat->captain_id,
@@ -304,7 +312,7 @@ class ChatServices
             ]);
         }
 
-        if ($order->drop_off_location_lat && $order->drop_off_location_long){
+        if ($order->drop_off_location_lat && $order->drop_off_location_long) {
             ChatMessage::query()->create([
                 "chat_id" => $chat->id,
                 "sender_id" => $chat->captain_id,
@@ -326,7 +334,7 @@ class ChatServices
         if ($request->hasFile("purchasing_image")) {
             $purchasingImageMessage = ChatMessage::query()->create([
                 "chat_id" => $order->chat->id,
-                "sender_id" => $order->captain_id ,
+                "sender_id" => $order->captain_id,
                 "receiver_id" => $order->user_id,
                 "type" => 'images',
             ]);
@@ -336,7 +344,7 @@ class ChatServices
 
         $message = ChatMessage::query()->create([
             "chat_id" => $order->chat->id,
-            "sender_id" => $order->captain_id ,
+            "sender_id" => $order->captain_id,
             "receiver_id" => $order->user_id,
             "message_text" => "تم إصدار فاتورة التوصيل قم بتحميلها",
             "type" => 'text',
