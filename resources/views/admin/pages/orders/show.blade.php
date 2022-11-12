@@ -392,6 +392,9 @@
                                                         @if($message->type == "text" && $message->style_type == null)
                                                             {{$message->message_text}}
                                                         @endif
+                                                        @if($message->type == "text" && $message->style_type == "EXPORT_INVOICE_STYLE")
+                                                            {{$message->message_text}}
+                                                        @endif
                                                         @if($message->type == "text" && $message->style_type == "DISTANCE_DURATION_COST_STYLE")
                                                             <h4>{{__("Delivery Cost")}} : {{\App\Helper\Helper::price($message->delivery_cost)}}</h4>
                                                             <h4>{{__("Delivery Distance")}} : {{$message->delivery_distance}} {{__("KM")}}</h4>
@@ -432,6 +435,9 @@
                                                     </div>
                                                     <div class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end" data-kt-element="message-text">
                                                         @if($message->type == "text" && $message->style_type == null)
+                                                            {{$message->message_text}}
+                                                        @endif
+                                                        @if($message->type == "text" && $message->style_type == "EXPORT_INVOICE_STYLE")
                                                             {{$message->message_text}}
                                                         @endif
                                                         @if($message->type == "text" && $message->style_type == "DISTANCE_DURATION_COST_STYLE")
