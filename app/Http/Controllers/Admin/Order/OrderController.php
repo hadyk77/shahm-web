@@ -25,8 +25,9 @@ class OrderController extends Controller
 
     public function show($id)
     {
+        $order = $this->orderServices->findById($id);
         return view("admin.pages.orders.show")->with([
-            "order" => $this->orderServices->findById($id),
+            "order" => $order,
         ]);
     }
 }

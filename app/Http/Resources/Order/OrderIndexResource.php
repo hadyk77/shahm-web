@@ -75,7 +75,7 @@ class OrderIndexResource extends JsonResource
                         $this->drop_off_location_lat,
                         $this->drop_off_location_long
                     )["distanceValue"],
-                    "pickup_distance" => Helper::getLocationDetailsFromGoogleMapApi(
+                    "pickup_distance" => $this->service_id == 2 ? 0 : Helper::getLocationDetailsFromGoogleMapApi(
                         Auth::user()->address_lat,
                         Auth::user()->address_long,
                         $this->pickup_location_lat,

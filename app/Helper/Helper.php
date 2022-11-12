@@ -246,6 +246,15 @@ class Helper
                 ];
             }
 
+            if ($response["rows"][0]["elements"][0]["status"] == "NOT_FOUND") {
+                return [
+                    "distanceText" => 0,
+                    "distanceValue" => 0,
+                    "durationText" => 0,
+                    "durationValue" => 0,
+                ];
+            }
+
             return [
                 "distanceText" => $response["rows"][0]["elements"][0]["distance"]["text"],
                 "distanceValue" => $response["rows"][0]["elements"][0]["distance"]["value"] / 1000,
