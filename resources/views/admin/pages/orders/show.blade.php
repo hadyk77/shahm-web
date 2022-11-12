@@ -279,9 +279,6 @@
                             <div class="card-title">
                                 <h2>{{__("Order Code")}} {{$order->order_code}}</h2>
                             </div>
-                            <div class="card-toolbar">
-                                <a href="" class="btn btn-success">{{__("Download Invoice")}}</a>
-                            </div>
                         </div>
                         <div class="card-body pt-0">
                             <div class="table-responsive">
@@ -293,7 +290,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-start">{{__("Delivery Cost")}}</td>
-                                        <td class="text-start">{{\App\Helper\Helper::price($order->delivery_cost)}}</td>
+                                        <td class="text-start">{{\App\Helper\Helper::price($order->delivery_cost_with_user_commission)}}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-start">{{__("VAT")}} ({{$order->tax_percentage ?? 0}}%)</td>
@@ -305,7 +302,7 @@
                                     </tr>
                                     <tr>
                                         <td class="fs-3 text-dark text-start">{{__("Grand Total")}}</td>
-                                        <td class="text-dark fs-3 fw-bolder text-start">{{\App\Helper\Helper::price($order->grand_total)}}</td>
+                                        <td class="text-dark fs-3 fw-bolder text-start">{{\App\Helper\Helper::price($order->grand_total - $order->discount_amount + $order->items_price)}}</td>
                                     </tr>
                                     </tbody>
 
@@ -373,8 +370,100 @@
                                 <h2>{{__("Chats")}}</h2>
                             </div>
                         </div>
-                        <div class="card-body pt-0">
+                        <div class="card-body pt-0" id="kt_chat_messenger_body">
+                            <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer" data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body" data-kt-scroll-offset="5px" style="">
 
+                                @foreach($order->chat->messages()->orderBy("chat_messages.created_at", "asc")->get() as $message)
+
+                                    @if($message->sender_id != $order->captain_id)
+                                        <div class="d-flex justify-content-start mb-10">
+                                            <div class="d-flex flex-column align-items-start">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="symbol symbol-35px symbol-circle">
+                                                        <img alt="Pic" src="{{$message->sender->profile_image}}">
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">{{$message->sender->name}}</a>
+                                                        <span class="text-muted fs-7 mb-1">{{$message->created_at->diffForHumans()}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="p-5 rounded bg-light-info text-dark fw-semibold mw-lg-400px text-start" data-kt-element="message-text">
+                                                    @if($message->type == "text" && $message->style_type == null)
+                                                        {{$message->message_text}}
+                                                    @endif
+                                                    @if($message->type == "text" && $message->style_type == "DISTANCE_DURATION_COST_STYLE")
+                                                        <h4>{{__("Delivery Cost")}} : {{\App\Helper\Helper::price($message->delivery_cost)}}</h4>
+                                                        <h4>{{__("Delivery Distance")}} : {{$message->delivery_distance}} {{__("KM")}}</h4>
+                                                        <h4>{{__("Delivery Duration")}} : {{$message->delivery_duration}} {{__("MIN")}}</h4>
+                                                    @endif
+                                                    @if($message->type == "text" && $message->style_type == "ADMIN_WARNING_MESSAGE_STYLE")
+                                                        <p class="mb-0" style="border: 2px solid red; padding: 10px; border-radius: 10px;">
+                                                            {{$message->message_text}}
+                                                        </p>
+                                                    @endif
+                                                    @if($message->type == "location" && $message->style_type == "ORDER_PICK_LOCATION_STYLE")
+                                                        <img src="https://maps.googleapis.com/maps/api/staticmap?center={{$message->lat}},{{$message->long}}?&zoom=13&size=300x200&&channel=webpwa&markers=anchor:bottomcenter|{{$message->lat}},{{$message->long}}&key={{config("services.google_map.api")}}" alt="">
+                                                        <p class="my-3">{{$order->pickup_location}}</p>
+                                                    @endif
+                                                    @if($message->type == "location" && $message->style_type == "ORDER_DROP_OFF_LOCATION_STYLE")
+                                                        <img src="https://maps.googleapis.com/maps/api/staticmap?center={{$message->lat}},{{$message->long}}?&zoom=13&size=300x200&&channel=webpwa&markers=anchor:bottomcenter|{{$message->lat}},{{$message->long}}&key={{config("services.google_map.api")}}" alt="">
+                                                        <p class="my-3">{{$order->drop_off_location}}</p>
+                                                    @endif
+                                                    @if($message->type == "images")
+                                                        @foreach($message->getMedia("chat_images") as $image)
+                                                            <img src="{{$image->getUrl()}}" class="img-fluid" alt="">
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="d-flex justify-content-end mb-10">
+                                            <div class="d-flex flex-column align-items-end">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <div class="me-3">
+                                                        <span class="text-muted fs-7 mb-1">{{$message->sender->created_at->diffForHumans()}}</span>
+                                                        <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">{{$message->sender->name}}</a>
+                                                    </div>
+                                                    <div class="symbol symbol-35px symbol-circle">
+                                                        <img alt="Pic" src="{{$message->sender->profile_image}}">
+                                                    </div>
+                                                </div>
+                                                <div class="p-5 rounded bg-light-primary text-dark fw-semibold mw-lg-400px text-end" data-kt-element="message-text">
+                                                    @if($message->type == "text" && $message->style_type == null)
+                                                        {{$message->message_text}}
+                                                    @endif
+                                                    @if($message->type == "text" && $message->style_type == "DISTANCE_DURATION_COST_STYLE")
+                                                        <h4>{{__("Delivery Cost")}} : {{\App\Helper\Helper::price($message->delivery_cost)}}</h4>
+                                                        <h4>{{__("Delivery Distance")}} : {{$message->delivery_distance}} {{__("KM")}}</h4>
+                                                        <h4>{{__("Delivery Duration")}} : {{$message->delivery_duration}} {{__("MIN")}}</h4>
+                                                    @endif
+                                                    @if($message->type == "text" && $message->style_type == "ADMIN_WARNING_MESSAGE_STYLE")
+                                                        <p class="mb-0" style="border: 2px solid red; padding: 10px; border-radius: 10px;">
+                                                            {{$message->message_text}}
+                                                        </p>
+                                                    @endif
+                                                    @if($message->type == "location" && $message->style_type == "ORDER_PICK_LOCATION_STYLE")
+                                                        <img src="https://maps.googleapis.com/maps/api/staticmap?center={{$message->lat}},{{$message->long}}?&zoom=13&size=300x200&&channel=webpwa&markers=anchor:bottomcenter|{{$message->lat}},{{$message->long}}&key={{config("services.google_map.api")}}" alt="">
+                                                        <p class="my-3">{{$order->pickup_location}}</p>
+                                                    @endif
+                                                    @if($message->type == "location" && $message->style_type == "ORDER_DROP_OFF_LOCATION_STYLE")
+                                                        <img src="https://maps.googleapis.com/maps/api/staticmap?center={{$message->lat}},{{$message->long}}?&zoom=13&size=300x200&&channel=webpwa&markers=anchor:bottomcenter|{{$message->lat}},{{$message->long}}&key={{config("services.google_map.api")}}" alt="">
+                                                        <p class="my-3">{{$order->drop_off_location}}</p>
+                                                    @endif
+                                                    @if($message->type == "images")
+                                                        @foreach($message->getMedia("chat_images") as $image)
+                                                                <img src="{{$image->getUrl()}}" class="img-fluid" alt="">
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                @endforeach
+
+                            </div>
                         </div>
                     </div>
                 </div>
