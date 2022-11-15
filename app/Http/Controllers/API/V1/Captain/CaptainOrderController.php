@@ -86,7 +86,7 @@ class CaptainOrderController extends Controller
 //            "data" => OrderIndexResource::collection($orders)
 //        ]);
 
-        return $this::sendSuccessResponse($orders->paginate(10));
+        return $this::sendSuccessResponse(OrderIndexResource::collection($orders->paginate(10)));
 
     }
 
