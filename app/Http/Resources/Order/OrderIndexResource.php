@@ -29,6 +29,7 @@ class OrderIndexResource extends JsonResource
                 "price_from" => $this->expectedPriceRange?->price_from,
                 "price_to" => $this->expectedPriceRange?->price_to,
             ],
+            "has_chat" => DB::table("chats")->where("order_id", $this->id)->exists(),
             "items_price" => $this->items_price,
             "captain_profit" => $this->captain_profit,
             "app_profit_from_captain" => $this->app_profit_from_captain,
@@ -67,7 +68,7 @@ class OrderIndexResource extends JsonResource
                     "user_rate" => DB::table("rates")->where("model_id", $this->client->id)->average("rate") ?? 0,
                 ];
             }),
-            'distance' => $this->mergeWhen(Helper::isCaptain($this), function () {
+            'distance' => $this->merge(function () {
                 return [
                     "drop_off_distance" => Helper::getLocationDetailsFromGoogleMapApi(
                         Auth::user()->address_lat,
@@ -102,7 +103,7 @@ class OrderIndexResource extends JsonResource
                     return true;
                 }
 
-                return  false;
+                return false;
             }),
             "created_at" => Helper::formatDate($this->created_at)
         ];
