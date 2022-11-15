@@ -83,7 +83,7 @@ class CaptainOrderController extends Controller
         $orders = $orders->get();
 
         return $this::sendSuccessResponse([
-            "count" => $orders->count(),
+            "count" => DB::table("orders")->where("captain_id",Auth::id())->count(),
             "data" => OrderIndexResource::collection($orders)
         ]);
     }
