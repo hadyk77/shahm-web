@@ -121,7 +121,7 @@ class Helper
     public static function price($price, $with_currency = true): float|string
     {
         if ($with_currency) {
-            return number_format($price, 2) . " " . __("SAR");
+            return number_format($price, 2) . " " . __("JOD");
         }
         return floatval($price);
     }
