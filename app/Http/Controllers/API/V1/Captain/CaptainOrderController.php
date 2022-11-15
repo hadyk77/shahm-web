@@ -42,11 +42,20 @@ class CaptainOrderController extends Controller
                     ->where("captain_id", null)
                     ->orWhere("captain_id", Auth::id());
             })
+            ->when($request->filled("from") && $request->from != "" && $request->filled("to") && $request->to != "", function ($query) use ($request) {
+                $from = (int)$request->from;
+                $to = (int)$request->to;
+
+                $total = $to - $from + 1;
+                $skip = $from - 1;
+
+                $query->skip($skip)->take($total);
+            })
             ->get()
             ->filter(function (Order $order) use ($max_radius) {
                 if ($order->service_id == 2) {
                     $distance = Helper::getLocationDetailsFromGoogleMapApi(Auth::user()->address_lat, Auth::user()->address_long, $order->drop_off_location_lat, $order->drop_off_location_long)["distanceValue"];
-                } else{
+                } else {
                     $distance = Helper::getLocationDetailsFromGoogleMapApi(Auth::user()->address_lat, Auth::user()->address_long, $order->pickup_location_lat, $order->pickup_location_long)["distanceValue"];
                 }
                 if ($distance <= $max_radius && $distance != 0) {
@@ -55,7 +64,10 @@ class CaptainOrderController extends Controller
                 return false;
             });
 
-        return $this::sendSuccessResponse(OrderIndexResource::collection($new_orders));
+        return $this::sendSuccessResponse([
+            "count" => $new_orders->count(),
+            "data" => OrderIndexResource::collection($new_orders),
+        ]);
     }
 
     public function myOrder(Request $request)

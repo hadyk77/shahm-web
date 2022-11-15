@@ -35,8 +35,34 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        $orders = $this->orderServices->getClientOrders($request);
-        return $this::sendSuccessResponse(OrderIndexResource::collection($orders));
+        $orders = Order::query()
+            ->where("user_id", Auth::id())
+            ->when($request->filled("from") && $request->from != "" && $request->filled("to") && $request->to != "", function ($query) use ($request) {
+                $from = (int)$request->from;
+                $to = (int)$request->to;
+
+                $total = $to - $from + 1;
+                $skip = $from - 1;
+
+                $query->skip($skip)->take($total);
+            });
+
+        if ($request->filled("status")) {
+            if ($request->status == "active") {
+                $orders = $orders
+                    ->where("order_status", "!=", OrderEnum::DELIVERED)
+                    ->where("order_status", "!=", OrderEnum::CANCELED);
+            }
+            if (in_array($request->status, array_keys(OrderEnum::statues()))) {
+                $orders = $orders->where("order_status", $request->status);
+            }
+        }
+
+
+        return $this::sendSuccessResponse([
+            "count" => $orders->count(),
+            "data" => OrderIndexResource::collection($orders->get())
+        ]);
     }
 
     public function show($id)
@@ -198,7 +224,7 @@ class OrderController extends Controller
         $order = Order::query()->find($id);
         if (Helper::isCaptain($order)) {
             $order = Order::query()->where("captain_id", Auth::id())->findOrFail($id);
-        } else{
+        } else {
             $order = Order::query()->where("user_id", Auth::id())->findOrFail($id);
         }
 
