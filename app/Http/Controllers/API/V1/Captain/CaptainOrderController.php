@@ -80,9 +80,11 @@ class CaptainOrderController extends Controller
             $orders = $orders->whereIn("order_status", $request->status);
         }
 
+        $orders = $orders->get();
+
         return $this::sendSuccessResponse([
             "count" => $orders->count(),
-            "data" => OrderIndexResource::collection($orders->get())
+            "data" => OrderIndexResource::collection($orders)
         ]);
     }
 
