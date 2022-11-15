@@ -38,18 +38,7 @@ class CaptainOrderController extends Controller
             ->where("order_status", "!=", OrderEnum::CANCELED)
             ->where("order_status", OrderEnum::WAITING_OFFERS)
             ->where(function ($query) {
-                return $query
-                    ->where("captain_id", null)
-                    ->orWhere("captain_id", Auth::id());
-            })
-            ->when($request->filled("from") && $request->from != "" && $request->filled("to") && $request->to != "", function ($query) use ($request) {
-                $from = (int)$request->from;
-                $to = (int)$request->to;
-
-                $total = $to - $from + 1;
-                $skip = $from - 1;
-
-                $query->skip($skip)->take($total);
+                return $query->where("captain_id", null)->orWhere("captain_id", Auth::id());
             })
             ->get()
             ->filter(function (Order $order) use ($max_radius) {
@@ -64,16 +53,24 @@ class CaptainOrderController extends Controller
                 return false;
             });
 
-        return $this::sendSuccessResponse([
-            "count" => $new_orders->count(),
-            "data" => OrderIndexResource::collection($new_orders),
-        ]);
+        return $this::sendSuccessResponse(OrderIndexResource::collection($new_orders));
     }
 
     public function myOrder(Request $request)
     {
 
-        $orders = Order::query()->where("captain_id", Auth::id());
+        $orders = Order::query()
+            ->where("captain_id", Auth::id())
+            ->when($request->filled("from") && $request->from != "" && $request->filled("to") && $request->to != "", function ($query) use ($request) {
+                $from = (int)$request->from;
+                $to = (int)$request->to;
+
+                $total = $to - $from + 1;
+                $skip = $from - 1;
+
+                $query->skip($skip)->take($total);
+            });
+
 
         if ($request->filled("status")) {
             $this->validate($request, [
@@ -83,7 +80,10 @@ class CaptainOrderController extends Controller
             $orders = $orders->whereIn("order_status", $request->status);
         }
 
-        return $this::sendSuccessResponse(OrderIndexResource::collection($orders->get()));
+        return $this::sendSuccessResponse([
+            "count" => $orders->count(),
+            "data" => OrderIndexResource::collection($orders->get())
+        ]);
     }
 
     public function show($id)
