@@ -80,12 +80,14 @@ class CaptainOrderController extends Controller
             $orders = $orders->whereIn("order_status", $request->status);
         }
 
-        $orders = $orders->get();
+//        $orders = $orders->get();
+//        return $this::sendSuccessResponse([
+//            "count" => DB::table("orders")->where("captain_id",Auth::id())->count(),
+//            "data" => OrderIndexResource::collection($orders)
+//        ]);
 
-        return $this::sendSuccessResponse([
-            "count" => DB::table("orders")->where("captain_id",Auth::id())->count(),
-            "data" => OrderIndexResource::collection($orders)
-        ]);
+        return $this::sendSuccessResponse($orders->paginate(10));
+
     }
 
     public function show($id)
