@@ -37,6 +37,7 @@ class OrderController extends Controller
     {
         $orders = Order::query()
             ->where("user_id", Auth::id())
+            ->latest("created_at")
             ->when($request->filled("from") && $request->from != "" && $request->filled("to") && $request->to != "", function ($query) use ($request) {
                 $from = (int)$request->from;
                 $to = (int)$request->to;

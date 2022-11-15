@@ -10,6 +10,7 @@ use App\Http\Middleware\Domain\EnsureNotHaveDomainMiddleware;
 use App\Http\Middleware\Domain\SubDomainMiddleware;
 use App\Http\Middleware\LanguageApiMiddleware;
 use App\Http\Middleware\StatisticsMiddleware;
+use App\Http\Middleware\TimeZoneMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -77,6 +78,7 @@ class Kernel extends HttpKernel
         'api.check.phone' => CheckPhoneVerificationMiddleware::class,
         'api.check.captain.phone' => CheckCaptainMiddleware::class,
         'api.check.status' => CheckUserStatusMiddleware::class,
+        'api.check.timezone' => TimeZoneMiddleware::class,
         'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
         'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
